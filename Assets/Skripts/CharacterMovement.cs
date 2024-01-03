@@ -4,8 +4,17 @@ using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
 {
+
+    BaseState currentState;
+    public IdleS idle = new IdleS();
+    public WalkS walk = new WalkS();
+    public SprintS sprint = new SprintS();
+
     public CharacterController controller;
-    public float speed = 10f;
+    public float speed;
+    public float walkSpeed =3, walkBackwardsS =2;
+    public float sprintSpeed =7, sprintBackwardsS =5;
+    [HideInInspector] public float hzInput, vInput;
     [HideInInspector] public Vector3 direction;
 
     [SerializeField] float groundOff;
@@ -15,17 +24,26 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] float gravity = -9.81f;
     Vector3 velocity;
 
+    void Start() {
+        SwitchState(idle);
+    }
     void Update()
     {
        GetDataMove();
         Gravity();
+        currentState.UpdateState(this);
+    }
+
+    public void SwitchState(BaseState state) {
+        currentState = state;
+        currentState.EnterState(this);
     }
 
     void GetDataMove()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
-        direction = transform.forward * vertical + transform.right * horizontal;
+        direction = (transform.forward * vertical + transform.right * horizontal).normalized;
         controller.Move(direction * speed * Time.deltaTime);
     }
     bool IsGrounded() {
