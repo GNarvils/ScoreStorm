@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class CharacterMovement : MonoBehaviour
 {
 
@@ -12,8 +11,8 @@ public class CharacterMovement : MonoBehaviour
 
     public CharacterController controller;
     public float speed;
-    public float walkSpeed =3, walkBackwardsS =2;
-    public float sprintSpeed =7, sprintBackwardsS =5;
+    public float walkSpeed = 3, walkBackwardsS = 2;
+    public float sprintSpeed = 7, sprintBackwardsS = 5;
     [HideInInspector] public float hzInput, vInput;
     [HideInInspector] public Vector3 direction;
 
