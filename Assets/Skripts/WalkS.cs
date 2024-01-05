@@ -6,7 +6,7 @@ public class WalkS : BaseState
 {
     public override void EnterState(CharacterMovement movement)
     {
-
+        movement.anim.SetBool("Walk", true);
     }
 
     public override void UpdateState(CharacterMovement movement)
@@ -16,9 +16,11 @@ public class WalkS : BaseState
 
         if (movement.vInput < 0) movement.speed = movement.walkBackwardsS;
         else movement.speed = movement.walkSpeed;
+
     }
 
     void ExitState(CharacterMovement movement, BaseState state) {
+        movement.anim.SetBool("Walk", false);
         movement.SwitchState(state);
     }
 }

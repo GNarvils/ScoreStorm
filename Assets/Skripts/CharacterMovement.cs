@@ -23,6 +23,8 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] float gravity = -9.81f;
     Vector3 velocity;
 
+    public Animator anim;
+
     void Start() {
         SwitchState(idle);
     }
@@ -30,6 +32,10 @@ public class CharacterMovement : MonoBehaviour
     {
        GetDataMove();
         Gravity();
+
+        anim.SetFloat("horizontal", hzInput);
+        anim.SetFloat("vertical", vInput);
+
         currentState.UpdateState(this);
     }
 
@@ -40,9 +46,9 @@ public class CharacterMovement : MonoBehaviour
 
     void GetDataMove()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        direction = (transform.forward * vertical + transform.right * horizontal).normalized;
+        hzInput = Input.GetAxisRaw("Horizontal");
+        vInput = Input.GetAxisRaw("Vertical");
+        direction = (transform.forward * vInput + transform.right * hzInput).normalized;
         controller.Move(direction * speed * Time.deltaTime);
     }
     bool IsGrounded() {

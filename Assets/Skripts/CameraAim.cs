@@ -2,7 +2,7 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
+using UnityEngine.Scripting;
 
 public class CameraAim : MonoBehaviour
 {
@@ -20,7 +20,11 @@ public class CameraAim : MonoBehaviour
     [HideInInspector] public float Fov;
     [HideInInspector] public float currentFov;
     public float fovSmooth;
+    public Animator anim;
 
+    [SerializeField] Transform aimPos;
+    [SerializeField] float aimSmooth = 20;
+    [SerializeField] LayerMask aimMask;
     void Start()
     {
             vCam = GetComponentInChildren<CinemachineVirtualCamera>();
@@ -34,6 +38,13 @@ public class CameraAim : MonoBehaviour
         yAxis = Mathf.Clamp(yAxis, -80, 80);
 
         vCam.m_Lens.FieldOfView = Mathf.Lerp(vCam.m_Lens.FieldOfView, currentFov, fovSmooth * Time.deltaTime);
+
+        Vector2 screenCenter = new Vector2(Screen.width / 2, Screen.height / 2);
+        Ray ray = Camera.main.ScreenPointToRay(screenCenter);
+
+        if(Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, aimMask))
+            aimPos.position = Vector3.Lerp(aimPos.position, hit.point, aimSmooth * Time.deltaTime);
+
         currentState.UpdateState(this);
     }
     private void LateUpdate() {

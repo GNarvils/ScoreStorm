@@ -14,5 +14,6 @@ public class IdleS : BaseState
             if (Input.GetKey(KeyCode.LeftShift)) movement.SwitchState(movement.sprint);
             else movement.SwitchState(movement.walk);
         }
+
     }
 }
