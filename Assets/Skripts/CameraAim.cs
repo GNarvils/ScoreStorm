@@ -22,11 +22,12 @@ public class CameraAim : MonoBehaviour
     public float fovSmooth;
     public Animator anim;
 
-    [SerializeField] Transform aimPos;
+    public Transform aimPos;
     [SerializeField] float aimSmooth = 20;
     [SerializeField] LayerMask aimMask;
     void Start()
     {
+            Cursor.visible = false; 
             vCam = GetComponentInChildren<CinemachineVirtualCamera>();
             Fov = vCam.m_Lens.FieldOfView;
             SwitchState(Hip);
