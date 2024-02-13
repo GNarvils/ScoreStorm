@@ -3393,6 +3393,9 @@ MonoBehaviour:
   clipSize: 30
   extraAmmo: 120
   currentAmmo: 0
+  magInSound: {fileID: 8300000, guid: 375d6c2e13bd0304f9b586e551f35b7e, type: 3}
+  magOutSound: {fileID: 8300000, guid: dcb4b7d5e047c504e8a43cb08e92985e, type: 3}
+  slideSound: {fileID: 8300000, guid: 1986635c9e446294698d52fff9a4637d, type: 3}
 --- !u!1 &2853286956776620273
 GameObject:
   m_ObjectHideFlags: 0

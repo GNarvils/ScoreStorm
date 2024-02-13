@@ -7,6 +7,10 @@ public class WPAmmo : MonoBehaviour
     public int clipSize;
     public int extraAmmo;
     public int currentAmmo;
+
+    public AudioClip magInSound;
+    public AudioClip magOutSound;
+    public AudioClip slideSound;
     void Start()
     {
         currentAmmo = clipSize;

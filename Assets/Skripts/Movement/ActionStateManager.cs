@@ -12,7 +12,7 @@ public class ActionStateManager : MonoBehaviour
 
     public GameObject currentWeapon;
     [HideInInspector] public WPAmmo ammo;
-
+    AudioSource audioSource;
     public Animator anim;
 
     public MultiAimConstraint rHandAim;
@@ -21,6 +21,7 @@ public class ActionStateManager : MonoBehaviour
     {
         SwitchState(Default);
         ammo = currentWeapon.GetComponent<WPAmmo>();
+        audioSource = currentWeapon.GetComponent<AudioSource>();
     }
     void Update()
     {
@@ -39,5 +40,16 @@ public class ActionStateManager : MonoBehaviour
         lHandIK.weight = 1;
         ammo.Reload();
         SwitchState(Default);
+    }
+
+    public void MagOut() {
+        audioSource.PlayOneShot(ammo.magOutSound);
+    }
+    public void MagIn()
+    {
+        audioSource.PlayOneShot(ammo.magInSound);
+    }
+    public void ReloadSlide() {
+        audioSource.PlayOneShot(ammo.slideSound);
     }
 }
