@@ -6,7 +6,7 @@ using UnityEngine.Scripting;
 
 public class CameraAim : MonoBehaviour
 {
-    AimBaseState currentState;
+    public AimBaseState currentState;
     public NoAimS Hip = new NoAimS();
     public AimS Aim = new AimS(); 
 

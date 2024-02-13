@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
 
-    BaseState currentState;
+    public BaseState currentState;
     public IdleS idle = new IdleS();
     public WalkS walk = new WalkS();
     public SprintS sprint = new SprintS();

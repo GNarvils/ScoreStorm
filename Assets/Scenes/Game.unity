@@ -3195,6 +3195,7 @@ GameObject:
   - component: {fileID: 2764149537623762850}
   - component: {fileID: 2764149537623762851}
   - component: {fileID: 2764149537623762852}
+  - component: {fileID: 2764149537623762853}
   m_Layer: 0
   m_Name: Weapon1
   m_TagString: Untagged
@@ -3604,6 +3605,22 @@ MonoBehaviour:
   kickBackAmount: -1
   kickBackSpeed: 10
   returnSpeed: 20
+--- !u!114 &2764149537623762853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1925342054752236223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f43f909bfe474f94f8bd7ecabffd2c76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defualtBloomAngle: 3
+  walkBloomMultiplier: 1.5
+  sprintBloomMultiplier: 2
+  adsBloomMultiplier: 0.5
 --- !u!1 &2853286956776620273
 GameObject:
   m_ObjectHideFlags: 0
