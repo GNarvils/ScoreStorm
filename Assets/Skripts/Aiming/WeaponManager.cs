@@ -18,10 +18,15 @@ public class WeaponManager : MonoBehaviour
     CameraAim aim;
     [SerializeField] AudioClip gunShot;
     AudioSource audioSource;
+
+    WPAmmo ammo;
+    ActionStateManager actions;
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         aim = GetComponentInParent<CameraAim>();
+        ammo = GetComponent<WPAmmo>();
+        actions = GetComponentInParent<ActionStateManager>();
         fireRateTime = fireSpeed;
     }
 
@@ -33,6 +38,8 @@ public class WeaponManager : MonoBehaviour
     bool ShouldFire() {
         fireRateTime += Time.deltaTime;
         if (fireRateTime < fireSpeed) return false;
+        if (ammo.currentAmmo == 0) return false;
+        if (actions.currentState==actions.Reload) return false;
         if (semiAuto && Input.GetKeyDown(KeyCode.Mouse0)) return true;
         if (!semiAuto && Input.GetKey(KeyCode.Mouse0)) return true;
         return false;
@@ -42,6 +49,7 @@ public class WeaponManager : MonoBehaviour
         fireRateTime = 0;
         barrelPos.LookAt(aim.aimPos);
         audioSource.PlayOneShot(gunShot);
+        ammo.currentAmmo--;
         for (int i = 0; i < bulletsPerFire; i++) {
             GameObject currentBullet = Instantiate(bullet, barrelPos.position, barrelPos.rotation);
             Rigidbody rb = currentBullet.GetComponent<Rigidbody>();
