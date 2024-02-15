@@ -335,8 +335,8 @@ Transform:
   m_GameObject: {fileID: 142592278}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 490.51, y: 2.35, z: 527.88}
-  m_LocalScale: {x: 15, y: 10, z: 1}
+  m_LocalPosition: {x: 489.46, y: 2.35, z: 526.13}
+  m_LocalScale: {x: 15, y: 10, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 136071285}
@@ -644,8 +644,8 @@ Transform:
   m_GameObject: {fileID: 414255525}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 478.33, y: 2.35, z: 527.37}
-  m_LocalScale: {x: 2, y: 10, z: 1}
+  m_LocalPosition: {x: 478.33, y: 2.35, z: 526.39}
+  m_LocalScale: {x: 2, y: 10, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 136071285}
@@ -781,8 +781,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 441007860}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.219, y: -0, z: 0.022}
+  m_LocalRotation: {x: 0.14608625, y: 0.68394345, z: 0.14297777, w: 0.70031244}
+  m_LocalPosition: {x: 1.32, y: 0.058, z: -0.002}
   m_LocalScale: {x: 1.0392, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -818,8 +818,8 @@ Transform:
   m_GameObject: {fileID: 542642571}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 487.35, y: 2.3, z: 508.07}
-  m_LocalScale: {x: 20, y: 10, z: 1}
+  m_LocalPosition: {x: 487.35, y: 2.3, z: 508.86}
+  m_LocalScale: {x: 20, y: 10, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 136071285}
@@ -1381,8 +1381,8 @@ Transform:
   m_GameObject: {fileID: 1130017261}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 477.18, y: 2.35, z: 517.7}
-  m_LocalScale: {x: 20, y: 10, z: 1}
+  m_LocalPosition: {x: 476.93, y: 2.35, z: 517.7}
+  m_LocalScale: {x: 20, y: 10, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 136071285}
@@ -2347,8 +2347,8 @@ Transform:
   m_GameObject: {fileID: 1999048679}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 496.56, y: 2.35, z: 517.7}
-  m_LocalScale: {x: 20, y: 10, z: 1}
+  m_LocalPosition: {x: 495.62, y: 2.35, z: 517.7}
+  m_LocalScale: {x: 20, y: 10, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 136071285}
@@ -2434,6 +2434,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2105122401}
   - component: {fileID: 2105122402}
+  - component: {fileID: 2105122403}
   m_Layer: 7
   m_Name: Virtual Camera
   m_TagString: Untagged
@@ -2496,6 +2497,36 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 932344272}
+--- !u!114 &2105122403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105122400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e501d18bb52cf8c40b1853ca4904654f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CollideAgainst:
+    serializedVersion: 2
+    m_Bits: 65
+  m_IgnoreTag: Player
+  m_TransparentLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_MinimumDistanceFromTarget: 0.1
+  m_AvoidObstacles: 1
+  m_DistanceLimit: 0
+  m_MinimumOcclusionTime: 0
+  m_CameraRadius: 0.1
+  m_Strategy: 0
+  m_MaximumEffort: 4
+  m_SmoothingTime: 0
+  m_Damping: 0
+  m_DampingWhenOccluded: 0
+  m_OptimalTargetDistance: 0
 --- !u!1 &9171100950776837
 GameObject:
   m_ObjectHideFlags: 0
@@ -3467,7 +3498,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 594563c37233f8947aa7d1bb46481f05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireSpeed: 0.6
+  fireSpeed: 0.1
   semiAuto: 0
   bullet: {fileID: 3896639094390242287, guid: 9bb02367aef5ec7498017e85967287d7, type: 3}
   barrelPos: {fileID: 441007861}
@@ -3617,7 +3648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f43f909bfe474f94f8bd7ecabffd2c76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defualtBloomAngle: 3
+  defualtBloomAngle: 1
   walkBloomMultiplier: 1.5
   sprintBloomMultiplier: 2
   adsBloomMultiplier: 0.5

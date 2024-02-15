@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bloom : MonoBehaviour
 {
-    [SerializeField] float defualtBloomAngle = 3f;
+    [SerializeField] float defualtBloomAngle = 1f;
     [SerializeField] float walkBloomMultiplier = 1.5f;
     [SerializeField] float sprintBloomMultiplier = 2f;
     [SerializeField] float adsBloomMultiplier = 0.5f;
