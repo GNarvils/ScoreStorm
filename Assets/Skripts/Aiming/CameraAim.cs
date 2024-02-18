@@ -8,7 +8,7 @@ public class CameraAim : MonoBehaviour
 {
     public AimBaseState currentState;
     public NoAimS Hip = new NoAimS();
-    public AimS Aim = new AimS(); 
+    public AimS Aim = new AimS();
 
     [SerializeField] float sensitivity = 1;
     float xAxis, yAxis;
@@ -25,6 +25,7 @@ public class CameraAim : MonoBehaviour
     public Transform aimPos;
     [SerializeField] float aimSmooth = 20;
     [SerializeField] LayerMask aimMask;
+    public GameObject redDot;
     void Start()
     {
             Cursor.visible = false; 

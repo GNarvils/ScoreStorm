@@ -10,6 +10,9 @@ public class AimS : AimBaseState
         aim.anim.SetBool("Aiming", true);
     }
     public override void UpdateState(CameraAim aim) {
-        if (Input.GetKeyUp(KeyCode.Mouse1)) aim.SwitchState(aim.Hip);
+        if (Input.GetKeyUp(KeyCode.Mouse1)) { 
+            aim.redDot.SetActive(false);
+            aim.SwitchState(aim.Hip); 
+        }
     }
 }

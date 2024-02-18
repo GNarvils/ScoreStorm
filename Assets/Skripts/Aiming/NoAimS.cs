@@ -9,6 +9,9 @@ public class NoAimS : AimBaseState
         aim.anim.SetBool("Aiming", false);
     }
     public override void UpdateState(CameraAim aim) {
-        if (Input.GetKey(KeyCode.Mouse1)) aim.SwitchState(aim.Aim);
+        if (Input.GetKey(KeyCode.Mouse1)) {
+            aim.redDot.SetActive(true);
+            aim.SwitchState(aim.Aim); 
+        }
     }
 }

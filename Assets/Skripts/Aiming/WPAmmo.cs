@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class WPAmmo : MonoBehaviour
 {
@@ -11,9 +12,17 @@ public class WPAmmo : MonoBehaviour
     public AudioClip magInSound;
     public AudioClip magOutSound;
     public AudioClip slideSound;
+    public TMP_Text mag; 
+    public TMP_Text ammoLeft;
     void Start()
     {
         currentAmmo = clipSize;
+    }
+
+    private void Update()
+    {
+        mag.text = currentAmmo.ToString();
+        ammoLeft.text = extraAmmo.ToString();
     }
 
     public void Reload()
