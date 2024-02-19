@@ -9,6 +9,7 @@ public class ActionStateManager : MonoBehaviour
 
     public ReloadState Reload = new ReloadState();
     public DefaultState Default = new DefaultState();
+    public SwapS Swap = new SwapS();
 
     public WeaponManager currentWeapon;
     [HideInInspector] public WPAmmo ammo;
