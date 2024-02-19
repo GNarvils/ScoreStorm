@@ -19,8 +19,9 @@ public class DefaultState : ActionBaseState
         {
             actions.SwitchState(actions.Reload);
         }
-        else if (Input.mouseScrollDelta.y != 0) { 
-            scrollDirection = Input.mouseScrollDelta.y;
+        else if (Input.GetKeyDown(KeyCode.Q))
+        {
+            actions.Default.scrollDirection = -1; 
             actions.SwitchState(actions.Swap);
         }
     }

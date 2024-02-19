@@ -12,9 +12,9 @@ public class AmmoPickUp : MonoBehaviour, IInteractable
     {
         if (weaponAmmo != null)
         {
-            weaponAmmo.extraAmmo += 15;
+            weaponAmmo.extraAmmo += 10;
 
-            Debug.Log("Picked up 15 extra ammo.");
+            Debug.Log("Picked up 10 extra ammo.");
             gameObject.SetActive(false);
         }
     }

@@ -70,6 +70,7 @@ public class WeaponManager : MonoBehaviour
         if (fireRateTime < fireSpeed) return false;
         if (ammo.currentAmmo == 0) return false;
         if (actions.currentState==actions.Reload) return false;
+        if (actions.currentState == actions.Swap) return false;
         if (semiAuto && Input.GetKeyDown(KeyCode.Mouse0)) return true;
         if (!semiAuto && Input.GetKey(KeyCode.Mouse0)) return true;
         return false;
