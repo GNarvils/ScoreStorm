@@ -18,9 +18,9 @@ public class WeaponManager : MonoBehaviour
     public float damage = 20;
     CameraAim aim;
     [SerializeField] AudioClip gunShot;
-    AudioSource audioSource;
+    public AudioSource audioSource;
 
-    WPAmmo ammo;
+    public WPAmmo ammo;
     Bloom bloom;
     ActionStateManager actions;
     Recoil recoil;
@@ -31,12 +31,12 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] float lightReturnSpeed = 20;
 
     public float enemyKickBackForce = 100;
+
+    public Transform leftHandTarget, leftHandHint;
+    WeaponClassManager weaponClass;
     void Start()
     {
-        recoil = GetComponent<Recoil>();
-        audioSource = GetComponent<AudioSource>();
         aim = GetComponentInParent<CameraAim>();
-        ammo = GetComponent<WPAmmo>();
         bloom = GetComponent<Bloom>();
         actions = GetComponentInParent<ActionStateManager>();
         muzzleFlashParticals = GetComponentInChildren<ParticleSystem>();
@@ -44,6 +44,19 @@ public class WeaponManager : MonoBehaviour
         lightIntensity = muzzleLight.intensity;
         muzzleLight.intensity = 0;
         fireRateTime = fireSpeed;
+    }
+
+    private void OnEnable()
+    {
+        if (weaponClass == null)
+        {
+            weaponClass = GetComponentInParent<WeaponClassManager>();
+            recoil = GetComponent<Recoil>();
+            audioSource = GetComponent<AudioSource>();
+            ammo = GetComponent<WPAmmo>();
+            recoil.recoilFollowPos = weaponClass.recoilFollowPos;
+        }
+        weaponClass.SetCurrentWeapon(this);
     }
 
     void Update()

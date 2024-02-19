@@ -27,7 +27,7 @@ public class EnemyHealth : MonoBehaviour
         Debug.Log("Death enemy");
 
  
-        StartCoroutine(HideAfterDelay(10f));
+        StartCoroutine(HideAfterDelay(5f));
     }
 
     IEnumerator HideAfterDelay(float delay)
