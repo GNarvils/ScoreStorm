@@ -29,6 +29,8 @@ public class WeaponManager : MonoBehaviour
     ParticleSystem muzzleFlashParticals;
     float lightIntensity;
     [SerializeField] float lightReturnSpeed = 20;
+
+    public float enemyKickBackForce = 100;
     void Start()
     {
         recoil = GetComponent<Recoil>();
@@ -73,6 +75,8 @@ public class WeaponManager : MonoBehaviour
             
             Bullet bulletScirpt = currentBullet.GetComponent<Bullet>();
             bulletScirpt.weapon = this;
+
+            bulletScirpt.dir = barrelPos.transform.forward;
 
             Rigidbody rb = currentBullet.GetComponent<Rigidbody>();
             rb.AddForce(barrelPos.forward * bulletVelocity, ForceMode.Impulse);
