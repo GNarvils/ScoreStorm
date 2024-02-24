@@ -17,10 +17,8 @@ public class EnemyHealth : MonoBehaviour
     {
         ragDollManager = GetComponent<RagDollManager>();
 
-        // Find the player's score script
         playerScore = FindObjectOfType<Score>();
 
-        // Find the combo script
         combo = FindObjectOfType<Combo>();
 
         // Meklē head objektu 
@@ -47,7 +45,6 @@ public class EnemyHealth : MonoBehaviour
             {
                 return child;
             }
-            // Recursively search through the child's children
             Transform result = FindChildTransform(child, name);
             if (result != null)
             {
@@ -97,13 +94,13 @@ public class EnemyHealth : MonoBehaviour
         ragDollManager.TriggerRagdoll();
         Debug.Log("Death enemy");
 
-        // Call EnemyKilled method in Combo script
+        //Izsauc combo scriptu
         if (combo != null)
         {
             combo.EnemyKilled();
         }
 
-        // Add score
+        // Pievieno Score
         if (playerScore != null)
         {
             playerScore.AddToScore(100);
