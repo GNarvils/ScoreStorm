@@ -9,11 +9,19 @@ public class EnemyHealth : MonoBehaviour
     [HideInInspector] public bool isDead;
     public GameObject head;
 
-    private float damageMultiplier = 1f; 
+    private float damageMultiplier = 1f;
+    private Score playerScore;
+    private Combo combo;
 
     private void Start()
     {
         ragDollManager = GetComponent<RagDollManager>();
+
+        // Find the player's score script
+        playerScore = FindObjectOfType<Score>();
+
+        // Find the combo script
+        combo = FindObjectOfType<Combo>();
 
         // Meklē head objektu 
         if (head == null)
@@ -46,7 +54,7 @@ public class EnemyHealth : MonoBehaviour
                 return result;
             }
         }
-        return null; 
+        return null;
     }
 
     public void TakeDamage(float damage, bool isHeadshot = false)
@@ -82,16 +90,29 @@ public class EnemyHealth : MonoBehaviour
             }
         }
     }
-    //Funkcija, kas notiek, kad nošauj enemy
+
+    // Funkcija, kas notiek, kad nošauj enemy
     void EnemyDeath()
     {
         ragDollManager.TriggerRagdoll();
         Debug.Log("Death enemy");
 
+        // Call EnemyKilled method in Combo script
+        if (combo != null)
+        {
+            combo.EnemyKilled();
+        }
+
+        // Add score
+        if (playerScore != null)
+        {
+            playerScore.AddToScore(100);
+        }
+
         StartCoroutine(HideAfterDelay(5f));
     }
 
-    //Paslēpj enemy 5 sekundes pēc nomiršanas
+    // Paslēpj enemy 5 sekundes pēc nomiršanas
     IEnumerator HideAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
