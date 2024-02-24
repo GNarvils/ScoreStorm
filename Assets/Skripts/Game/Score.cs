@@ -18,8 +18,11 @@ public class Score : MonoBehaviour
     //Funkcija, kas pievieno score
     public void AddToScore(int value)
     {
-        totalScore += Mathf.RoundToInt(value * combo.GetScoreMultiplier()); // Reizina score ar combo
+        int addedScore = Mathf.RoundToInt(value * combo.GetScoreMultiplier()); 
+        totalScore += addedScore; 
         UpdateScoreText();
+
+        Debug.Log("Added " + addedScore + " to score."); 
     }
 
     // Funkcija, kas updato score vērtību

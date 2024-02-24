@@ -601,7 +601,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 328af594c6557e142b9c7f7ce6739f01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1
+  health: 100
   isDead: 0
   head: {fileID: 0}
 --- !u!95 &66557152
@@ -5752,6 +5752,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   addedTime: 30
+  scoreToAdd: 25
 --- !u!65 &1067810911
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7365,7 +7366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 328af594c6557e142b9c7f7ce6739f01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1
+  health: 100
   isDead: 0
   head: {fileID: 0}
 --- !u!95 &1312692353
@@ -21128,7 +21129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 328af594c6557e142b9c7f7ce6739f01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1
+  health: 100
   isDead: 0
   head: {fileID: 0}
 --- !u!114 &5866666019935583651

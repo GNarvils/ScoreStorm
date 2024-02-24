@@ -12,14 +12,14 @@ public class EnemyHealth : MonoBehaviour
     private float damageMultiplier = 1f;
     private Score playerScore;
     private Combo combo;
+    private GameTime gameTime;
 
     private void Start()
     {
         ragDollManager = GetComponent<RagDollManager>();
-
         playerScore = FindObjectOfType<Score>();
-
         combo = FindObjectOfType<Combo>();
+        gameTime = FindObjectOfType<GameTime>(); 
 
         // Meklē head objektu 
         if (head == null)
@@ -104,6 +104,12 @@ public class EnemyHealth : MonoBehaviour
         if (playerScore != null)
         {
             playerScore.AddToScore(100);
+        }
+
+        // Pievieno laiku
+        if (gameTime != null)
+        {
+            gameTime.AddTime(5f);
         }
 
         StartCoroutine(HideAfterDelay(5f));
