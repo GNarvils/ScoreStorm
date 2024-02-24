@@ -8,6 +8,8 @@ public class AmmoPickUp : MonoBehaviour, IInteractable
     public WPAmmo weaponAmmo;
 
 
+
+    //Kad pieskaras ar ammo box
     public void Interact()
     {
         if (weaponAmmo != null)

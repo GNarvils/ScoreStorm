@@ -21,10 +21,13 @@ public class WPAmmo : MonoBehaviour
 
     private void Update()
     {
+        //Ammo Teksts
         mag.text = currentAmmo.ToString();
         ammoLeft.text = extraAmmo.ToString();
     }
 
+
+    //Reload funkcija
     public void Reload()
     {
         if (extraAmmo >= clipSize)
