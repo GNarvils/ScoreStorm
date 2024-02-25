@@ -7,6 +7,17 @@ public class GameTime : MonoBehaviour
 {
     public TMP_Text timeText;
     public float timer = 120f;
+    private PlayerHealth playerHealth; 
+    void Start()
+    {
+
+        playerHealth = FindObjectOfType<PlayerHealth>();
+
+        if (playerHealth == null)
+        {
+            Debug.LogError("PlayerHealth script not found!.");
+        }
+    }
 
     void Update()
     {
@@ -22,9 +33,13 @@ public class GameTime : MonoBehaviour
 
         timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
 
-        if (timer <= 0f)
+        if (timer <= 0f && !playerHealth.isDead)
         {
             Debug.Log("Time's up!");
+            if (playerHealth != null)
+            {
+                playerHealth.Die();
+            }
         }
     }
 

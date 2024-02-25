@@ -20,7 +20,7 @@ public class TimePickUp : MonoBehaviour, IInteractable
         if (gameTime != null)
         {
             gameTime.AddTime(addedTime);
-            Debug.Log("Pievienoja " + addedTime + " sekunded spēles laikam.");
+            Debug.Log("Added " + addedTime + " seconds to the game time.");
         }
 
  

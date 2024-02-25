@@ -12,6 +12,7 @@ public class Combo : MonoBehaviour
     public GameObject comboTextObject;
     public TextMeshProUGUI comboCountText;
     private int comboMultiplier;
+    private Coroutine flashingCoroutine;
 
     void Start()
     {
@@ -29,15 +30,40 @@ public class Combo : MonoBehaviour
             {
                 ResetCombo();
             }
+            else if (comboTimer <= 3 && flashingCoroutine == null)
+            {
+                flashingCoroutine = StartCoroutine(FlashComboText());
+            }
+        }
+    }
+
+    // Coroutine, kas pārvalda tekstu pazušanu/parādīšanos.
+    IEnumerator FlashComboText()
+    {
+        TextMeshProUGUI comboText = comboCountText;
+        float duration = 0.5f; 
+        float elapsedTime = 0f;
+        float targetAlpha = 0f;
+
+        while (true)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / duration);
+            float alpha = Mathf.Lerp(0f, 1f, t);
+            if (t >= 1f)
+            {
+                targetAlpha = Mathf.Abs(targetAlpha - 1);
+                elapsedTime = 0f;
+            }
+            comboText.color = new Color(comboText.color.r, comboText.color.g, comboText.color.b, alpha);
+            yield return null;
         }
     }
 
     // Kad nogalina enemy activē combo
     public void EnemyKilled()
     {
-
         enemiesKilledInCombo++;
-
         comboTimer = 10f;
 
         if (enemiesKilledInCombo >= 2)
@@ -56,13 +82,17 @@ public class Combo : MonoBehaviour
         comboTextObject.SetActive(true);
     }
 
-
     // Restartē combo
     private void ResetCombo()
     {
         isComboActive = false;
         enemiesKilledInCombo = 0;
         comboTextObject.SetActive(false);
+        if (flashingCoroutine != null)
+        {
+            StopCoroutine(flashingCoroutine);
+            flashingCoroutine = null;
+        }
     }
 
     // Dabū multiplier no cik enemy ir killed

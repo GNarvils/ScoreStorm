@@ -12,8 +12,8 @@ public class WPAmmo : MonoBehaviour
     public AudioClip magInSound;
     public AudioClip magOutSound;
     public AudioClip slideSound;
-    public TMP_Text mag; 
-    public TMP_Text ammoLeft;
+    public TMP_Text ammoText;
+
     void Start()
     {
         currentAmmo = clipSize;
@@ -21,13 +21,10 @@ public class WPAmmo : MonoBehaviour
 
     private void Update()
     {
-        //Ammo Teksts
-        mag.text = currentAmmo.ToString();
-        ammoLeft.text = extraAmmo.ToString();
+        ammoText.text = currentAmmo.ToString() + " / " + extraAmmo.ToString();
     }
 
-
-    //Reload funkcija
+    // Reload function
     public void Reload()
     {
         if (extraAmmo >= clipSize)
