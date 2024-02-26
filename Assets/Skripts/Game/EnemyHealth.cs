@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     public float health;
-    RagDollManager ragDollManager;
+    public RagDollManager ragdollManager; 
     [HideInInspector] public bool isDead;
     public GameObject head;
 
@@ -14,13 +14,16 @@ public class EnemyHealth : MonoBehaviour
     private Combo combo;
     private GameTime gameTime;
     private EnemyAi enemyAi;
+    private Animator animator;
+
     private void Start()
     {
-        ragDollManager = GetComponent<RagDollManager>();
+        ragdollManager = GetComponent<RagDollManager>();
         playerScore = FindObjectOfType<Score>();
         combo = FindObjectOfType<Combo>();
         gameTime = FindObjectOfType<GameTime>();
         enemyAi = GetComponent<EnemyAi>();
+        animator = GetComponent<Animator>();
 
         // Meklē head objektu 
         if (head == null)
@@ -92,7 +95,9 @@ public class EnemyHealth : MonoBehaviour
     // Funkcija, kas notiek, kad nošauj enemy
     void EnemyDeath()
     {
-        ragDollManager.TriggerRagdoll();
+        // Trigger ragdoll
+        ragdollManager.TriggerRagdoll();
+
         Debug.Log("Death enemy");
 
         //Izsauc combo scriptu
@@ -113,12 +118,18 @@ public class EnemyHealth : MonoBehaviour
             gameTime.AddTime(5f);
         }
 
-        StartCoroutine(HideAfterDelay(5f));
         //Izslēdz Ai
         if (enemyAi != null)
         {
             enemyAi.enabled = false;
         }
+
+        // Disable the animator
+        if (animator != null)
+        {
+            animator.enabled = false;
+        }
+        StartCoroutine(HideAfterDelay(5f));
     }
 
     // Paslēpj enemy 5 sekundes pēc nomiršanas

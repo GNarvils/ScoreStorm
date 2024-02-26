@@ -5,13 +5,14 @@ using UnityEngine.AI;
 
 public class EnemyAi : MonoBehaviour
 {
- 
+
     public NavMeshAgent agent;
 
     public Transform player;
 
     public LayerMask whatIsGround, whatIsPlayer;
 
+    public Animator animator;
     //Meklēšana
     public Vector3 walkPoint;
     bool walkPointSet;
@@ -37,11 +38,27 @@ public class EnemyAi : MonoBehaviour
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if (!playerInSightRange && !playerInAttackRange) Patroling();
-        if (playerInSightRange && !playerInAttackRange) ChasePlayer();
-        if (playerInSightRange && playerInAttackRange) AttackPlayer();
+        if (!playerInSightRange && !playerInAttackRange)
+        {
+            Patroling();
+            animator.SetBool("Walk", true);
+            animator.SetBool("Attack", false);
+        }
+        if (playerInSightRange && !playerInAttackRange)
+        {
+            ChasePlayer();
+            animator.SetBool("Walk", true);
+            animator.SetBool("Attack", false);
+        }
+        if (playerInSightRange && playerInAttackRange)
+        {
+            AttackPlayer();
+            animator.SetBool("Walk", false);
+            animator.SetBool("Attack", true);
+        }
     }
-    private void Patroling() {
+    private void Patroling()
+    {
         if (!walkPointSet) SearchWalkPoint();
         if (walkPointSet) agent.SetDestination(walkPoint);
 
@@ -51,7 +68,8 @@ public class EnemyAi : MonoBehaviour
         if (distanceToWalkPoint.magnitude < 1f) walkPointSet = false;
     }
 
-    private void SearchWalkPoint() { 
+    private void SearchWalkPoint()
+    {
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
 
@@ -60,7 +78,8 @@ public class EnemyAi : MonoBehaviour
         if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround)) walkPointSet = true;
     }
 
-    private void ChasePlayer() {
+    private void ChasePlayer()
+    {
         agent.SetDestination(player.position);
     }
 
@@ -69,13 +88,14 @@ public class EnemyAi : MonoBehaviour
         agent.SetDestination(transform.position);
         transform.LookAt(player);
 
-        if (!alreadyAttacked) {
+        if (!alreadyAttacked)
+        {
 
             //Uzbrukšanas kods
             PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
-                playerHealth.TakeDamage(50); 
+                playerHealth.TakeDamage(50);
             }
 
             alreadyAttacked = true;
@@ -83,7 +103,14 @@ public class EnemyAi : MonoBehaviour
         }
     }
 
-    private void ResetAttack() {
+    private void ResetAttack()
+    {
         alreadyAttacked = false;
+    }
+
+    public void StopAnimations()
+    {
+        animator.SetBool("Walk", false);
+        animator.SetBool("Attack", false);
     }
 }
