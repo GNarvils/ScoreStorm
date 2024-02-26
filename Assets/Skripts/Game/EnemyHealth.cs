@@ -13,13 +13,14 @@ public class EnemyHealth : MonoBehaviour
     private Score playerScore;
     private Combo combo;
     private GameTime gameTime;
-
+    private EnemyAi enemyAi;
     private void Start()
     {
         ragDollManager = GetComponent<RagDollManager>();
         playerScore = FindObjectOfType<Score>();
         combo = FindObjectOfType<Combo>();
-        gameTime = FindObjectOfType<GameTime>(); 
+        gameTime = FindObjectOfType<GameTime>();
+        enemyAi = GetComponent<EnemyAi>();
 
         // Meklē head objektu 
         if (head == null)
@@ -113,6 +114,11 @@ public class EnemyHealth : MonoBehaviour
         }
 
         StartCoroutine(HideAfterDelay(5f));
+        //Izslēdz Ai
+        if (enemyAi != null)
+        {
+            enemyAi.enabled = false;
+        }
     }
 
     // Paslēpj enemy 5 sekundes pēc nomiršanas
