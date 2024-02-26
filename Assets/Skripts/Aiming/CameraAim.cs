@@ -27,6 +27,7 @@ public class CameraAim : MonoBehaviour
     [SerializeField] LayerMask aimMask;
     public GameObject redDot;
     public GameObject blackDot;
+    
     void Start()
     {
             Cursor.visible = false; 
