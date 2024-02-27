@@ -26,8 +26,6 @@ public class CameraAim : MonoBehaviour
     public Transform aimPos;
     [SerializeField] float aimSmooth = 20;
     [SerializeField] LayerMask aimMask;
-    public GameObject redDot;
-    public GameObject blackDot;
 
    
     void Start()

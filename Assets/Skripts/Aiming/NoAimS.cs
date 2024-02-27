@@ -10,8 +10,6 @@ public class NoAimS : AimBaseState
     }
     public override void UpdateState(CameraAim aim) {
         if (Input.GetKey(KeyCode.Mouse1)) {
-            aim.redDot.SetActive(true);
-            aim.blackDot.SetActive(false);
             aim.SwitchState(aim.Aim); 
         }
     }

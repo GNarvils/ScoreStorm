@@ -90,16 +90,28 @@ public class EnemyAi : MonoBehaviour
 
         if (!alreadyAttacked)
         {
+            // Trigger the attack animation
+            animator.SetTrigger("Attack");
 
-            //Uzbrukšanas kods
+            float animationDuration = 1f;
+            Invoke(nameof(DamagePlayer), animationDuration);
+
+            alreadyAttacked = true;
+            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+        }
+    }
+
+    private void DamagePlayer()
+    {
+        // Check if the player is still in attack range
+        if (playerInAttackRange)
+        {
+            // Inflict damage to the player
             PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
                 playerHealth.TakeDamage(50);
             }
-
-            alreadyAttacked = true;
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
     }
 
