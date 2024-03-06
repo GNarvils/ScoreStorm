@@ -21,8 +21,11 @@ public class DefaultState : ActionBaseState
         }
         else if (Input.GetKeyDown(KeyCode.Q))
         {
-            actions.Default.scrollDirection = -1; 
+            actions.Default.scrollDirection = -1;
             actions.SwitchState(actions.Swap);
+        }
+        else if (Input.GetKeyDown(KeyCode.Space)) {
+            actions.SwitchState(actions.Guard);
         }
     }
 
