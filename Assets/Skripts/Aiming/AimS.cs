@@ -6,6 +6,7 @@ public class AimS : AimBaseState
 {
 
     public override void EnterState(CameraAim aim) {
+
         aim.currentFov = aim.aimFov;
         aim.anim.SetBool("Aiming", true);
     }

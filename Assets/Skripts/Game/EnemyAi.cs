@@ -13,6 +13,9 @@ public class EnemyAi : MonoBehaviour
     public LayerMask whatIsGround, whatIsPlayer;
 
     public Animator animator;
+
+    public int damageToPlayer;
+
     //Meklēšana
     public Vector3 walkPoint;
     bool walkPointSet;
@@ -43,18 +46,21 @@ public class EnemyAi : MonoBehaviour
             Patroling();
             animator.SetBool("Walk", true);
             animator.SetBool("Attack", false);
+            animator.SetBool("Reaction", false);
         }
         if (playerInSightRange && !playerInAttackRange)
         {
             ChasePlayer();
             animator.SetBool("Walk", true);
             animator.SetBool("Attack", false);
+            animator.SetBool("Reaction", false);
         }
         if (playerInSightRange && playerInAttackRange)
         {
             AttackPlayer();
             animator.SetBool("Walk", false);
             animator.SetBool("Attack", true);
+            animator.SetBool("Reaction", false);
         }
     }
     private void Patroling()
@@ -80,6 +86,7 @@ public class EnemyAi : MonoBehaviour
 
     private void ChasePlayer()
     {
+        animator.SetBool("Reaction", false);
         agent.SetDestination(player.position);
     }
 
@@ -101,6 +108,7 @@ public class EnemyAi : MonoBehaviour
         }
     }
 
+
     private void DamagePlayer()
     {
         // Check if the player is still in attack range
@@ -108,9 +116,11 @@ public class EnemyAi : MonoBehaviour
         {
             // Inflict damage to the player
             PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+            ActionStateManager actions = player.GetComponentInChildren<ActionStateManager>();
             if (playerHealth != null)
             {
-                playerHealth.TakeDamage(50);
+                if (actions.currentState == actions.Guard) playerHealth.TakeDamage(damageToPlayer / 2);
+                else playerHealth.TakeDamage(damageToPlayer);
             }
         }
     }
@@ -120,9 +130,19 @@ public class EnemyAi : MonoBehaviour
         alreadyAttacked = false;
     }
 
+    public void Stagger()
+    {
+        agent.isStopped = true;
+        animator.SetBool("Walk", false);
+        animator.SetBool("Attack", false);
+        animator.SetBool("Reaction", true);
+        Debug.Log("Enemy staggered");
+    }
+
     public void StopAnimations()
     {
         animator.SetBool("Walk", false);
         animator.SetBool("Attack", false);
+        animator.SetBool("Reaction", false);
     }
 }

@@ -35,7 +35,7 @@ public class EnemyHealth : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("Head GameObject 'mixamorig:Head' not found.");
+                Debug.LogWarning("Galva nav atrasta!");
             }
         }
     }
@@ -66,6 +66,9 @@ public class EnemyHealth : MonoBehaviour
             if (isHeadshot)
             {
                 Debug.Log("Headshot!");
+    
+                    enemyAi.Stagger();
+
             }
 
             // Pieliek vai reseto damage multiplier ja ir headshot
