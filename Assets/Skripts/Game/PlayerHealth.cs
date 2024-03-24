@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour
 {
     public int playerHealth = 200;
     public bool isDead = false;
-
+    public Image healthBar;
     void Update()
     {
         if (!isDead && IsPlayerDead())
@@ -37,6 +37,7 @@ public class PlayerHealth : MonoBehaviour
         if (!isDead)
         {
             playerHealth -= damage;
+            healthBar.fillAmount = playerHealth / 200f;
             Debug.Log("Player took " + damage + " damage. Remaining health: " + playerHealth);
         }
     }
