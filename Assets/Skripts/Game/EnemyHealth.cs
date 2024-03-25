@@ -15,6 +15,7 @@ public class EnemyHealth : MonoBehaviour
     private GameTime gameTime;
     private EnemyAi enemyAi;
     private Animator animator;
+    private Rigidbody rb;
 
     private void Start()
     {
@@ -63,12 +64,11 @@ public class EnemyHealth : MonoBehaviour
         if (health > 0)
         {
             // Pārbauda vai ir head shots
-            if (isHeadshot)
+            Debug.Log("Headshot!");
+            if (isHeadshot && Random.value >= 0.5f) // 50% iespēja ka ir stagger
             {
-                Debug.Log("Headshot!");
-    
-                    enemyAi.Stagger();
-
+ 
+                enemyAi.Stagger();
             }
 
             // Pieliek vai reseto damage multiplier ja ir headshot
@@ -100,7 +100,7 @@ public class EnemyHealth : MonoBehaviour
     {
         // Trigger ragdoll
         ragdollManager.TriggerRagdoll();
-
+        isDead = true;
         Debug.Log("Death enemy");
 
         //Izsauc combo scriptu
@@ -132,7 +132,25 @@ public class EnemyHealth : MonoBehaviour
         {
             animator.enabled = false;
         }
+        StopEnemyMovement();
         StartCoroutine(HideAfterDelay(5f));
+    }
+    // apstādina kustību tā lai neslīdētu pēc nomiršanas
+    void StopEnemyMovement()
+    {
+    
+        if (enemyAi != null && enemyAi.agent != null)
+        {
+            enemyAi.agent.enabled = false;
+        }
+
+        // Disable the Rigidbody to stop physics simulation (if it exists)
+        if (rb != null)
+        {
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            rb.isKinematic = true;
+        }
     }
 
     // Paslēpj enemy 5 sekundes pēc nomiršanas

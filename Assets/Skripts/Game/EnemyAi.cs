@@ -16,6 +16,8 @@ public class EnemyAi : MonoBehaviour
 
     public int damageToPlayer;
 
+    private bool staggered = false;
+
     //Meklēšana
     public Vector3 walkPoint;
     bool walkPointSet;
@@ -37,6 +39,9 @@ public class EnemyAi : MonoBehaviour
 
     private void Update()
     {
+        if (staggered)
+            return;
+
         //Pārbauda redzi un uzbrukšanas attālumu
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
@@ -46,21 +51,19 @@ public class EnemyAi : MonoBehaviour
             Patroling();
             animator.SetBool("Walk", true);
             animator.SetBool("Attack", false);
-            animator.SetBool("Reaction", false);
         }
         if (playerInSightRange && !playerInAttackRange)
         {
             ChasePlayer();
             animator.SetBool("Walk", true);
             animator.SetBool("Attack", false);
-            animator.SetBool("Reaction", false);
+
         }
         if (playerInSightRange && playerInAttackRange)
         {
             AttackPlayer();
             animator.SetBool("Walk", false);
             animator.SetBool("Attack", true);
-            animator.SetBool("Reaction", false);
         }
     }
     private void Patroling()
@@ -111,7 +114,7 @@ public class EnemyAi : MonoBehaviour
 
     private void DamagePlayer()
     {
-        // Check if the player is still in attack range
+        // Pārbauda vai pretinieks ir uzbrukšanas attālumā.
         if (playerInAttackRange)
         {
             // Inflict damage to the player
@@ -133,12 +136,26 @@ public class EnemyAi : MonoBehaviour
     public void Stagger()
     {
         agent.isStopped = true;
+        staggered = true;
         animator.SetBool("Walk", false);
         animator.SetBool("Attack", false);
         animator.SetBool("Reaction", true);
         Debug.Log("Enemy staggered");
+
+        StartCoroutine(RecoverFromStagger());
     }
 
+    private IEnumerator RecoverFromStagger()
+    {
+        yield return new WaitForSeconds(1.2f);
+        EnemyHealth enemyHealth = GetComponent<EnemyHealth>();
+        if (enemyHealth != null && !enemyHealth.isDead)
+        {
+            staggered = false;
+            agent.isStopped = false;
+            animator.SetBool("Reaction", false);
+        }
+    }
     public void StopAnimations()
     {
         animator.SetBool("Walk", false);
