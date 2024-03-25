@@ -10,6 +10,7 @@ public class ActionStateManager : MonoBehaviour
     public ReloadState Reload = new ReloadState();
     public DefaultState Default = new DefaultState();
     public GuardState Guard = new GuardState();
+    public ReactionState Reaction = new ReactionState();
     public SwapS Swap = new SwapS();
 
     public WeaponManager currentWeapon;
@@ -48,6 +49,12 @@ public class ActionStateManager : MonoBehaviour
         SwitchState(Default);
     }
 
+    public void Reacted()
+    {
+        rHandAim.weight = 1;
+        lHandIK.weight = 1;
+        SwitchState(Default);
+    }
 
     public void MagOut() {
         audioSource.PlayOneShot(ammo.magOutSound);
