@@ -47,7 +47,10 @@ public class PlayerHealth : MonoBehaviour
             }
             healthBar.fillAmount = (float)playerHealth / maxPlayerHealth;
             Debug.Log("Player took " + damage + " damage. Remaining health: " + playerHealth);
-            actions.SwitchState(actions.Reaction);
+            if (actions.currentState != actions.Guard)
+            {
+                actions.SwitchState(actions.Reaction);
+            }
         }
     }
     public void Heal(int healAmount)
