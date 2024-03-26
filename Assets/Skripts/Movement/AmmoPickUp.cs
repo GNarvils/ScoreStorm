@@ -20,7 +20,7 @@ public class AmmoPickUp : MonoBehaviour, IInteractable
             weaponAmmo.extraAmmo += 10;
 
             Debug.Log("Picked up 10 extra ammo.");
-            gameObject.SetActive(false);
+            Destroy(gameObject);
             if (playerScore != null)
             {
                 playerScore.AddToScore(25);

@@ -11,7 +11,9 @@ public class ActionStateManager : MonoBehaviour
     public DefaultState Default = new DefaultState();
     public GuardState Guard = new GuardState();
     public ReactionState Reaction = new ReactionState();
+    public DeathState Death = new DeathState();
     public SwapS Swap = new SwapS();
+    public PlayerHealth health;
 
     public WeaponManager currentWeapon;
     [HideInInspector] public WPAmmo ammo;
@@ -22,6 +24,7 @@ public class ActionStateManager : MonoBehaviour
     public TwoBoneIKConstraint lHandIK;
     void Start()
     {
+        health = GetComponentInParent<PlayerHealth>();
         SwitchState(Default);
     }
     void Update()

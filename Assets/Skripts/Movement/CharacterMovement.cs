@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditorInternal;
 using UnityEngine;
 public class CharacterMovement : MonoBehaviour
@@ -10,6 +11,7 @@ public class CharacterMovement : MonoBehaviour
     public WalkS walk = new WalkS();
     public SprintS sprint = new SprintS();
 
+    public PlayerHealth health;
     public CharacterController controller;
     public float speed;
     public float walkSpeed = 3, walkBackwardsS = 2;
@@ -28,23 +30,26 @@ public class CharacterMovement : MonoBehaviour
 
     void Start() {
         SwitchState(idle);
+        health = GetComponent<PlayerHealth>();
     }
     void Update()
     {
-       GetDataMove();
-        Gravity();
+        if (!health.isDead)
+        {
+            GetDataMove();
+            Gravity();
 
-        anim.SetFloat("horizontal", hzInput);
-        anim.SetFloat("vertical", vInput);
+            anim.SetFloat("horizontal", hzInput);
+            anim.SetFloat("vertical", vInput);
 
-        currentState.UpdateState(this);
+            currentState.UpdateState(this);
+        }
     }
 
     public void SwitchState(BaseState state) {
         currentState = state;
         currentState.EnterState(this);
     }
-
     void GetDataMove()
     {
         hzInput = Input.GetAxisRaw("Horizontal");

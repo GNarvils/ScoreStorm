@@ -29,6 +29,6 @@ public class TimePickUp : MonoBehaviour, IInteractable
             playerScore.AddToScore(scoreToAdd);
         }
 
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 }

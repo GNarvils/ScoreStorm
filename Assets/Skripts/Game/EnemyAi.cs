@@ -42,6 +42,15 @@ public class EnemyAi : MonoBehaviour
         if (staggered)
             return;
 
+        PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+        if (playerHealth != null && playerHealth.isDead)
+        {
+            Patroling();
+            animator.SetBool("Walk", true);
+            animator.SetBool("Attack", false);
+            return; // Stop processing further if player is dead
+        }
+
         //Pārbauda redzi un uzbrukšanas attālumu
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);

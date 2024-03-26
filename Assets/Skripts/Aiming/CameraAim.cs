@@ -27,9 +27,12 @@ public class CameraAim : MonoBehaviour
     [SerializeField] float aimSmooth = 20;
     [SerializeField] LayerMask aimMask;
 
-   
+    public PlayerHealth health;
+
+
     void Start()
     {
+        health = GetComponent<PlayerHealth>();
         Cursor.visible = false;
         vCam = GetComponentInChildren<CinemachineVirtualCamera>();
         Fov = vCam.m_Lens.FieldOfView;
@@ -37,6 +40,7 @@ public class CameraAim : MonoBehaviour
     }
     void Update()
     {
+        if (!health.isDead) { 
         xAxis += Input.GetAxisRaw("Mouse X") * sensitivity;
         yAxis += Input.GetAxisRaw("Mouse Y") * sensitivity;
         yAxis = Mathf.Clamp(yAxis, -80, 80);
@@ -50,6 +54,7 @@ public class CameraAim : MonoBehaviour
             aimPos.position = Vector3.Lerp(aimPos.position, hit.point, aimSmooth * Time.deltaTime);
 
         currentState.UpdateState(this);
+        }
     }
     private void LateUpdate()
     {

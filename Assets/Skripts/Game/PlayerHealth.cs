@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour
 {
     public int playerHealth = 200;
+    public int maxPlayerHealth = 200;
     public bool isDead = false;
     public Image healthBar;
     public ActionStateManager actions;
@@ -29,6 +30,7 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("Player is Dead!");
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        actions.SwitchState(actions.Death);
 
     }
 
@@ -38,9 +40,27 @@ public class PlayerHealth : MonoBehaviour
         if (!isDead)
         {
             playerHealth -= damage;
-            healthBar.fillAmount = playerHealth / 200f;
+            if (playerHealth <= 0)
+            {
+                playerHealth = 0;
+                Die();
+            }
+            healthBar.fillAmount = (float)playerHealth / maxPlayerHealth;
             Debug.Log("Player took " + damage + " damage. Remaining health: " + playerHealth);
             actions.SwitchState(actions.Reaction);
+        }
+    }
+    public void Heal(int healAmount)
+    {
+        if (!isDead)
+        {
+            playerHealth += healAmount;
+            if (playerHealth > maxPlayerHealth)
+            {
+                playerHealth = maxPlayerHealth;
+            }
+            healthBar.fillAmount = (float)playerHealth / maxPlayerHealth;
+            Debug.Log("Player healed for " + healAmount + " health. Current health: " + playerHealth);
         }
     }
 }

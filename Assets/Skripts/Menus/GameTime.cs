@@ -21,8 +21,9 @@ public class GameTime : MonoBehaviour
 
     void Update()
     {
-        timer -= Time.deltaTime;
-
+        if (!playerHealth.isDead) { 
+            timer -= Time.deltaTime;
+    }
         if (timer < 0f)
         {
             timer = 0f;
