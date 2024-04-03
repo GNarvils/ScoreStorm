@@ -365,8 +365,12 @@ MonoBehaviour:
   bulletsPerFire: 1
   damage: 20
   gunShot: {fileID: 8300000, guid: 6dd7024f00606b44eb5884197a66a893, type: 3}
+  audioSource: {fileID: 0}
+  ammo: {fileID: 0}
   lightReturnSpeed: 20
   enemyKickBackForce: 100
+  leftHandTarget: {fileID: 0}
+  leftHandHint: {fileID: 0}
 --- !u!82 &3952356322308630415
 AudioSource:
   m_ObjectHideFlags: 0
@@ -481,8 +485,7 @@ MonoBehaviour:
   magInSound: {fileID: 8300000, guid: 375d6c2e13bd0304f9b586e551f35b7e, type: 3}
   magOutSound: {fileID: 8300000, guid: dcb4b7d5e047c504e8a43cb08e92985e, type: 3}
   slideSound: {fileID: 8300000, guid: 1986635c9e446294698d52fff9a4637d, type: 3}
-  mag: {fileID: 0}
-  ammoLeft: {fileID: 0}
+  ammoText: {fileID: 0}
 --- !u!114 &4155237959091241869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -512,9 +515,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defualtBloomAngle: 1
-  walkBloomMultiplier: 1.5
-  sprintBloomMultiplier: 2
-  adsBloomMultiplier: 0.5
+  walkBloomMultiplier: 2
+  adsBloomMultiplier: 0
 --- !u!1 &8213024600953611717
 GameObject:
   m_ObjectHideFlags: 0

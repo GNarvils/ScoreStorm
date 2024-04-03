@@ -33,7 +33,21 @@ public class EnemyAi : MonoBehaviour
 
     private void Awake()
     {
-        player = GameObject.Find("Player").transform;
+        GameObject player1Object = GameObject.Find("Player_1");
+        GameObject player2Object = GameObject.Find("Player_2");
+
+        if (player1Object != null)
+        {
+            player = player1Object.transform;
+        }
+        else if (player2Object != null)
+        {
+            player = player2Object.transform;
+        }
+        else
+        {
+            Debug.LogError("Neither Player_1 nor Player_2 found in the scene!");
+        }
         agent = GetComponent<NavMeshAgent>();
     }
 

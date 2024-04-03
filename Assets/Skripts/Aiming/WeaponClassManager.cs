@@ -22,13 +22,18 @@ public class WeaponClassManager : MonoBehaviour
         }
     }
 
-    public void SetCurrentWeapon(WeaponManager weapon) {
+    public void SetCurrentWeapon(WeaponManager weapon)
+    {
+        if (actions == null)
+            actions = GetComponent<ActionStateManager>();
 
-        if (actions == null) actions = GetComponent<ActionStateManager>();
+
         leftHandIk.data.target = weapon.leftHandTarget;
         leftHandIk.data.hint = weapon.leftHandHint;
+
         actions.SetWeapon(weapon);
     }
+   
 
     public void ChangeWeapon(float direction)
     {
