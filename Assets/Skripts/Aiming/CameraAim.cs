@@ -17,7 +17,7 @@ public class CameraAim : MonoBehaviour
 
 
     [HideInInspector] public CinemachineVirtualCamera vCam;
-    public float aimFov = 40;
+    public float aimFov = 35;
     [HideInInspector] public float Fov;
     [HideInInspector] public float currentFov;
     public float fovSmooth;

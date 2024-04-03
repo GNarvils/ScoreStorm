@@ -48,8 +48,10 @@ public class EnemyAi : MonoBehaviour
             Patroling();
             animator.SetBool("Walk", true);
             animator.SetBool("Attack", false);
-            return; // Stop processing further if player is dead
+            return;
         }
+
+
 
         //Pārbauda redzi un uzbrukšanas attālumu
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
@@ -126,7 +128,7 @@ public class EnemyAi : MonoBehaviour
         // Pārbauda vai pretinieks ir uzbrukšanas attālumā.
         if (playerInAttackRange)
         {
-            // Inflict damage to the player
+            //Izdara uzbrukumu pret spēlētaju
             PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
             ActionStateManager actions = player.GetComponentInChildren<ActionStateManager>();
             if (playerHealth != null)

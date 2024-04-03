@@ -73,7 +73,8 @@ public class WeaponManager : MonoBehaviour
         if (actions.currentState == actions.Reload) return false;
         if (actions.currentState == actions.Swap) return false;
         if (actions.currentState == actions.Guard) return false;
-        if (aim.currentState==aim.Hip) return false;
+        if (actions.currentState == actions.Reaction) return false;
+        if (aim.currentState == aim.Hip) return false;
         if (semiAuto && Input.GetKeyDown(KeyCode.Mouse0)) return true;
         if (!semiAuto && Input.GetKey(KeyCode.Mouse0)) return true;
         return false;

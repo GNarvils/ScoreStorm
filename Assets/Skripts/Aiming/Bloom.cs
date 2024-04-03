@@ -5,9 +5,8 @@ using UnityEngine;
 public class Bloom : MonoBehaviour
 {
     [SerializeField] float defualtBloomAngle = 1f;
-    [SerializeField] float walkBloomMultiplier = 1.5f;
-    [SerializeField] float sprintBloomMultiplier = 2f;
-    [SerializeField] float adsBloomMultiplier = 0.5f;
+    [SerializeField] float walkBloomMultiplier = 2f;
+    [SerializeField] float adsBloomMultiplier = 0f;
 
     CharacterMovement movement;
     CameraAim aiming;
@@ -22,7 +21,6 @@ public class Bloom : MonoBehaviour
     public Vector3 bloomA(Transform barrelPos) {
         if (movement.currentState == movement.idle) currentBloom = defualtBloomAngle;
         else if (movement.currentState == movement.walk) currentBloom = walkBloomMultiplier;
-        else if (movement.currentState == movement.sprint) currentBloom = sprintBloomMultiplier;
 
         if (aiming.currentState == aiming.Aim) currentBloom *= adsBloomMultiplier;
 

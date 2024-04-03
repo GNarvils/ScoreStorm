@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditorInternal;
@@ -52,10 +52,23 @@ public class CharacterMovement : MonoBehaviour
     }
     void GetDataMove()
     {
-        hzInput = Input.GetAxisRaw("Horizontal");
-        vInput = Input.GetAxisRaw("Vertical");
-        direction = (transform.forward * vInput + transform.right * hzInput).normalized;
-        controller.Move(direction * speed * Time.deltaTime);
+        hzInput = 0f;
+        vInput = 0f;
+
+        if (Input.GetKey(KeyCode.A)) 
+            hzInput -= 1f;
+        if (Input.GetKey(KeyCode.D)) 
+            hzInput += 1f;
+        if (Input.GetKey(KeyCode.W)) 
+            vInput += 1f;
+        if (Input.GetKey(KeyCode.S)) 
+            vInput -= 1f;
+
+        if (hzInput != 0f || vInput != 0f)
+        {
+            direction = (transform.forward * vInput + transform.right * hzInput).normalized;
+            controller.Move(direction * speed * Time.deltaTime);
+        }
     }
     bool IsGrounded() {
         ballPos = new Vector3(transform.position.x, transform.position.y - groundOff, transform.position.z);

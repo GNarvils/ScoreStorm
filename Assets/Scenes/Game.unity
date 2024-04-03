@@ -4712,7 +4712,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 500
-  field of view: 60
+  field of view: 55
   orthographic: 0
   orthographic size: 10
   m_Depth: -1
@@ -4739,7 +4739,7 @@ Transform:
   m_GameObject: {fileID: 922981814}
   serializedVersion: 2
   m_LocalRotation: {x: 0.02835784, y: 0, z: 0, w: 0.99959785}
-  m_LocalPosition: {x: 0.5, y: 2.0127423, z: -1.9741062}
+  m_LocalPosition: {x: 0.7, y: 2.0127423, z: -1.9741062}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5289,7 +5289,7 @@ Transform:
   m_GameObject: {fileID: 1061583753}
   serializedVersion: 2
   m_LocalRotation: {x: 0.02835784, y: 0, z: 0, w: 0.99959785}
-  m_LocalPosition: {x: 0.5, y: 1.5, z: 0}
+  m_LocalPosition: {x: 0.7, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12790,7 +12790,7 @@ Transform:
   m_GameObject: {fileID: 2105122400}
   serializedVersion: 2
   m_LocalRotation: {x: 0.02835784, y: -0, z: -0, w: 0.99959785}
-  m_LocalPosition: {x: 0.5, y: 2.0127423, z: -1.9741062}
+  m_LocalPosition: {x: 0.7, y: 2.0127423, z: -1.9741062}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12818,7 +12818,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 1564266115}
   m_Follow: {fileID: 1564266115}
   m_Lens:
-    FieldOfView: 60
+    FieldOfView: 55
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 500
@@ -13153,7 +13153,7 @@ MonoBehaviour:
   recoilFollowPos: {fileID: 1564266115}
   kickBackAmount: -1
   kickBackSpeed: 10
-  returnSpeed: 20
+  returnSpeed: 5
 --- !u!4 &366175169463145107
 Transform:
   m_ObjectHideFlags: 0
@@ -13235,9 +13235,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defualtBloomAngle: 1
-  walkBloomMultiplier: 1.5
-  sprintBloomMultiplier: 2
-  adsBloomMultiplier: 0.5
+  walkBloomMultiplier: 2
+  adsBloomMultiplier: 0
 --- !u!4 &497831375808666235
 Transform:
   m_ObjectHideFlags: 0
@@ -13507,7 +13506,7 @@ GameObject:
   - component: {fileID: 919132147687243697}
   - component: {fileID: 919132147687243698}
   m_Layer: 7
-  m_Name: PlayerModel
+  m_Name: Player1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14346,7 +14345,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &2101602235336545445
 GameObject:
   m_ObjectHideFlags: 0
@@ -20201,7 +20200,7 @@ Transform:
   m_GameObject: {fileID: 2923629587050783030}
   serializedVersion: 2
   m_LocalRotation: {x: 0.14608625, y: 0.68394345, z: 0.14297777, w: 0.70031244}
-  m_LocalPosition: {x: 1.32, y: 0.058, z: -0.002}
+  m_LocalPosition: {x: 1.126, y: 0.069, z: -0}
   m_LocalScale: {x: 1.0392, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -20622,7 +20621,7 @@ MonoBehaviour:
   semiAuto: 1
   bullet: {fileID: 3896639094390242287, guid: 9bb02367aef5ec7498017e85967287d7, type: 3}
   barrelPos: {fileID: 3607485458233571098}
-  bulletVelocity: 500
+  bulletVelocity: 150
   bulletsPerFire: 4
   damage: 35
   gunShot: {fileID: 8300000, guid: 6dd7024f00606b44eb5884197a66a893, type: 3}
@@ -22250,7 +22249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 594563c37233f8947aa7d1bb46481f05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireSpeed: 0.1
+  fireSpeed: 0.25
   semiAuto: 0
   bullet: {fileID: 3896639094390242287, guid: 9bb02367aef5ec7498017e85967287d7, type: 3}
   barrelPos: {fileID: 6209463699220294134}
@@ -27136,7 +27135,7 @@ Transform:
   m_GameObject: {fileID: 5525634316155535322}
   serializedVersion: 2
   m_LocalRotation: {x: 0.14608625, y: 0.68394345, z: 0.14297777, w: 0.70031244}
-  m_LocalPosition: {x: 1.32, y: 0.058, z: -0.002}
+  m_LocalPosition: {x: 1.319, y: 0.029, z: 0.025}
   m_LocalScale: {x: 1.0392, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -27520,9 +27519,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   recoilFollowPos: {fileID: 1564266115}
-  kickBackAmount: -1
+  kickBackAmount: -1.5
   kickBackSpeed: 10
-  returnSpeed: 20
+  returnSpeed: 5
 --- !u!114 &7054735749421604076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27536,9 +27535,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defualtBloomAngle: 1
-  walkBloomMultiplier: 1.5
-  sprintBloomMultiplier: 2
-  adsBloomMultiplier: 0.5
+  walkBloomMultiplier: 2
+  adsBloomMultiplier: 0
 --- !u!4 &7078722786571516332
 Transform:
   m_ObjectHideFlags: 0
@@ -29037,7 +29035,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8700783697797755319
 Transform:
   m_ObjectHideFlags: 0
