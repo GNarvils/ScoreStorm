@@ -10,8 +10,8 @@ public class CharacterMovement : MonoBehaviour
     public IdleS idle = new IdleS();
     public WalkS walk = new WalkS();
     public SprintS sprint = new SprintS();
-
     public PlayerHealth health;
+    public KeyBinds key;
     public CharacterController controller;
     public float speed;
     public float walkSpeed = 3, walkBackwardsS = 2;
@@ -31,6 +31,7 @@ public class CharacterMovement : MonoBehaviour
     void Start() {
         SwitchState(idle);
         health = GetComponent<PlayerHealth>();
+        key = GetComponentInParent<KeyBinds>();
     }
     void Update()
     {
@@ -55,13 +56,13 @@ public class CharacterMovement : MonoBehaviour
         hzInput = 0f;
         vInput = 0f;
 
-        if (Input.GetKey(KeyCode.A)) 
+        if (Input.GetKey(KeyBinds.manager.left)) 
             hzInput -= 1f;
-        if (Input.GetKey(KeyCode.D)) 
+        if (Input.GetKey(KeyBinds.manager.right)) 
             hzInput += 1f;
-        if (Input.GetKey(KeyCode.W)) 
+        if (Input.GetKey(KeyBinds.manager.forward)) 
             vInput += 1f;
-        if (Input.GetKey(KeyCode.S)) 
+        if (Input.GetKey(KeyBinds.manager.backward)) 
             vInput -= 1f;
 
         if (hzInput != 0f || vInput != 0f)

@@ -17,16 +17,16 @@ public class DefaultState : ActionBaseState
 
         if (!actions.health.isDead)
         {
-            if (Input.GetKeyDown(KeyCode.R) && CanReload(actions))
+            if (Input.GetKeyDown(KeyBinds.manager.reload) && CanReload(actions))
             {
                 actions.SwitchState(actions.Reload);
             }
-            else if (Input.GetKeyDown(KeyCode.Q))
+            else if (Input.GetKeyDown(KeyBinds.manager.swap))
             {
                 actions.Default.scrollDirection = -1;
                 actions.SwitchState(actions.Swap);
             }
-            else if (Input.GetKeyDown(KeyCode.Space))
+            else if (Input.GetKeyDown(KeyBinds.manager.guard))
             {
                 actions.SwitchState(actions.Guard);
             }

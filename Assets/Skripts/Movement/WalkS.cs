@@ -11,7 +11,7 @@ public class WalkS : BaseState
 
     public override void UpdateState(CharacterMovement movement)
     {
-        if (Input.GetKey(KeyCode.LeftShift)) ExitState(movement, movement.sprint);
+        if (Input.GetKey(KeyBinds.manager.run)) ExitState(movement, movement.sprint);
         else if(movement.direction.magnitude<0.1f) ExitState(movement, movement.idle);
 
         if (movement.vInput < 0) movement.speed = movement.walkBackwardsS;
