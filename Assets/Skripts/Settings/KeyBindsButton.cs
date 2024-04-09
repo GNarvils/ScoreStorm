@@ -11,18 +11,16 @@ public class KeyBindsButton : MonoBehaviour
     TMP_Text buttonText;
     KeyCode newKey;
     bool waitingKey;
+    KeyBinds keyBindsManager;
+
     void Start()
     {
-        // Find the KeyBinds GameObject directly under the Canvas
         keybinds = transform.Find("KeyBinds");
         waitingKey = false;
+        keyBindsManager = KeyBinds.manager;
 
-        if (keybinds != null)
-        {
-            // Loop through child elements only if keybinds is not null
             for (int i = 0; i < 9; i++)
             {
-                // Check if the child exists
                 Transform child = keybinds.Find(keybinds.GetChild(i).name);
 
                 if (child != null)
@@ -30,123 +28,137 @@ public class KeyBindsButton : MonoBehaviour
                     TMP_Text textComponent = child.GetComponentInChildren<TMP_Text>();
                     if (textComponent != null)
                     {
-                        switch (child.name)
-                        {
-                            case "Forward":
-                                textComponent.text = KeyBinds.manager.forward.ToString();
-                                break;
-                            case "Backward":
-                                textComponent.text = KeyBinds.manager.backward.ToString();
-                                break;
-                            case "Left":
-                                textComponent.text = KeyBinds.manager.left.ToString();
-                                break;
-                            case "Right":
-                                textComponent.text = KeyBinds.manager.right.ToString();
-                                break;
-                            case "Run":
-                                textComponent.text = KeyBinds.manager.run.ToString();
-                                break;
-                            case "Reload":
-                                textComponent.text = KeyBinds.manager.reload.ToString();
-                                break;
-                            case "Guard":
-                                textComponent.text = KeyBinds.manager.guard.ToString();
-                                break;
-                            case "Interact":
-                                textComponent.text = KeyBinds.manager.interact.ToString();
-                                break;
-                            case "Swap":
-                                textComponent.text = KeyBinds.manager.swap.ToString();
-                                break;
-                        }
+                        SetKeyText(child.name, textComponent);
                     }
                 }
             }
-        }
-        else
-        {
-            Debug.LogError("KeyBinds GameObject not found!");
-        }
     }
 
+    void SetKeyText(string actionName, TMP_Text textComponent)
+    {
+        switch (actionName)
+        {
+            case "Forward":
+                textComponent.text = keyBindsManager.forward.ToString();
+                break;
+            case "Backward":
+                textComponent.text = keyBindsManager.backward.ToString();
+                break;
+            case "Left":
+                textComponent.text = keyBindsManager.left.ToString();
+                break;
+            case "Right":
+                textComponent.text = keyBindsManager.right.ToString();
+                break;
+            case "Run":
+                textComponent.text = keyBindsManager.run.ToString();
+                break;
+            case "Reload":
+                textComponent.text = keyBindsManager.reload.ToString();
+                break;
+            case "Guard":
+                textComponent.text = keyBindsManager.guard.ToString();
+                break;
+            case "Interact":
+                textComponent.text = keyBindsManager.interact.ToString();
+                break;
+            case "Swap":
+                textComponent.text = keyBindsManager.swap.ToString();
+                break;
+        }
+    }
 
     void OnGUI()
     {
         keyEvent = Event.current;
-        if (keyEvent.isKey && waitingKey) {
+        if (keyEvent.isKey && waitingKey)
+        {
             newKey = keyEvent.keyCode;
             waitingKey = false;
+            StartCoroutine(AssignKey());
         }
     }
 
-    public void StartAssignment(string keyName) {
+    public void StartAssignment(string keyName)
+    {
         if (!waitingKey)
-            StartCoroutine(AssignKey(keyName));
+            StartCoroutine(AssignKey());
     }
 
-    public void SendText(TMP_Text text) {
+    public void SendText(TMP_Text text)
+    {
         buttonText = text;
     }
 
-    IEnumerator WaitForKey() {
+    IEnumerator WaitForKey()
+    {
         while (!keyEvent.isKey)
             yield return null;
     }
 
-    public IEnumerator AssignKey(string keyName)
+    IEnumerator AssignKey()
     {
         waitingKey = true;
-
         yield return WaitForKey();
 
-        switch (keyName) {
-            case "forward":
-                KeyBinds.manager.forward = newKey;
-                buttonText.text = KeyBinds.manager.forward.ToString();
-                PlayerPrefs.SetString("forwardKey", KeyBinds.manager.forward.ToString());
-                break;
-            case "backward":
-                KeyBinds.manager.backward = newKey;
-                buttonText.text = KeyBinds.manager.backward.ToString();
-                PlayerPrefs.SetString("backwardKey", KeyBinds.manager.backward.ToString());
-                break;
-            case "left":
-                KeyBinds.manager.left = newKey;
-                buttonText.text = KeyBinds.manager.left.ToString();
-                PlayerPrefs.SetString("leftKey", KeyBinds.manager.left.ToString());
-                break;
-            case "right":
-                KeyBinds.manager.right = newKey;
-                buttonText.text = KeyBinds.manager.right.ToString();
-                PlayerPrefs.SetString("rightKey", KeyBinds.manager.right.ToString());
-                break;
-            case "run":
-                KeyBinds.manager.run = newKey;
-                buttonText.text = KeyBinds.manager.run.ToString();
-                PlayerPrefs.SetString("runKey", KeyBinds.manager.run.ToString());
-                break;
-            case "reload":
-                KeyBinds.manager.reload = newKey;
-                buttonText.text = KeyBinds.manager.reload.ToString();
-                PlayerPrefs.SetString("reloadKey", KeyBinds.manager.reload.ToString());
-                break;
-            case "guard":
-                KeyBinds.manager.guard = newKey;
-                buttonText.text = KeyBinds.manager.guard.ToString();
-                PlayerPrefs.SetString("guardKey", KeyBinds.manager.guard.ToString());
-                break;
-            case "interact":
-                KeyBinds.manager.interact = newKey;
-                buttonText.text = KeyBinds.manager.interact.ToString();
-                PlayerPrefs.SetString("interactKey", KeyBinds.manager.interact.ToString());
-                break;
-            case "swap":
-                KeyBinds.manager.swap = newKey;
-                buttonText.text = KeyBinds.manager.swap.ToString();
-                PlayerPrefs.SetString("swapKey", KeyBinds.manager.swap.ToString());
-                break;
+        if (!IsKeyAlreadyUsed(newKey))
+        {
+            AssignKeyToAction(newKey);
         }
-        yield return null;
+        else
+        {
+            AssignKeyToAction(GetDefaultValue(buttonText.transform.parent.name));
+        }
+    }
+
+    bool IsKeyAlreadyUsed(KeyCode key)
+    {
+        foreach (var property in typeof(KeyBinds).GetProperties())
+        {
+            if (property.PropertyType == typeof(KeyCode))
+            {
+                if ((KeyCode)property.GetValue(keyBindsManager) == key)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    void AssignKeyToAction(KeyCode key)
+    {
+        buttonText.text = key.ToString();
+        string actionName = buttonText.transform.parent.name;
+        typeof(KeyBinds).GetProperty(actionName.ToLower()).SetValue(keyBindsManager, key);
+        PlayerPrefs.SetString(actionName.ToLower() + "Key", key.ToString());
+        PlayerPrefs.Save();
+    }
+
+    KeyCode GetDefaultValue(string actionName)
+    {
+        switch (actionName)
+        {
+            case "Forward":
+                return KeyCode.W;
+            case "Backward":
+                return KeyCode.S;
+            case "Left":
+                return KeyCode.A;
+            case "Right":
+                return KeyCode.D;
+            case "Run":
+                return KeyCode.LeftShift;
+            case "Reload":
+                return KeyCode.R;
+            case "Guard":
+                return KeyCode.Space;
+            case "Interact":
+                return KeyCode.E;
+            case "Swap":
+                return KeyCode.Q;
+            default:
+                return KeyCode.None;
+        }
     }
 }

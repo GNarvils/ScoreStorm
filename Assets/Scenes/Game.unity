@@ -28865,13 +28865,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 594563c37233f8947aa7d1bb46481f05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireSpeed: 1
+  fireSpeed: 2
   semiAuto: 1
   bullet: {fileID: 3896639094390242287, guid: 9bb02367aef5ec7498017e85967287d7, type: 3}
   barrelPos: {fileID: 3607485458233571098}
-  bulletVelocity: 150
-  bulletsPerFire: 4
-  damage: 35
+  bulletVelocity: 10000
+  bulletsPerFire: 6
+  damage: 25
   gunShot: {fileID: 8300000, guid: 6dd7024f00606b44eb5884197a66a893, type: 3}
   audioSource: {fileID: 0}
   ammo: {fileID: 0}
