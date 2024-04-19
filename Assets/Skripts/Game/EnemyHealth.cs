@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     public float health;
-    public RagDollManager ragdollManager; 
+    public RagDollManager ragdollManager;
     [HideInInspector] public bool isDead;
     public GameObject head;
 
@@ -17,6 +17,9 @@ public class EnemyHealth : MonoBehaviour
     private Animator animator;
     private Rigidbody rb;
 
+    public AudioClip[] enemySounds;
+    private AudioSource audioSource;
+
     private void Start()
     {
         ragdollManager = GetComponent<RagDollManager>();
@@ -25,6 +28,10 @@ public class EnemyHealth : MonoBehaviour
         gameTime = FindObjectOfType<GameTime>();
         enemyAi = GetComponent<EnemyAi>();
         animator = GetComponent<Animator>();
+
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.spatialBlend = 1f;
+        audioSource.maxDistance = 10f;
 
         // Meklē head objektu 
         if (head == null)
@@ -67,7 +74,7 @@ public class EnemyHealth : MonoBehaviour
             Debug.Log("Headshot!");
             if (isHeadshot && Random.value >= 0.5f) // 50% iespēja ka ir stagger
             {
- 
+
                 enemyAi.Stagger();
             }
 
@@ -91,6 +98,8 @@ public class EnemyHealth : MonoBehaviour
             else
             {
                 Debug.Log("Hit enemy");
+                int rand = Random.Range(6, 8);
+                audioSource.PlayOneShot(enemySounds[rand]);
             }
         }
     }
@@ -102,6 +111,10 @@ public class EnemyHealth : MonoBehaviour
         ragdollManager.TriggerRagdoll();
         isDead = true;
         Debug.Log("Death enemy");
+
+        //
+        int rand = Random.Range(0, 2);
+        audioSource.PlayOneShot(enemySounds[rand]);
 
         //Izsauc combo scriptu
         if (combo != null)
@@ -138,7 +151,7 @@ public class EnemyHealth : MonoBehaviour
     // apstādina kustību tā lai neslīdētu pēc nomiršanas
     void StopEnemyMovement()
     {
-    
+
         if (enemyAi != null && enemyAi.agent != null)
         {
             enemyAi.agent.enabled = false;
@@ -158,5 +171,19 @@ public class EnemyHealth : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         gameObject.SetActive(false);
+    }
+
+    public void EnemySpottedSound()
+    {
+
+        int rand = Random.Range(2, 4);
+        audioSource.PlayOneShot(enemySounds[rand]);
+    }
+
+    public void EnemyAttackSound()
+    {
+
+        int rand = Random.Range(4, 6);
+        audioSource.PlayOneShot(enemySounds[rand]);
     }
 }

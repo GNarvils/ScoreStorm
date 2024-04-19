@@ -31,6 +31,8 @@ public class EnemyAi : MonoBehaviour
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
 
+    private bool spotSoundPlayed = false;
+
     private void Awake()
     {
         GameObject player1Object = GameObject.Find("Player_1");
@@ -82,6 +84,15 @@ public class EnemyAi : MonoBehaviour
             ChasePlayer();
             animator.SetBool("Walk", true);
             animator.SetBool("Attack", false);
+            if (!spotSoundPlayed) 
+            {
+                EnemyHealth enemyHealth = GetComponent<EnemyHealth>();
+                if (enemyHealth != null)
+                {
+                    enemyHealth.EnemySpottedSound();
+                    spotSoundPlayed = true;
+                }
+            }
 
         }
         if (playerInSightRange && playerInAttackRange)
@@ -125,6 +136,13 @@ public class EnemyAi : MonoBehaviour
 
         if (!alreadyAttacked)
         {
+
+            EnemyHealth enemyHealth = GetComponent<EnemyHealth>();
+            if (enemyHealth != null)
+            {
+                enemyHealth.EnemyAttackSound();
+            }
+
             // Trigger the attack animation
             animator.SetTrigger("Attack");
 
