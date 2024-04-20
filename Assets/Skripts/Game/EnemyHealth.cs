@@ -20,8 +20,20 @@ public class EnemyHealth : MonoBehaviour
     public AudioClip[] enemySounds;
     private AudioSource audioSource;
 
+    public EnemySpawn spawn;
+
     private void Start()
     {
+        GameObject enemiesObject = GameObject.Find("Enemies");
+        if (enemiesObject != null)
+        {
+            spawn = enemiesObject.GetComponent<EnemySpawn>();
+        }
+        else
+        {
+            Debug.LogError("Enemies game object not found!");
+        }
+
         ragdollManager = GetComponent<RagDollManager>();
         playerScore = FindObjectOfType<Score>();
         combo = FindObjectOfType<Combo>();
@@ -110,7 +122,7 @@ public class EnemyHealth : MonoBehaviour
         // Trigger ragdoll
         ragdollManager.TriggerRagdoll();
         isDead = true;
-        Debug.Log("Death enemy");
+        Debug.Log("Dead enemy");
 
         //
         int rand = Random.Range(0, 2);
@@ -146,7 +158,7 @@ public class EnemyHealth : MonoBehaviour
             animator.enabled = false;
         }
         StopEnemyMovement();
-        StartCoroutine(HideAfterDelay(5f));
+        StartCoroutine(DestroyAfterDelay(5f));
     }
     // apstādina kustību tā lai neslīdētu pēc nomiršanas
     void StopEnemyMovement()
@@ -167,10 +179,12 @@ public class EnemyHealth : MonoBehaviour
     }
 
     // Paslēpj enemy 5 sekundes pēc nomiršanas
-    IEnumerator HideAfterDelay(float delay)
+    IEnumerator DestroyAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        gameObject.SetActive(false);
+        Destroy(gameObject);
+        Debug.Log("Enemy destroyed");
+        spawn.currentEnemyCount = spawn.currentEnemyCount - 1;
     }
 
     public void EnemySpottedSound()

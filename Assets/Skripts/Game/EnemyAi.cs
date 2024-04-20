@@ -51,6 +51,9 @@ public class EnemyAi : MonoBehaviour
             Debug.LogError("Neither Player_1 nor Player_2 found in the scene!");
         }
         agent = GetComponent<NavMeshAgent>();
+
+        agent.speed = Random.Range(1f, 5f);
+        
     }
 
     private void Update()

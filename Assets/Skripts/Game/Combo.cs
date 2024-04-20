@@ -14,6 +14,7 @@ public class Combo : MonoBehaviour
     private int comboMultiplier;
     private Coroutine flashingCoroutine;
 
+
     void Start()
     {
         playerScore = FindObjectOfType<Score>();
