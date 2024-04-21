@@ -112,6 +112,8 @@ public class EnemyHealth : MonoBehaviour
                 Debug.Log("Hit enemy");
                 int rand = Random.Range(6, 8);
                 audioSource.PlayOneShot(enemySounds[rand]);
+                enemyAi.hasBeenHit = true;
+
             }
         }
     }

@@ -33,6 +33,9 @@ public class EnemyAi : MonoBehaviour
 
     private bool spotSoundPlayed = false;
 
+    public bool hasBeenHit = false;
+
+
     private void Awake()
     {
         GameObject player1Object = GameObject.Find("Player_1");
@@ -53,7 +56,7 @@ public class EnemyAi : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
 
         agent.speed = Random.Range(1f, 5f);
-        
+
     }
 
     private void Update()
@@ -76,13 +79,13 @@ public class EnemyAi : MonoBehaviour
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if (!playerInSightRange && !playerInAttackRange)
+        if (!playerInSightRange && !playerInAttackRange || !playerInAttackRange && !hasBeenHit)
         {
             Patroling();
             animator.SetBool("Walk", true);
             animator.SetBool("Attack", false);
         }
-        if (playerInSightRange && !playerInAttackRange)
+        if (playerInSightRange && !playerInAttackRange || !playerInAttackRange && hasBeenHit)
         {
             ChasePlayer();
             animator.SetBool("Walk", true);
@@ -98,7 +101,7 @@ public class EnemyAi : MonoBehaviour
             }
 
         }
-        if (playerInSightRange && playerInAttackRange)
+        if (playerInSightRange && playerInAttackRange || hasBeenHit && playerInAttackRange)
         {
             AttackPlayer();
             animator.SetBool("Walk", false);
@@ -208,4 +211,6 @@ public class EnemyAi : MonoBehaviour
         animator.SetBool("Attack", false);
         animator.SetBool("Reaction", false);
     }
+
+
 }
