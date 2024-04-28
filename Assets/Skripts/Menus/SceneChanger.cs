@@ -20,6 +20,12 @@ public class SceneChanger : MonoBehaviour
     }
     public void doExitGame()
     {
+        StartCoroutine(ExitAfterDelay(3f)); 
+    }
+
+    private IEnumerator ExitAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
         Application.Quit();
     }
     public void Game()
