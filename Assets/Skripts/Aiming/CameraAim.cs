@@ -37,6 +37,8 @@ public class CameraAim : MonoBehaviour
         vCam = GetComponentInChildren<CinemachineVirtualCamera>();
         Fov = vCam.m_Lens.FieldOfView;
         SwitchState(Hip);
+        sensitivity = PlayerPrefs.GetFloat("Sensitivity", 1f);
+
     }
     void Update()
     {
