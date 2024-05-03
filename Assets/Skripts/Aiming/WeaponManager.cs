@@ -54,7 +54,6 @@ public class WeaponManager : MonoBehaviour
             recoil = GetComponent<Recoil>();
             audioSource = GetComponent<AudioSource>();
             ammo = GetComponent<WPAmmo>();
-            recoil.recoilFollowPos = weaponClass.recoilFollowPos;
         }
         weaponClass.SetCurrentWeapon(this);
     }

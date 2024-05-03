@@ -20,7 +20,6 @@ public class KeyBinds : MonoBehaviour
     void Awake()
     {
         if (manager == null) { 
-            DontDestroyOnLoad(gameObject);
             manager = this;
         } 
         else if (manager != this) { 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class PreGame : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
@@ -94,6 +95,7 @@ public class PreGame : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
         Debug.Log("Level 1 selected.");
         playerSelection.SetActive(false);
         levelSelection.SetActive(false);
+        SceneManager.LoadScene("Game", LoadSceneMode.Single);
     }
     public void SelectLevel2()
     {
@@ -102,5 +104,6 @@ public class PreGame : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
         Debug.Log("Level 2 selected.");
         playerSelection.SetActive(false);
         levelSelection.SetActive(false);
+        SceneManager.LoadScene("Game", LoadSceneMode.Single);
     }
 }
