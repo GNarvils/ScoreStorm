@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -8,32 +8,28 @@ public class GameTime : MonoBehaviour
 {
     public TMP_Text timeText;
     public float timer = 120f;
-    private PlayerHealth playerHealth;
+    public PlayerHealth playerHealth;
     public GameObject level1;
     public GameObject level2;
     public GameObject player1;
     public GameObject player2;
+    public GameObject deadPanel;
+    public TMP_Text deathT;
     void Start()
     {
-        
-        playerHealth = FindObjectOfType<PlayerHealth>();
-
-        if (playerHealth == null)
-        {
-            Debug.LogError("PlayerHealth script not found!.");
-        }
-
         int selectedPlayer = PlayerPrefs.GetInt("SelectedPlayer", 1);
 
         if (selectedPlayer == 1)
         {
             player1.SetActive(true);
             player2.SetActive(false);
+            playerHealth = player1.GetComponent<PlayerHealth>();
         }
         else if (selectedPlayer == 2)
         {
             player1.SetActive(false);
             player2.SetActive(true);
+            playerHealth = player2.GetComponent<PlayerHealth>();
         }
 
         int selectedLevel = PlayerPrefs.GetInt("SelectedLevel", 1);
@@ -47,6 +43,16 @@ public class GameTime : MonoBehaviour
         {
             level1.SetActive(false);
             level2.SetActive(true);
+        }
+
+        deadPanel = GameObject.Find("DeadPanel");
+        if (deadPanel == null)
+        {
+            Debug.LogError("Panelis nēatrasts");
+        }
+        else
+        {
+            deadPanel.SetActive(false);
         }
     }
 
@@ -71,6 +77,7 @@ public class GameTime : MonoBehaviour
             if (playerHealth != null)
             {
                 playerHealth.Die();
+                StartCoroutine(ShowDeadPanel(4f));
             }
         }
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -82,5 +89,12 @@ public class GameTime : MonoBehaviour
     public void AddTime(float timeToAdd)
     {
         timer += timeToAdd;
+    }
+
+    IEnumerator ShowDeadPanel(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        deadPanel.SetActive(true);
+        deathT.text = "Laiks ir beidzies!";
     }
 }

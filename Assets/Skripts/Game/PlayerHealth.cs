@@ -9,6 +9,16 @@ public class PlayerHealth : MonoBehaviour
     public bool isDead = false;
     public Image healthBar;
     public ActionStateManager actions;
+    public GameTime time;
+
+    private void Start()
+    {
+        time = FindObjectOfType<GameTime>();
+        if (time == null)
+        {
+            Debug.LogError("GameTime skripts nav ainā!");
+        }
+    }
     void Update()
     {
         if (!isDead && IsPlayerDead())
@@ -31,6 +41,7 @@ public class PlayerHealth : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         actions.SwitchState(actions.Death);
+        StartCoroutine(ShowDeadPanel(4f));
 
     }
 
@@ -65,5 +76,12 @@ public class PlayerHealth : MonoBehaviour
             healthBar.fillAmount = (float)playerHealth / maxPlayerHealth;
             Debug.Log("Player healed for " + healAmount + " health. Current health: " + playerHealth);
         }
+    }
+
+    IEnumerator ShowDeadPanel(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        time.deadPanel.SetActive(true);
+        time.deathT.text = "Jūs esat miruši!";
     }
 }
