@@ -23,15 +23,31 @@ public class ActionStateManager : MonoBehaviour
 
     public MultiAimConstraint rHandAim;
     public TwoBoneIKConstraint lHandIK;
+    public GameTime gameTime;
     void Start()
     {
         key = GetComponentInParent<Transform>().parent.GetComponentInParent<KeyBinds>();
         health = GetComponentInParent<PlayerHealth>();
         SwitchState(Default);
+        GameObject uiGameObject = GameObject.Find("UI");
+        if (uiGameObject != null)
+        {
+            gameTime = uiGameObject.GetComponent<GameTime>();
+            if (gameTime == null)
+            {
+                Debug.LogError("GameTime skripts nav atrasts");
+            }
+        }
+        else
+        {
+            Debug.LogError("UI GameObject nav atrasts.");
+        }
     }
     void Update()
     {
+        if (gameTime.gameIsOver) return;
         currentState.UpdateState(this);
+
     }
 
     public void SwitchState(ActionBaseState state)

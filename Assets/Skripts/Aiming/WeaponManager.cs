@@ -34,6 +34,7 @@ public class WeaponManager : MonoBehaviour
 
     public Transform leftHandTarget, leftHandHint;
     WeaponClassManager weaponClass;
+    public GameTime gameTime;
     void Start()
     {
         aim = GetComponentInParent<CameraAim>();
@@ -44,6 +45,20 @@ public class WeaponManager : MonoBehaviour
         lightIntensity = muzzleLight.intensity;
         muzzleLight.intensity = 0;
         fireRateTime = fireSpeed;
+
+        GameObject uiGameObject = GameObject.Find("UI");
+        if (uiGameObject != null)
+        {
+            gameTime = uiGameObject.GetComponent<GameTime>();
+            if (gameTime == null)
+            {
+                Debug.LogError("GameTime skripts nav atrasts");
+            }
+        }
+        else
+        {
+            Debug.LogError("UI GameObject nav atrasts.");
+        }
     }
 
     private void OnEnable()
@@ -75,6 +90,7 @@ public class WeaponManager : MonoBehaviour
         if (actions.currentState == actions.Reaction) return false;
         if (actions.currentState == actions.Death) return false;
         if (aim.currentState == aim.Hip) return false;
+        if (gameTime.gameIsOver) return false;
         if (semiAuto && Input.GetKeyDown(KeyCode.Mouse0)) return true;
         if (!semiAuto && Input.GetKey(KeyCode.Mouse0)) return true;
         return false;

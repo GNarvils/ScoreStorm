@@ -7,19 +7,20 @@ public class EnemySpawn : MonoBehaviour
 {
     public GameObject enemyBasic; //Parastais pretinieks
     public Transform player; // Playeris
-    public int maxEnemies = 150; // max limits pretiniekiem
+    public int maxEnemies = 150; // Limits pretiniekiem
     public float spawnRadius = 100f; // Rādius kur viņi var parādīties
     public int initialSpawnCount = 10; // 10 sākumā parādās
 
     public int currentEnemyCount = 0; // tagadējošais pretinieku sakits
-    public int totalEnemyCount = 0;
+    public int totalEnemyCount = 0; //Kopēja pretinieku skaits
+    public int killedEnemy = 0;
 
-
+    public GameTime gameTime;
     private void Awake()
     {
         GameObject player1Object = GameObject.Find("Player_1");
         GameObject player2Object = GameObject.Find("Player_2");
-
+      
         if (player1Object != null)
         {
             player = player1Object.transform;
@@ -37,6 +38,16 @@ public class EnemySpawn : MonoBehaviour
     }
     void Start()
     {
+        GameObject UI = GameObject.Find("UI");
+        if (UI != null)
+        {
+            gameTime = UI.GetComponent<GameTime>();
+            if (gameTime == null)
+            {
+                Debug.LogError("GameTime script not found!");
+            }
+        }
+
         for (int i = 0; i < initialSpawnCount; i++)
         {
             SpawnEnemy();
@@ -45,6 +56,11 @@ public class EnemySpawn : MonoBehaviour
 
     void Update()
     {
+        if (killedEnemy == maxEnemies)
+        {
+            gameTime.gameIsOver = true;
+        }
+
         if (totalEnemyCount < maxEnemies)
         {
             int enemiesToSpawn = initialSpawnCount - currentEnemyCount;

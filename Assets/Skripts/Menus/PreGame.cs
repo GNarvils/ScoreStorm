@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class PreGame : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
@@ -23,6 +24,10 @@ public class PreGame : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     private Vector3 normalScale2; 
     private Vector3 normalScale3;
     private Vector3 normalScale4;
+    public TMP_Text p1l1Score;
+    public TMP_Text p2l1Score;
+    public TMP_Text p1l2Score;
+    public TMP_Text p2l2Score;
 
     void Start()
     {
@@ -32,6 +37,10 @@ public class PreGame : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
         normalScale2 = playerImage2.transform.localScale;
         normalScale3 = levelImage1.transform.localScale;
         normalScale4 = levelImage2.transform.localScale;
+        p1l1Score.text = PlayerPrefs.GetInt("Score_Player_1_Level_1", 0).ToString();
+        p2l1Score.text = PlayerPrefs.GetInt("Score_Player_2_Level_1", 0).ToString();
+        p1l2Score.text = PlayerPrefs.GetInt("Score_Player_1_Level_2", 0).ToString();
+        p2l2Score.text = PlayerPrefs.GetInt("Score_Player_2_Level_2", 0).ToString();
     }
 
     public void OnPointerEnter(PointerEventData eventData)

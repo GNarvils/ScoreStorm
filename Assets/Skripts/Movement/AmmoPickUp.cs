@@ -5,7 +5,8 @@ using UnityEngine;
 public class AmmoPickUp : MonoBehaviour, IInteractable
 {
 
-    public WPAmmo weaponAmmo;
+    public WPAmmo weaponAmmo1;
+    public WPAmmo weaponAmmo2;
     private Score playerScore;
 
     private void Start()
@@ -15,11 +16,12 @@ public class AmmoPickUp : MonoBehaviour, IInteractable
     //Kad pieskaras ar ammo box
     public void Interact()
     {
-        if (weaponAmmo != null)
+        if (weaponAmmo1 != null)
         {
-            weaponAmmo.extraAmmo += 10;
+            weaponAmmo1.extraAmmo += 15;
+            weaponAmmo2.extraAmmo += 15;
 
-            Debug.Log("Picked up 10 extra ammo.");
+            Debug.Log("Picked up ammo.");
             Destroy(gameObject);
             if (playerScore != null)
             {

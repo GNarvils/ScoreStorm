@@ -1615,6 +1615,10 @@ MonoBehaviour:
   levelImage1: {fileID: 1818972411}
   levelImage2: {fileID: 1425484351}
   levelSelection: {fileID: 1221878067}
+  p1l1Score: {fileID: 898817679}
+  p2l1Score: {fileID: 229300679}
+  p1l2Score: {fileID: 190596169}
+  p2l2Score: {fileID: 1834531013}
 --- !u!1 &1521764130
 GameObject:
   m_ObjectHideFlags: 0

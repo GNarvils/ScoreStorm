@@ -161,6 +161,7 @@ public class EnemyHealth : MonoBehaviour
         }
         StopEnemyMovement();
         StartCoroutine(DestroyAfterDelay(5f));
+        spawn.killedEnemy = spawn.killedEnemy + 1;
     }
     // apstādina kustību tā lai neslīdētu pēc nomiršanas
     void StopEnemyMovement()

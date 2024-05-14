@@ -27,15 +27,29 @@ public class CharacterMovement : MonoBehaviour
     Vector3 velocity;
 
     public Animator anim;
+    public GameTime gameTime;
 
     void Start() {
         SwitchState(idle);
         health = GetComponent<PlayerHealth>();
         key = GetComponentInParent<KeyBinds>();
+        GameObject uiGameObject = GameObject.Find("UI");
+        if (uiGameObject != null)
+        {
+            gameTime = uiGameObject.GetComponent<GameTime>();
+            if (gameTime == null)
+            {
+                Debug.LogError("GameTime skripts nav atrasts");
+            }
+        }
+        else
+        {
+            Debug.LogError("UI GameObject nav atrasts.");
+        }
     }
     void Update()
     {
-        if (!health.isDead)
+        if (!health.isDead && !gameTime.gameIsOver)
         {
             GetDataMove();
             Gravity();
@@ -44,6 +58,10 @@ public class CharacterMovement : MonoBehaviour
             anim.SetFloat("vertical", vInput);
 
             currentState.UpdateState(this);
+        }
+        else {
+            anim.SetFloat("horizontal", 0f);
+            anim.SetFloat("vertical", 0f);
         }
     }
 
@@ -82,9 +100,5 @@ public class CharacterMovement : MonoBehaviour
         else if (velocity.y < 0) velocity.y = -2;
 
         controller.Move(velocity * Time.deltaTime);
-    }
-    private void OnDrawGizmo() {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(ballPos, controller.radius - 0.05f);
     }
 }

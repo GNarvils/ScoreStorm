@@ -28,6 +28,7 @@ public class CameraAim : MonoBehaviour
     [SerializeField] LayerMask aimMask;
 
     public PlayerHealth health;
+    public GameTime gameTime;
 
 
     void Start()
@@ -39,10 +40,25 @@ public class CameraAim : MonoBehaviour
         SwitchState(Hip);
         sensitivity = PlayerPrefs.GetFloat("Sensitivity", 1f);
 
+        GameObject uiGameObject = GameObject.Find("UI");
+        if (uiGameObject != null)
+        {
+            gameTime = uiGameObject.GetComponent<GameTime>();
+            if (gameTime == null)
+            {
+                Debug.LogError("GameTime skripts nav atrasts");
+            }
+        }
+        else
+        {
+            Debug.LogError("UI GameObject nav atrasts.");
+        }
+
     }
     void Update()
     {
-        if (!health.isDead) { 
+        if (!health.isDead && !gameTime.gameIsOver)
+        { 
         xAxis += Input.GetAxisRaw("Mouse X") * sensitivity;
         yAxis += Input.GetAxisRaw("Mouse Y") * sensitivity;
         yAxis = Mathf.Clamp(yAxis, -80, 80);
