@@ -18,13 +18,13 @@ public class SliderOptions : MonoBehaviour
             PlayerPrefs.Save();
         }
 
-        if (!PlayerPrefs.HasKey("Music") || PlayerPrefs.GetFloat("Music") == 0f)
+        if (!PlayerPrefs.HasKey("Music") || PlayerPrefs.GetFloat("Music") < 0f)
         {
             PlayerPrefs.SetFloat("Music", 1f);
             PlayerPrefs.Save();
         }
 
-        if (!PlayerPrefs.HasKey("Sound") || PlayerPrefs.GetFloat("Sound") == 0f)
+        if (!PlayerPrefs.HasKey("Sound") || PlayerPrefs.GetFloat("Sound") < 0f)
         {
             PlayerPrefs.SetFloat("Sound", 1f);
             PlayerPrefs.Save();

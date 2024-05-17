@@ -59,6 +59,16 @@ public class WeaponManager : MonoBehaviour
         {
             Debug.LogError("UI GameObject nav atrasts.");
         }
+
+        if (PlayerPrefs.HasKey("Sound"))
+        {
+            float soundVolume = PlayerPrefs.GetFloat("Sound");
+            audioSource.volume = soundVolume;
+        }
+        else
+        {
+            Debug.LogWarning("PlayerPrefs key 'Sound' not found. Using default volume.");
+        }
     }
 
     private void OnEnable()

@@ -18,7 +18,7 @@ public class EnemyHealth : MonoBehaviour
     private Rigidbody rb;
 
     public AudioClip[] enemySounds;
-    private AudioSource audioSource;
+    public AudioSource audioSource;
 
     public EnemySpawn spawn;
 
@@ -44,6 +44,17 @@ public class EnemyHealth : MonoBehaviour
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.spatialBlend = 1f;
         audioSource.maxDistance = 10f;
+
+        if (PlayerPrefs.HasKey("Sound"))
+        {
+            float soundVolume = PlayerPrefs.GetFloat("Sound");
+            Debug.Log("Retrieved Sound volume: " + soundVolume); // Debug log
+            audioSource.volume = soundVolume;
+        }
+        else
+        {
+            Debug.LogWarning("PlayerPrefs key 'Sound' not found. Using default volume.");
+        }
 
         // Meklē head objektu 
         if (head == null)
@@ -83,7 +94,6 @@ public class EnemyHealth : MonoBehaviour
         if (health > 0)
         {
             // Pārbauda vai ir head shots
-            Debug.Log("Headshot!");
             if (isHeadshot && Random.value >= 0.5f) // 50% iespēja ka ir stagger
             {
 
@@ -97,6 +107,7 @@ public class EnemyHealth : MonoBehaviour
             }
             else
             {
+                Debug.Log("Headshot!");
                 damageMultiplier = 2f;
             }
 
@@ -113,7 +124,6 @@ public class EnemyHealth : MonoBehaviour
                 int rand = Random.Range(6, 8);
                 audioSource.PlayOneShot(enemySounds[rand]);
                 enemyAi.hasBeenHit = true;
-
             }
         }
     }
@@ -126,7 +136,6 @@ public class EnemyHealth : MonoBehaviour
         isDead = true;
         Debug.Log("Dead enemy");
 
-        //
         int rand = Random.Range(0, 2);
         audioSource.PlayOneShot(enemySounds[rand]);
 
@@ -163,10 +172,10 @@ public class EnemyHealth : MonoBehaviour
         StartCoroutine(DestroyAfterDelay(5f));
         spawn.killedEnemy = spawn.killedEnemy + 1;
     }
+
     // apstādina kustību tā lai neslīdētu pēc nomiršanas
     void StopEnemyMovement()
     {
-
         if (enemyAi != null && enemyAi.agent != null)
         {
             enemyAi.agent.enabled = false;
@@ -192,14 +201,12 @@ public class EnemyHealth : MonoBehaviour
 
     public void EnemySpottedSound()
     {
-
         int rand = Random.Range(2, 4);
         audioSource.PlayOneShot(enemySounds[rand]);
     }
 
     public void EnemyAttackSound()
     {
-
         int rand = Random.Range(4, 6);
         audioSource.PlayOneShot(enemySounds[rand]);
     }
