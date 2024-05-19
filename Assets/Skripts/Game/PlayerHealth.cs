@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,7 +11,7 @@ public class PlayerHealth : MonoBehaviour
     public Image healthBar;
     public ActionStateManager actions;
     public GameTime time;
-
+    public event Action OnPlayerDeath;
     private void Start()
     {
         time = FindObjectOfType<GameTime>();
@@ -42,7 +43,7 @@ public class PlayerHealth : MonoBehaviour
         Cursor.visible = true;
         actions.SwitchState(actions.Death);
         StartCoroutine(ShowDeadPanel(4f));
-
+        OnPlayerDeath?.Invoke();
     }
 
     // Ļauj lietotājam ņemt damage
