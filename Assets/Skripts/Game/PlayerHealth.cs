@@ -83,6 +83,7 @@ public class PlayerHealth : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         time.deadPanel.SetActive(true);
-        time.deathT.text = "Jūs esat miruši!";
+        time.deathT.SetActive(true);
+        time.timeT.SetActive(false);
     }
 }

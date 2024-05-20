@@ -15,7 +15,8 @@ public class GameTime : MonoBehaviour
     public GameObject player2;
     public GameObject deadPanel;
     public GameObject victoryPanel;
-    public TMP_Text deathT;
+    public GameObject deathT;
+    public GameObject timeT;
     public bool gameIsOver = false;
     public GameObject player1Image;
     public GameObject player2Image;
@@ -148,7 +149,8 @@ public class GameTime : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         deadPanel.SetActive(true);
-        deathT.text = "Laiks ir beidzies!";
+        deathT.SetActive(false);
+        timeT.SetActive(true);
     }
     void ShowVictoryPanel()
     {
