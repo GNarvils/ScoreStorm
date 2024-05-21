@@ -21,6 +21,7 @@ public class EnemyHealth : MonoBehaviour
     public AudioSource audioSource;
 
     public EnemySpawn spawn;
+    public int scoreValue = 100;
 
     private void Start()
     {
@@ -148,7 +149,7 @@ public class EnemyHealth : MonoBehaviour
         // Pievieno Score
         if (playerScore != null)
         {
-            playerScore.AddToScore(100);
+            playerScore.AddToScore(scoreValue);
         }
 
         // Pievieno laiku

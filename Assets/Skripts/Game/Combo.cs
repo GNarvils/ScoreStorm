@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+using UnityEngine.UI;
+
 public class Combo : MonoBehaviour
 {
-    private Score playerScore;
+
     private int enemiesKilledInCombo;
     private bool isComboActive;
     private float comboTimer;
     public GameObject comboTextObject;
     public TextMeshProUGUI comboCountText;
-    private int comboMultiplier;
+    public int comboMultiplier;
+    public Image comboMeter;
+    public float maxComboTime = 10f;
+
 
 
     void Start()
     {
-        playerScore = FindObjectOfType<Score>();
         ResetCombo();
         UpdateComboUI();
     }
@@ -26,6 +30,7 @@ public class Combo : MonoBehaviour
         if (isComboActive)
         {
             comboTimer -= Time.deltaTime;
+            UpdateComboMeter();
             if (comboTimer <= 0)
             {
                 ResetCombo();
@@ -46,6 +51,7 @@ public class Combo : MonoBehaviour
         }
 
         UpdateComboUI();
+        UpdateComboMeter();
     }
 
     //Sāk vai atjaunina combo
@@ -62,6 +68,7 @@ public class Combo : MonoBehaviour
         isComboActive = false;
         enemiesKilledInCombo = 0;
         comboTextObject.SetActive(false);
+        comboMeter.fillAmount = 0;
     }
 
     // Dabū multiplier no cik enemy ir killed
@@ -80,5 +87,10 @@ public class Combo : MonoBehaviour
     private void UpdateComboUI()
     {
         comboCountText.text = enemiesKilledInCombo.ToString();
+    }
+
+    private void UpdateComboMeter()
+    {
+        comboMeter.fillAmount = comboTimer / maxComboTime;
     }
 }

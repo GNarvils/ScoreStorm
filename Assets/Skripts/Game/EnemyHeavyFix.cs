@@ -5,6 +5,7 @@ public class EnemyHeavyFix : MonoBehaviour
 {
     private NavMeshAgent agent;
     private PlayerHealth playerHealth;
+    public AudioSource audioSource;
 
     void Start()
     {
@@ -27,11 +28,21 @@ public class EnemyHeavyFix : MonoBehaviour
         {
             Debug.LogError("Nevar atrast Player_1 vai Player_2 GameObjektu");
         }
+
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            Debug.LogError("AudioSource nav atrasts.");
+        }
+        else {
+            audioSource.pitch = 1f;
+        }
     }
 
     void HandlePlayerDeath()
     {
         agent.baseOffset = 0;
+
     }
 
     void OnDestroy()
