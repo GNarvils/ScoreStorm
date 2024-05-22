@@ -12,12 +12,31 @@ public class PlayerHealth : MonoBehaviour
     public ActionStateManager actions;
     public GameTime time;
     public event Action OnPlayerDeath;
+
+    public AudioClip[] damageSound;
+    private AudioSource audioSource;
     private void Start()
     {
         time = FindObjectOfType<GameTime>();
         if (time == null)
         {
             Debug.LogError("GameTime skripts nav ainā!");
+        }
+        audioSource = GetComponent<AudioSource>(); 
+        if (audioSource == null)
+        {
+            Debug.LogError("AudioSource nav atrasts!");
+        }
+
+        if (PlayerPrefs.HasKey("Sound"))
+        {
+            float soundVolume = PlayerPrefs.GetFloat("Sound");
+            Debug.Log("Retrieved Player sound volume: " + soundVolume); // Debug log
+            audioSource.volume = soundVolume;
+        }
+        else
+        {
+            Debug.LogWarning("PlayerPrefs key 'Sound' not found. Using default volume.");
         }
     }
     void Update()
@@ -56,6 +75,10 @@ public class PlayerHealth : MonoBehaviour
             {
                 playerHealth = 0;
                 Die();
+                audioSource.PlayOneShot(damageSound[1]);
+            }
+            else {
+                audioSource.PlayOneShot(damageSound[0]);
             }
             healthBar.fillAmount = (float)playerHealth / maxPlayerHealth;
             Debug.Log("Player took " + damage + " damage. Remaining health: " + playerHealth);
