@@ -8861,7 +8861,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
-  m_Pitch: 0.45
+  m_Pitch: 0.7
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -8963,7 +8963,7 @@ MonoBehaviour:
   bulletVelocity: 500
   bulletsPerFire: 1
   damage: 200
-  gunShot: {fileID: 8300000, guid: 6dd7024f00606b44eb5884197a66a893, type: 3}
+  gunShot: {fileID: 8300000, guid: 421e701bac4457948853cdec79a58c31, type: 3}
   audioSource: {fileID: 0}
   ammo: {fileID: 0}
   lightReturnSpeed: 20
@@ -18353,7 +18353,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 401.27176, y: 62.276993}
+  m_AnchoredPosition: {x: 401.27173, y: 62.2771}
   m_SizeDelta: {x: -359.3908, y: 92.3146}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1657451554
@@ -23012,7 +23012,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
-  m_Pitch: 1.5
+  m_Pitch: 2
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -30557,7 +30557,7 @@ MonoBehaviour:
   bulletVelocity: 250
   bulletsPerFire: 6
   damage: 25
-  gunShot: {fileID: 8300000, guid: 6dd7024f00606b44eb5884197a66a893, type: 3}
+  gunShot: {fileID: 8300000, guid: 421e701bac4457948853cdec79a58c31, type: 3}
   audioSource: {fileID: 0}
   ammo: {fileID: 0}
   lightReturnSpeed: 20

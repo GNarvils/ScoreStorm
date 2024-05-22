@@ -35,6 +35,8 @@ public class EnemyAi : MonoBehaviour
 
     public bool hasBeenHit = false;
 
+    public GameObject enemyType;
+
 
     private void Awake()
     {
@@ -54,7 +56,7 @@ public class EnemyAi : MonoBehaviour
             Debug.LogError("Neither Player_1 nor Player_2 found in the scene!");
         }
         agent = GetComponent<NavMeshAgent>();
-
+        enemyType = this.gameObject;
         agent.speed = Random.Range(1f, 5f);
 
     }
