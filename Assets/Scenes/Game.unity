@@ -6272,9 +6272,9 @@ MonoBehaviour:
   enemyBasic: {fileID: 292414417963759419, guid: 319ec333c1039224085d24665c00707a, type: 3}
   enemyHeavy: {fileID: 8284067405425724937, guid: deaeb5a24eda3ce4589ccf0c4d6054ca, type: 3}
   player: {fileID: 0}
-  maxEnemies: 100
+  maxEnemies: 1
   spawnRadius: 50
-  initialSpawnCount: 10
+  initialSpawnCount: 1
   currentEnemyCount: 0
   totalEnemyCount: 0
   killedEnemy: 0
@@ -20624,6 +20624,7 @@ MonoBehaviour:
   victorySound: {fileID: 8300000, guid: 43ce2a49acf057e4f87709ef73ede7ae, type: 3}
   lossSound: {fileID: 8300000, guid: 02c8f03b2f5c1b64c939188de819b510, type: 3}
   audioSource: {fileID: 0}
+  timeIsUp: 0
 --- !u!82 &1896548179
 AudioSource:
   m_ObjectHideFlags: 0

@@ -3584,7 +3584,6 @@ GameObject:
   - component: {fileID: 57942682447694057}
   - component: {fileID: 2784942222030731530}
   - component: {fileID: 8527488673006669927}
-  - component: {fileID: 7663756887655743136}
   m_Layer: 0
   m_Name: EnemyHeavy
   m_TagString: Untagged
@@ -3718,23 +3717,11 @@ MonoBehaviour:
   walkPointRange: 2.5
   timeBetweenAttacks: 2.8
   sightRange: 20
-  attackRange: 1.5
+  attackRange: 2
   playerInSightRange: 0
   playerInAttackRange: 0
   hasBeenHit: 1
---- !u!114 &7663756887655743136
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8284067405425724937}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9aa09985edfd23e46a71b0dddfda1829, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioSource: {fileID: 0}
+  enemyType: {fileID: 0}
 --- !u!1 &8309686154639409695
 GameObject:
   m_ObjectHideFlags: 0
