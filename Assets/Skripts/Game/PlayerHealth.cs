@@ -108,5 +108,6 @@ public class PlayerHealth : MonoBehaviour
         time.deadPanel.SetActive(true);
         time.deathT.SetActive(true);
         time.timeT.SetActive(false);
+        time.PlaySoundEffect(time.lossSound);
     }
 }

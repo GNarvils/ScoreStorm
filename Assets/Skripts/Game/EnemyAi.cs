@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using JetBrains.Annotations;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -40,21 +41,18 @@ public class EnemyAi : MonoBehaviour
 
     private void Awake()
     {
-        GameObject player1Object = GameObject.Find("Player_1");
-        GameObject player2Object = GameObject.Find("Player_2");
+        int selectedPlayer = PlayerPrefs.GetInt("SelectedPlayer", 1); // Default to Player_1 if the preference is not set
+        GameObject selectedPlayerObject = null;
 
-        if (player1Object != null)
+        if (selectedPlayer == 1)
         {
-            player = player1Object.transform;
+            selectedPlayerObject = GameObject.Find("Player_1");
         }
-        else if (player2Object != null)
+        else if (selectedPlayer == 2)
         {
-            player = player2Object.transform;
+            selectedPlayerObject = GameObject.Find("Player_2");
         }
-        else
-        {
-            Debug.LogError("Neither Player_1 nor Player_2 found in the scene!");
-        }
+        player = selectedPlayerObject.transform;
         agent = GetComponent<NavMeshAgent>();
         enemyType = this.gameObject;
         agent.speed = Random.Range(1f, 5f);

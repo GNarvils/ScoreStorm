@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -27,8 +28,13 @@ public class GameTime : MonoBehaviour
     public TMP_Text ranks;
     public Score score;
     public int total = 0;
+    public AudioClip victorySound; 
+    public AudioClip lossSound;   
+    public AudioSource audioSource;
+    public bool timeIsUp = false;
     void Start()
     {
+        timeIsUp = false;
         gameIsOver = false;
         int selectedPlayer = PlayerPrefs.GetInt("SelectedPlayer", 1);
 
@@ -101,6 +107,9 @@ public class GameTime : MonoBehaviour
         {
             victoryPanel.SetActive(false);
         }
+        audioSource = gameObject.GetComponent<AudioSource>(); 
+        float volume = PlayerPrefs.GetFloat("Sound", 1.0f);
+        audioSource.volume = volume;
     }
 
     void Update()
@@ -127,7 +136,8 @@ public class GameTime : MonoBehaviour
 
         if (timer <= 0f && !playerHealth.isDead)
         {
-            Debug.Log("Time's up!");
+            timeIsUp = true;
+            Debug.Log("Laiks beidzies!");
             if (playerHealth != null)
             {
                 playerHealth.Die();
@@ -148,6 +158,7 @@ public class GameTime : MonoBehaviour
     IEnumerator ShowDeadPanel(float delay)
     {
         yield return new WaitForSeconds(delay);
+        PlaySoundEffect(lossSound);
         deadPanel.SetActive(true);
         deathT.SetActive(false);
         timeT.SetActive(true);
@@ -208,6 +219,11 @@ public class GameTime : MonoBehaviour
         }
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        Debug.Log("Victory");
+        Debug.Log("Uzvara");
+        PlaySoundEffect(victorySound);
+    }
+   public void PlaySoundEffect(AudioClip clip)
+    {
+            audioSource.PlayOneShot(clip);    
     }
 }

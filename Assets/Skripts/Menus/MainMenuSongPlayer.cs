@@ -22,8 +22,7 @@ public class MainMenuSongPlayer : MonoBehaviour
         audioSource.loop = true;
         if (PlayerPrefs.HasKey("Music"))
         {
-            float soundVolume = PlayerPrefs.GetFloat("Music");
-            Debug.Log("Mūzikas skaļums: " + soundVolume); 
+            float soundVolume = PlayerPrefs.GetFloat("Music"); 
             audioSource.volume = soundVolume;
         }
         else
@@ -34,7 +33,6 @@ public class MainMenuSongPlayer : MonoBehaviour
         {
             float savedTime = PlayerPrefs.GetFloat("MusicTime");
             audioSource.time = savedTime;
-            Debug.Log("Atsāk mūziku no: " + savedTime);
         }
     }
 
@@ -45,7 +43,6 @@ public class MainMenuSongPlayer : MonoBehaviour
             if (PlayerPrefs.HasKey("Music"))
             {
                 float soundVolume = PlayerPrefs.GetFloat("Music");
-                Debug.Log("Mūzikas skaļums: " + soundVolume);
                 audioSource.volume = soundVolume;
             }
         }
