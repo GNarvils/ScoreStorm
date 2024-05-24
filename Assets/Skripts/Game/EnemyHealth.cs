@@ -42,19 +42,14 @@ public class EnemyHealth : MonoBehaviour
         enemyAi = GetComponent<EnemyAi>();
         animator = GetComponent<Animator>();
 
-        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource = gameObject.GetComponent<AudioSource>();
         audioSource.spatialBlend = 1f;
         audioSource.maxDistance = 10f;
 
         if (PlayerPrefs.HasKey("Sound"))
         {
             float soundVolume = PlayerPrefs.GetFloat("Sound");
-            Debug.Log("Retrieved Sound volume: " + soundVolume); // Debug log
             audioSource.volume = soundVolume;
-        }
-        else
-        {
-            Debug.LogWarning("PlayerPrefs key 'Sound' not found. Using default volume.");
         }
 
         // Meklē head objektu 

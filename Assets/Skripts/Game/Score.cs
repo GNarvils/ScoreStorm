@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -8,6 +7,8 @@ public class Score : MonoBehaviour
     public int totalScore = 0;
     public TextMeshProUGUI scoreText;
     private Combo combo;
+    private float scoreMultiplier = 1f;
+    private Coroutine multiplierCoroutine;
 
     void Start()
     {
@@ -15,22 +16,36 @@ public class Score : MonoBehaviour
         UpdateScoreText();
     }
 
-    //Funkcija, kas pievieno score
     public void AddToScore(int value)
     {
-        int addedScore = Mathf.RoundToInt(value * combo.GetScoreMultiplier()); 
-        totalScore += addedScore; 
+        int addedScore = Mathf.RoundToInt(value * combo.GetScoreMultiplier() * scoreMultiplier);
+        totalScore += addedScore;
         UpdateScoreText();
 
-        Debug.Log("Added " + addedScore + " to score."); 
+        Debug.Log("Pielikts " + addedScore + " pie punktiem.");
     }
 
-    // Funkcija, kas updato score vērtību
     private void UpdateScoreText()
     {
         if (scoreText != null)
         {
             scoreText.text = totalScore.ToString();
         }
+    }
+
+    public void ActivateScoreMultiplier(float multiplier, float duration)
+    {
+        if (multiplierCoroutine != null)
+        {
+            StopCoroutine(multiplierCoroutine);
+        }
+        multiplierCoroutine = StartCoroutine(ScoreMultiplierCoroutine(multiplier, duration));
+    }
+
+    private IEnumerator ScoreMultiplierCoroutine(float multiplier, float duration)
+    {
+        scoreMultiplier = multiplier;
+        yield return new WaitForSeconds(duration);
+        scoreMultiplier = 1f;
     }
 }

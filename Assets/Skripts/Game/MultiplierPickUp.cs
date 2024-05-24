@@ -1,25 +1,31 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class TimePickUp : MonoBehaviour, IInteractable
+public class MultiplierPickUp : MonoBehaviour, IInteractable
 {
-    public int addTime = 30;
     public AudioClip clip;
     private AudioSource audioSource;
     private Renderer[] objectRenderers;
     private Collider[] objectColliders;
 
-    private GameTime gameTime;
+    private Score score;
     private bool isInteracted = false;
 
     private void Start()
     {
+        int selectedPlayer = PlayerPrefs.GetInt("SelectedPlayer", 1);
+        GameObject selectedPlayerObject = null;
 
-        GameObject uiObject = GameObject.Find("UI");
-
-        gameTime = uiObject.GetComponent<GameTime>();
+        if (selectedPlayer == 1)
+        {
+            selectedPlayerObject = GameObject.Find("Player_1");
+        }
+        else if (selectedPlayer == 2)
+        {
+            selectedPlayerObject = GameObject.Find("Player_2");
+        }
+        score = selectedPlayerObject.GetComponent<Score>();
 
         audioSource = GetComponent<AudioSource>();
         objectRenderers = GetComponentsInChildren<Renderer>();
@@ -30,10 +36,10 @@ public class TimePickUp : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        if (!isInteracted && gameTime != null)
+        if (!isInteracted && score != null)
         {
             isInteracted = true;
-            gameTime.AddTime(addTime);
+            score.ActivateScoreMultiplier(2f, 30f);
             audioSource.PlayOneShot(clip);
             HideObject();
             StartCoroutine(DelayedDestroy());

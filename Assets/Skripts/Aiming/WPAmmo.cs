@@ -23,8 +23,6 @@ public class WPAmmo : MonoBehaviour
     {
         ammoText.text = currentAmmo.ToString() + " / " + extraAmmo.ToString();
     }
-
-    // Reload function
     public void Reload()
     {
         if (extraAmmo >= clipSize)
