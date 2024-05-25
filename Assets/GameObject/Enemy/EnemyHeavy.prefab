@@ -3655,7 +3655,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4fb45f9472f5e554c82a5a9c7ba4c739, type: 3}
   - {fileID: 8300000, guid: bdb798b20d5ac2f438f3a562f4150019, type: 3}
   - {fileID: 8300000, guid: 0547b940dba4d964e9e447af1dc0759a, type: 3}
-  audioSource: {fileID: 0}
+  audioSource: {fileID: -2003202579666296121}
   spawn: {fileID: 0}
   scoreValue: 250
 --- !u!114 &57942682447694057
@@ -3714,6 +3714,8 @@ MonoBehaviour:
     m_Bits: 128
   animator: {fileID: 488296707763333907}
   damageToPlayer: 100
+  spell: {fileID: 2713892878420229585, guid: dc395ec0ae5a547458e0e42a97863ef1, type: 3}
+  hasSpells: 0
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 2.5
   timeBetweenAttacks: 2.8

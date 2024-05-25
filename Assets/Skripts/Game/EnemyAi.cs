@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.ProBuilder;
 
 public class EnemyAi : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class EnemyAi : MonoBehaviour
     public int damageToPlayer;
 
     private bool staggered = false;
+
+    public GameObject spell;
+    public bool hasSpells = true;
 
     //Meklēšana
     public Vector3 walkPoint;
@@ -41,7 +45,7 @@ public class EnemyAi : MonoBehaviour
 
     private void Awake()
     {
-        int selectedPlayer = PlayerPrefs.GetInt("SelectedPlayer", 1); // Default to Player_1 if the preference is not set
+        int selectedPlayer = PlayerPrefs.GetInt("SelectedPlayer", 1);
         GameObject selectedPlayerObject = null;
 
         if (selectedPlayer == 1)
@@ -103,7 +107,14 @@ public class EnemyAi : MonoBehaviour
         }
         if (playerInSightRange && playerInAttackRange || hasBeenHit && playerInAttackRange)
         {
-            AttackPlayer();
+            if (hasSpells)
+            {
+                ProjectileAttackPlayer();
+            }
+            else
+            {
+                MeleeAttackPlayer();
+            }
             animator.SetBool("Walk", false);
             animator.SetBool("Attack", true);
         }
@@ -135,26 +146,56 @@ public class EnemyAi : MonoBehaviour
         agent.SetDestination(player.position);
     }
 
-    private void AttackPlayer()
+    private void MeleeAttackPlayer()
     {
         agent.SetDestination(transform.position);
         transform.LookAt(player);
 
         if (!alreadyAttacked)
         {
-
             EnemyHealth enemyHealth = GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
                 enemyHealth.EnemyAttackSound();
             }
-
-            // Trigger the attack animation
             animator.SetTrigger("Attack");
 
             float animationDuration = 1f;
             Invoke(nameof(DamagePlayer), animationDuration);
 
+            alreadyAttacked = true;
+            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+        }
+    }
+
+    private IEnumerator SpawnProjectileWithDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        Vector3 spawnPosition = transform.position + transform.forward * 1.5f + transform.up * 1.5f;
+        Rigidbody rb = Instantiate(spell, spawnPosition, Quaternion.identity).GetComponent<Rigidbody>();
+        rb.velocity = Vector3.zero;
+        Vector3 projectileDirection = transform.forward + Vector3.up * 0.25f;
+        float forceMagnitude = 15f;
+        rb.AddForce(projectileDirection * forceMagnitude, ForceMode.Impulse);
+
+    }
+
+    private void ProjectileAttackPlayer()
+    {
+        agent.SetDestination(transform.position);
+        transform.LookAt(player);
+
+        if (!alreadyAttacked)
+        {
+            EnemyHealth enemyHealth = GetComponent<EnemyHealth>();
+            if (enemyHealth != null)
+            {
+                enemyHealth.EnemyAttackSound();
+            }
+            animator.SetTrigger("Attack");
+
+            StartCoroutine(SpawnProjectileWithDelay(0.5f));
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }

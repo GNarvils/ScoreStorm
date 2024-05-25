@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class EnemySpawn : MonoBehaviour
 {
     public GameObject enemyBasic; //Parastais pretinieks
+    public GameObject enemySpell; //Pretinieks, kas uzbrūk metot
     public GameObject enemyHeavy; //Stiprais pretinieks
     public Transform player; // Playeris
     public int maxEnemies = 100; // Limits pretiniekiem
@@ -99,8 +100,15 @@ public class EnemySpawn : MonoBehaviour
             }
             else
             {
-                //Parastie pretinieki
-                enemyToSpawn = enemyBasic;
+                float randomNumber = Random.Range(0f, 1f);
+                if (randomNumber <= 0.5f)
+                {
+                    enemyToSpawn = enemyBasic;
+                }
+                else
+                {
+                    enemyToSpawn = enemySpell;
+                }
             }
 
             // Spawn the enemy
