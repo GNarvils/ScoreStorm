@@ -3642,7 +3642,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 328af594c6557e142b9c7f7ce6739f01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 600
+  health: 800
   ragdollManager: {fileID: 0}
   isDead: 0
   head: {fileID: 0}
@@ -3657,7 +3657,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0547b940dba4d964e9e447af1dc0759a, type: 3}
   audioSource: {fileID: -2003202579666296121}
   spawn: {fileID: 0}
-  scoreValue: 250
+  scoreValue: 500
 --- !u!114 &57942682447694057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3713,7 +3713,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   animator: {fileID: 488296707763333907}
-  damageToPlayer: 100
+  damageToPlayer: 400
   spell: {fileID: 2713892878420229585, guid: dc395ec0ae5a547458e0e42a97863ef1, type: 3}
   hasSpells: 0
   walkPoint: {x: 0, y: 0, z: 0}
@@ -3738,7 +3738,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 0.5
   Loop: 0
   Mute: 0
   Spatialize: 0

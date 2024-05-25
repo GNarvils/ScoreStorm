@@ -22,7 +22,7 @@ public class Bullet : MonoBehaviour
             
             GameObject head = enemyHealth.head;
 
-            // CPārbauda vai ir headshots
+            // Pārbauda vai ir headshots
             bool isHeadshot = IsHeadshot(collision.contacts[0].point, head);
 
             enemyHealth.TakeDamage(weapon.damage, isHeadshot);
@@ -42,7 +42,7 @@ public class Bullet : MonoBehaviour
     {
         if (head == null)
         {
-            Debug.LogWarning("Head GameObject not found in EnemyHealth script.");
+            Debug.LogWarning("Galvas GameObject nav atrasts!");
             return false;
         }
 

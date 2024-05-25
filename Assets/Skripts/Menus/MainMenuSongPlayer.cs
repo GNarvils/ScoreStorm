@@ -10,6 +10,24 @@ public class MainMenuSongPlayer : MonoBehaviour
 
     private void Awake()
     {
+
+        if (!PlayerPrefs.HasKey("Sensitivity"))
+        {
+            PlayerPrefs.SetFloat("Sensitivity", 1f);
+            PlayerPrefs.Save();
+        }
+
+        if (!PlayerPrefs.HasKey("Music"))
+        {
+            PlayerPrefs.SetFloat("Music", 1f);
+            PlayerPrefs.Save();
+        }
+
+        if (!PlayerPrefs.HasKey("Sound"))
+        {
+            PlayerPrefs.SetFloat("Sound", 1f);
+            PlayerPrefs.Save();
+        }
         audioSource = GetComponent<AudioSource>();
 
         if (audioSource == null)
@@ -20,31 +38,20 @@ public class MainMenuSongPlayer : MonoBehaviour
 
         audioSource.clip = mainMenuMusic;
         audioSource.loop = true;
-        if (PlayerPrefs.HasKey("Music"))
-        {
-            float soundVolume = PlayerPrefs.GetFloat("Music"); 
-            audioSource.volume = soundVolume;
-        }
-        else
-        {
-            Debug.LogWarning("PlayerPrefs atslēga mūzika nav atrasta");
-        }
-        if (PlayerPrefs.HasKey("MusicTime"))
-        {
-            float savedTime = PlayerPrefs.GetFloat("MusicTime");
-            audioSource.time = savedTime;
-        }
+        float soundVolume = PlayerPrefs.GetFloat("Music"); 
+        audioSource.volume = soundVolume;
+        float savedTime = PlayerPrefs.GetFloat("MusicTime");
+        audioSource.time = savedTime;
+        
     }
 
     private void Update()
     {
         if (SceneManager.GetActiveScene().name == "Settings")
         {
-            if (PlayerPrefs.HasKey("Music"))
-            {
-                float soundVolume = PlayerPrefs.GetFloat("Music");
-                audioSource.volume = soundVolume;
-            }
+             float soundVolume = PlayerPrefs.GetFloat("Music");
+             audioSource.volume = soundVolume;
+
         }
     }
 

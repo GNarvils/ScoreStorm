@@ -23,16 +23,13 @@ public class EnemyAi : MonoBehaviour
     public GameObject spell;
     public bool hasSpells = true;
 
-    //Meklēšana
     public Vector3 walkPoint;
     bool walkPointSet;
     public float walkPointRange;
 
-    //Uzbrukšana
     public float timeBetweenAttacks;
     bool alreadyAttacked;
 
-    //States
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
 
@@ -59,7 +56,7 @@ public class EnemyAi : MonoBehaviour
         player = selectedPlayerObject.transform;
         agent = GetComponent<NavMeshAgent>();
         enemyType = this.gameObject;
-        agent.speed = Random.Range(1f, 5f);
+        agent.speed = Random.Range(1f, 7.5f);
 
     }
 
@@ -126,7 +123,6 @@ public class EnemyAi : MonoBehaviour
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
-        //WalkPoint sasniegts
         if (distanceToWalkPoint.magnitude < 1f) walkPointSet = false;
     }
 
@@ -204,10 +200,8 @@ public class EnemyAi : MonoBehaviour
 
     private void DamagePlayer()
     {
-        // Pārbauda vai pretinieks ir uzbrukšanas attālumā.
         if (playerInAttackRange)
         {
-            //Izdara uzbrukumu pret spēlētaju
             PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
             ActionStateManager actions = player.GetComponentInChildren<ActionStateManager>();
             if (playerHealth != null)

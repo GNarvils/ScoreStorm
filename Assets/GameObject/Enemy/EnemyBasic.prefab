@@ -252,7 +252,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0547b940dba4d964e9e447af1dc0759a, type: 3}
   audioSource: {fileID: 5388528072038023644}
   spawn: {fileID: 0}
-  scoreValue: 125
+  scoreValue: 100
 --- !u!114 &260669377544941960
 MonoBehaviour:
   m_ObjectHideFlags: 0

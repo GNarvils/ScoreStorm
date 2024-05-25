@@ -29,6 +29,7 @@ public class CameraAim : MonoBehaviour
 
     public PlayerHealth health;
     public GameTime gameTime;
+    public GameObject redDot;
 
 
     void Start()
@@ -58,8 +59,16 @@ public class CameraAim : MonoBehaviour
     void Update()
     {
         if (!health.isDead && !gameTime.gameIsOver)
-        { 
-        xAxis += Input.GetAxisRaw("Mouse X") * sensitivity;
+        {
+            if (currentState == Aim)
+            {
+                redDot.SetActive(true);
+            }
+            else
+            {
+                redDot.SetActive(false);
+            }
+            xAxis += Input.GetAxisRaw("Mouse X") * sensitivity;
         yAxis += Input.GetAxisRaw("Mouse Y") * sensitivity;
         yAxis = Mathf.Clamp(yAxis, -80, 80);
 

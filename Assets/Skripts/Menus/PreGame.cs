@@ -116,7 +116,7 @@ public class PreGame : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     {
         selectedPlayer = 1;
         PlayerPrefs.SetInt("SelectedPlayer", selectedPlayer);
-        Debug.Log("Player 1 selected.");
+        Debug.Log("Spēlētājs 1 izvēlēts.");
         playerSelection.SetActive(false);
         levelSelection.SetActive(true);
     }
@@ -125,7 +125,7 @@ public class PreGame : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     {
         selectedPlayer = 2;
         PlayerPrefs.SetInt("SelectedPlayer", selectedPlayer);
-        Debug.Log("Player 2 selected.");
+        Debug.Log("Spēlētājs 2 izvēlēts.");
         playerSelection.SetActive(false);
         levelSelection.SetActive(true);
     }
@@ -134,7 +134,7 @@ public class PreGame : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     {
         selectedLevel = 1;
         PlayerPrefs.SetInt("SelectedLevel", selectedLevel);
-        Debug.Log("Level 1 selected.");
+        Debug.Log("Līmenis 1 izvēlēts.");
         playerSelection.SetActive(false);
         levelSelection.SetActive(false);
         SceneManager.LoadScene("Game", LoadSceneMode.Single);
@@ -143,7 +143,7 @@ public class PreGame : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     {
         selectedLevel = 2;
         PlayerPrefs.SetInt("SelectedLevel", selectedLevel);
-        Debug.Log("Level 2 selected.");
+        Debug.Log("Līmenis 2 izvēlēts.");
         playerSelection.SetActive(false);
         levelSelection.SetActive(false);
         SceneManager.LoadScene("Game", LoadSceneMode.Single);

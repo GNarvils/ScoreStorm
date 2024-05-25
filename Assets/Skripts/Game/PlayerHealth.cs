@@ -28,16 +28,9 @@ public class PlayerHealth : MonoBehaviour
             Debug.LogError("AudioSource nav atrasts!");
         }
 
-        if (PlayerPrefs.HasKey("Sound"))
-        {
-            float soundVolume = PlayerPrefs.GetFloat("Sound");
-            Debug.Log("Retrieved Player sound volume: " + soundVolume); // Debug log
-            audioSource.volume = soundVolume;
-        }
-        else
-        {
-            Debug.LogWarning("PlayerPrefs key 'Sound' not found. Using default volume.");
-        }
+        float soundVolume = PlayerPrefs.GetFloat("Sound");
+        audioSource.volume = soundVolume;
+
     }
     void Update()
     {
@@ -57,7 +50,7 @@ public class PlayerHealth : MonoBehaviour
     public void Die()
     {
         isDead = true;
-        Debug.Log("Player is Dead!");
+        Debug.Log("Spēlētājs ir nomiris!");
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         actions.SwitchState(actions.Death);
@@ -81,7 +74,7 @@ public class PlayerHealth : MonoBehaviour
                 audioSource.PlayOneShot(damageSound[0]);
             }
             healthBar.fillAmount = (float)playerHealth / maxPlayerHealth;
-            Debug.Log("Player took " + damage + " damage. Remaining health: " + playerHealth);
+            Debug.Log("Spēlētājam atņēma " + damage + " dzīvības. Palikušās dzīvības: " + playerHealth);
             if (actions.currentState != actions.Guard)
             {
                 actions.SwitchState(actions.Reaction);
@@ -98,7 +91,7 @@ public class PlayerHealth : MonoBehaviour
                 playerHealth = maxPlayerHealth;
             }
             healthBar.fillAmount = (float)playerHealth / maxPlayerHealth;
-            Debug.Log("Player healed for " + healAmount + " health. Current health: " + playerHealth);
+            Debug.Log("Spēlētājs dabuja " + healAmount + " dzīvības. Tagadējošās dzīvības: " + playerHealth);
         }
     }
 

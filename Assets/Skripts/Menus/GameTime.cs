@@ -32,6 +32,7 @@ public class GameTime : MonoBehaviour
     public AudioClip lossSound;   
     public AudioSource audioSource;
     public bool timeIsUp = false;
+    public GameObject rekords;
     void Start()
     {
         timeIsUp = false;
@@ -107,6 +108,8 @@ public class GameTime : MonoBehaviour
         {
             victoryPanel.SetActive(false);
         }
+
+        rekords.SetActive(false);
         audioSource = gameObject.GetComponent<AudioSource>(); 
         float volume = PlayerPrefs.GetFloat("Sound", 1.0f);
         audioSource.volume = volume;
@@ -183,23 +186,23 @@ public class GameTime : MonoBehaviour
         total = (int)(timer + score.totalScore);
         kopa.text += " " + total;
         string rank;
-        if (total < 200)
+        if (total < 2000)
         {
             rank = "F";
         }
-        else if (total < 300)
+        else if (total < 5000)
         {
             rank = "D";
         }
-        else if (total < 400)
+        else if (total < 10000)
         {
             rank = "C";
         }
-        else if (total < 500)
+        else if (total < 15000)
         {
             rank = "B";
         }
-        else if (total < 1000)
+        else if (total < 20000)
         {
             rank = "A";
         }
@@ -214,6 +217,7 @@ public class GameTime : MonoBehaviour
 
         if (total > previousScore)
         {
+            rekords.SetActive(true);
             PlayerPrefs.SetInt("Score_Player_" + selectedPlayer + "_Level_" + selectedLevel, total);
             PlayerPrefs.Save();
         }

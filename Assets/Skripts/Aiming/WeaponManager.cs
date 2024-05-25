@@ -5,12 +5,12 @@ using UnityEngine;
 public class WeaponManager : MonoBehaviour
 {
 
-    [Header("Fire Rate Control")]
+    [Header("Šaušanas kontrole")]
     [SerializeField] float fireSpeed;
     float fireRateTime;
     [SerializeField] bool semiAuto;
 
-    [Header("Bullet")]
+    [Header("Lode")]
     [SerializeField] GameObject bullet;
     [SerializeField] Transform barrelPos;
     [SerializeField] float bulletVelocity;
@@ -21,7 +21,6 @@ public class WeaponManager : MonoBehaviour
     public AudioSource audioSource;
 
     public WPAmmo ammo;
-    Bloom bloom;
     ActionStateManager actions;
     Recoil recoil;
 
@@ -38,7 +37,6 @@ public class WeaponManager : MonoBehaviour
     void Start()
     {
         aim = GetComponentInParent<CameraAim>();
-        bloom = GetComponent<Bloom>();
         actions = GetComponentInParent<ActionStateManager>();
         muzzleFlashParticals = GetComponentInChildren<ParticleSystem>();
         muzzleLight = GetComponentInChildren<Light>();
@@ -60,15 +58,8 @@ public class WeaponManager : MonoBehaviour
             Debug.LogError("UI GameObject nav atrasts.");
         }
 
-        if (PlayerPrefs.HasKey("Sound"))
-        {
-            float soundVolume = PlayerPrefs.GetFloat("Sound");
-            audioSource.volume = soundVolume;
-        }
-        else
-        {
-            Debug.LogWarning("PlayerPrefs key 'Sound' not found. Using default volume.");
-        }
+         float soundVolume = PlayerPrefs.GetFloat("Sound");
+         audioSource.volume = soundVolume;
     }
 
     private void OnEnable()
@@ -109,7 +100,6 @@ public class WeaponManager : MonoBehaviour
     void Fire() {
         fireRateTime = 0;
         barrelPos.LookAt(aim.aimPos);
-        barrelPos.localEulerAngles = bloom.bloomA(barrelPos);
         audioSource.PlayOneShot(gunShot);
         recoil.TriggerRecoil();
         TriggerMuzzleFlash();

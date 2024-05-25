@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEditorInternal.Profiling.Memory.Experimental.FileFormat;
 using UnityEngine;
@@ -32,10 +32,19 @@ public class EnemySpell : MonoBehaviour
         {
             Debug.Log("Collision");
             PlayerHealth playerHealth = player.GetComponentInParent<PlayerHealth>();
-            if (playerHealth != null)
+            ActionStateManager actions = player.GetComponent<ActionStateManager>();
+            if (playerHealth != null && actions != null)
             {
-                playerHealth.TakeDamage(damage);
+                if (actions.currentState == actions.Guard)
+                {
+                    Debug.Log("Spēlētājs nobloķēja metienu.");
+                }
+                else
+                {
+                    playerHealth.TakeDamage(damage);
+                }
             }
+
         }
         Destroy(gameObject);
     }

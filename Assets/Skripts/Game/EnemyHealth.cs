@@ -32,7 +32,7 @@ public class EnemyHealth : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Enemies game object not found!");
+            Debug.LogError("Enemies GameObject nav atrasts!");
         }
 
         ragdollManager = GetComponent<RagDollManager>();
@@ -46,11 +46,8 @@ public class EnemyHealth : MonoBehaviour
         audioSource.spatialBlend = 1f;
         audioSource.maxDistance = 10f;
 
-        if (PlayerPrefs.HasKey("Sound"))
-        {
-            float soundVolume = PlayerPrefs.GetFloat("Sound");
-            audioSource.volume = soundVolume;
-        }
+        float soundVolume = PlayerPrefs.GetFloat("Sound");
+        audioSource.volume = soundVolume;
 
         // Meklē head objektu 
         if (head == null)
@@ -66,8 +63,6 @@ public class EnemyHealth : MonoBehaviour
             }
         }
     }
-
-    // meklēšanas funkcija
     private Transform FindChildTransform(Transform parent, string name)
     {
         foreach (Transform child in parent)
@@ -103,7 +98,7 @@ public class EnemyHealth : MonoBehaviour
             }
             else
             {
-                Debug.Log("Headshot!");
+                Debug.Log("Galvas šaviens!");
                 damageMultiplier = 2f;
             }
 
@@ -116,7 +111,7 @@ public class EnemyHealth : MonoBehaviour
             }
             else
             {
-                Debug.Log("Hit enemy");
+                Debug.Log("Trāpijis pretiniekam.");
                 int rand = Random.Range(6, 8);
                 audioSource.PlayOneShot(enemySounds[rand]);
                 enemyAi.hasBeenHit = true;
@@ -130,7 +125,7 @@ public class EnemyHealth : MonoBehaviour
         // Trigger ragdoll
         ragdollManager.TriggerRagdoll();
         isDead = true;
-        Debug.Log("Dead enemy");
+        Debug.Log("Nošauts pretinieks");
 
         int rand = Random.Range(0, 2);
         audioSource.PlayOneShot(enemySounds[rand]);
@@ -191,7 +186,7 @@ public class EnemyHealth : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         Destroy(gameObject);
-        Debug.Log("Enemy destroyed");
+        Debug.Log("Pretinieks iznīcināts");
         spawn.currentEnemyCount = spawn.currentEnemyCount - 1;
     }
 

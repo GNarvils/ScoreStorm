@@ -5,17 +5,18 @@ using UnityEngine.AI;
 
 public class EnemySpawn : MonoBehaviour
 {
-    public GameObject enemyBasic; //Parastais pretinieks
-    public GameObject enemySpell; //Pretinieks, kas uzbrūk metot
-    public GameObject enemyHeavy; //Stiprais pretinieks
-    public Transform player; // Playeris
-    public int maxEnemies = 100; // Limits pretiniekiem
-    public float spawnRadius = 100f; // Rādius kur viņi var parādīties
-    public int initialSpawnCount = 10; // Sākumā parādās
+    public GameObject enemyBasic;
+    public GameObject enemySpell;
+    public GameObject enemyHeavy; 
+    public Transform player;
+    public int maxEnemies = 100;
+    public float spawnRadius = 100f;
+    public int initialSpawnCount = 10;
+    public float minSpawnDistance = 10f;
 
-    public int currentEnemyCount = 0; // tagadējošais pretinieku sakits
-    public int totalEnemyCount = 0; //Kopēja pretinieku skaits
-    public int killedEnemy = 0; // Nošautie pretinieki
+    public int currentEnemyCount = 0;
+    public int totalEnemyCount = 0;
+    public int killedEnemy = 0;
 
     public GameTime gameTime;
     private void Awake()
@@ -79,48 +80,41 @@ public class EnemySpawn : MonoBehaviour
 
     void SpawnEnemy()
     {
-        Vector3 spawnPosition = Random.insideUnitSphere * spawnRadius;
-        spawnPosition += transform.position;
-
-        spawnPosition.y = Terrain.activeTerrain.SampleHeight(spawnPosition);
-
-        if (Vector3.Distance(spawnPosition, player.position) > 50f)
+        Vector3 spawnPosition;
+        do
         {
-            GameObject enemyToSpawn;
+            spawnPosition = Random.insideUnitSphere * spawnRadius;
+            spawnPosition += transform.position;
+            spawnPosition.y = Terrain.activeTerrain.SampleHeight(spawnPosition);
+        } while (Vector3.Distance(spawnPosition, player.position) < minSpawnDistance);
 
-            if (totalEnemyCount >= maxEnemies - 3)
+        GameObject enemyToSpawn;
+
+        if (totalEnemyCount == 25 || totalEnemyCount == 50 || totalEnemyCount == 75 || totalEnemyCount == 99 || totalEnemyCount == 100)
+        {
+            enemyToSpawn = enemyHeavy;
+        }
+        else
+        {
+            float randomNumber = Random.Range(0f, 1f);
+            if (randomNumber <= 0.5f)
             {
-                // Pēdējie trīs pretinieki
-                enemyToSpawn = enemyHeavy;
-            }
-            else if (totalEnemyCount % 10 == 0 && totalEnemyCount != 0)
-            {
-                // Katrs 10 ir stiprais
-                enemyToSpawn = enemyHeavy;
+                enemyToSpawn = enemyBasic;
             }
             else
             {
-                float randomNumber = Random.Range(0f, 1f);
-                if (randomNumber <= 0.5f)
-                {
-                    enemyToSpawn = enemyBasic;
-                }
-                else
-                {
-                    enemyToSpawn = enemySpell;
-                }
+                enemyToSpawn = enemySpell;
             }
+        }
 
-            // Spawn the enemy
-            Instantiate(enemyToSpawn, spawnPosition, Quaternion.identity);
-            currentEnemyCount++;
-            totalEnemyCount++;
-            Debug.Log($"{enemyToSpawn.name} spawned");
+        // Spawn the enemy
+        Instantiate(enemyToSpawn, spawnPosition, Quaternion.identity);
+        currentEnemyCount++;
+        totalEnemyCount++;
 
-            if (totalEnemyCount >= maxEnemies)
-            {
-                Debug.Log("Maksimālais pretinieku daudzums sasniekts");
-            }
+        if (totalEnemyCount >= maxEnemies)
+        {
+            Debug.Log("Maksimālais pretinieku daudzums sasniekts");
         }
     }
 }

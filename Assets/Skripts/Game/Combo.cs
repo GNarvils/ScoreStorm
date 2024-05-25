@@ -17,8 +17,6 @@ public class Combo : MonoBehaviour
     public Image comboMeter;
     public float maxComboTime = 10f;
 
-
-
     void Start()
     {
         ResetCombo();
@@ -37,8 +35,6 @@ public class Combo : MonoBehaviour
             }
         }
     }
-
- 
     // Kad nogalina enemy activē combo
     public void EnemyKilled()
     {
@@ -74,15 +70,13 @@ public class Combo : MonoBehaviour
     // Dabū multiplier no cik enemy ir killed
     public float GetScoreMultiplier()
     {
-        if (enemiesKilledInCombo >= 50) return 1.6f;
-        else if (enemiesKilledInCombo >= 40) return 1.5f;
-        else if (enemiesKilledInCombo >= 30) return 1.4f;
-        else if (enemiesKilledInCombo >= 20) return 1.3f;
+        if (enemiesKilledInCombo >= 50) return 2f;
+        else if (enemiesKilledInCombo >= 40) return 1.8f;
+        else if (enemiesKilledInCombo >= 30) return 1.6f;
+        else if (enemiesKilledInCombo >= 20) return 1.4f;
         else if (enemiesKilledInCombo >= 10) return 1.2f;
-        else if (enemiesKilledInCombo > 2) return 1.1f;
         else return 1f;
     }
-
     //Atjaunina ui
     private void UpdateComboUI()
     {
