@@ -21,22 +21,23 @@ public class EnemySpawn : MonoBehaviour
     public GameTime gameTime;
     private void Awake()
     {
+        int selectedPlayer = PlayerPrefs.GetInt("SelectedPlayer", 1);
         GameObject player1Object = GameObject.Find("Player_1");
         GameObject player2Object = GameObject.Find("Player_2");
-      
-        if (player1Object != null)
+        if (selectedPlayer == 1)
         {
-            player = player1Object.transform;
+            if (player1Object != null)
+            {
+                player = player1Object.transform;
+            }
         }
-        else if (player2Object != null)
+        else if (selectedPlayer == 2)
         {
-            player = player2Object.transform;
+            if (player2Object != null)
+            {
+                player = player2Object.transform;
+            }
         }
-        else
-        {
-            Debug.LogError("Nav Player_1 vai Player_2");
-        }
-
 
     }
     void Start()
