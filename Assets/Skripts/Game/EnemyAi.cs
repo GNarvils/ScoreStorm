@@ -37,8 +37,7 @@ public class EnemyAi : MonoBehaviour
 
     public bool hasBeenHit = false;
 
-    public GameObject enemyType;
-
+    public EnemySpawn enemySpawn;
 
     private void Awake()
     {
@@ -55,8 +54,12 @@ public class EnemyAi : MonoBehaviour
         }
         player = selectedPlayerObject.transform;
         agent = GetComponent<NavMeshAgent>();
-        enemyType = this.gameObject;
-        agent.speed = Random.Range(1f, 7.5f);
+        agent.speed = Random.Range(3f, 7.5f);
+
+        GameObject enemiesObject = GameObject.Find("Enemies");
+        enemySpawn = enemiesObject.GetComponent<EnemySpawn>();
+        
+      
 
     }
 
@@ -72,6 +75,12 @@ public class EnemyAi : MonoBehaviour
             animator.SetBool("Walk", true);
             animator.SetBool("Attack", false);
             return;
+        }
+
+        if (enemySpawn != null && enemySpawn.killedEnemy >= 75)
+        {
+            hasBeenHit = true;
+            agent.speed = 6.5f;
         }
 
 
