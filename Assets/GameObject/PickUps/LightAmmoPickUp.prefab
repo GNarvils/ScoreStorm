@@ -1287,7 +1287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1f025b4410f6f844879d4adb3613b30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoToAdd: 30
+  ammoToAdd: 45
   clip: {fileID: 8300000, guid: c2b587f709d3ac046a53d5743ea18aff, type: 3}
   weaponAmmo1: {fileID: 0}
   weaponAmmo2: {fileID: 0}
