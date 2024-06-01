@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -11,7 +11,7 @@ public class SliderOptions : MonoBehaviour
     public Slider soundSlider;
     void Start()
     {
-
+        // Ja nav iestatītās vērtības vai iestatītās vērtības ir skaitlis, kas nav iespējam, tad iestata noklusējuma vērtības bīdņiem
         if (!PlayerPrefs.HasKey("Sensitivity") || PlayerPrefs.GetFloat("Sensitivity") == 0f)
         {
             PlayerPrefs.SetFloat("Sensitivity", 1f);
@@ -31,7 +31,7 @@ public class SliderOptions : MonoBehaviour
         }
 
 
-
+        // Dabū eksistējošās vērtības bīdņiem
         float sensitivity = PlayerPrefs.GetFloat("Sensitivity", 1f);
         sensitivitySlider.value = sensitivity;
 
@@ -41,28 +41,28 @@ public class SliderOptions : MonoBehaviour
         float sound = PlayerPrefs.GetFloat("Sound", 1f);
         soundSlider.value = sound;
 
-
+        // Ja tiek kustināti izdara metodes, kas nomaina vērtību.
         sensitivitySlider.onValueChanged.AddListener(delegate { OnSensitivityChanged(); });
 
         musicSlider.onValueChanged.AddListener(delegate { OnMusicChanged(); });
 
         soundSlider.onValueChanged.AddListener(delegate { OnSoundChanged(); });
     }
-
+    //Maina un saglabā peles kustināšanas ātruma vērtību
     void OnSensitivityChanged()
     {
         float newSensitivity = sensitivitySlider.value;
         PlayerPrefs.SetFloat("Sensitivity", newSensitivity);
         PlayerPrefs.Save();
     }
-
+    //Maina un saglabā mūzikas skaļuma vērtību
     void OnMusicChanged()
     {
         float newMusic = musicSlider.value;
         PlayerPrefs.SetFloat("Music", newMusic);
         PlayerPrefs.Save();
     }
-
+    //Maina un saglabā spēles skaņas skaļuma vērtību
     void OnSoundChanged()
     {
         float newSound = soundSlider.value;

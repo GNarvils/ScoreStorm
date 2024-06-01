@@ -10,17 +10,21 @@ public class ButtonSFX : MonoBehaviour
 
     void Start()
     {
+        //Dabū pogas skaņas skaļuma vertibas.
         audioSource = GetComponent<AudioSource>();
         float volume = PlayerPrefs.GetFloat("Sound", 1.0f);
         audioSource.volume = volume;
     }
 
+    //Metode, kas spēle pogas skaņu.
     public void PlayButtonSound()
     {
             audioSource.PlayOneShot(buttonSound);      
     }
+
     private void Update()
     {
+        //Ja atrodas iestatījuma ainā tad, visu laiku dabū skaņas vērtība, ja varētu dzirdēt izmaiņas.
         if (SceneManager.GetActiveScene().name == "Settings")
         {
             if (PlayerPrefs.HasKey("Sound"))

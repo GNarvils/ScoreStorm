@@ -15,7 +15,7 @@ public class Combo : MonoBehaviour
     public TextMeshProUGUI comboCountText;
     public int comboMultiplier;
     public Image comboMeter;
-    public float maxComboTime = 10f;
+    public float maxComboTime = 10f; //Cik ilgi combo var eksistēt
 
     void Start()
     {
@@ -25,10 +25,12 @@ public class Combo : MonoBehaviour
 
     void Update()
     {
+        //Ja combo ir aktīvs tjaunina vajadzīgo ui
         if (isComboActive)
         {
             comboTimer -= Time.deltaTime;
             UpdateComboMeter();
+            //Ja combo izbeidzas restartē combo
             if (comboTimer <= 0)
             {
                 ResetCombo();
@@ -77,12 +79,11 @@ public class Combo : MonoBehaviour
         else if (enemiesKilledInCombo >= 10) return 1.2f;
         else return 1f;
     }
-    //Atjaunina ui
+    //Atjaunina vizuālo tekstu, gan progresa līniju
     private void UpdateComboUI()
     {
         comboCountText.text = enemiesKilledInCombo.ToString();
     }
-
     private void UpdateComboMeter()
     {
         comboMeter.fillAmount = comboTimer / maxComboTime;

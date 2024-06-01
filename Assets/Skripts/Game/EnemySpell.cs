@@ -1,15 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal.Profiling.Memory.Experimental.FileFormat;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemySpell : MonoBehaviour
 {
-    public int damage=50;
-    private Transform player;
+    public int damage=50; // Cik daudz dzīvības atņem spēlētājam
+    private Transform player; // spēlētājs
     private void Awake()
     {
+        //Dabū tagadējošo spēlētāju
         int selectedPlayer = PlayerPrefs.GetInt("SelectedPlayer", 1); 
         GameObject selectedPlayerObject = null;
 
@@ -25,6 +25,7 @@ public class EnemySpell : MonoBehaviour
 
     }
 
+    //Ja trāpa spēlētājam
     void OnCollisionEnter(Collision collision)
     {
       
@@ -35,6 +36,7 @@ public class EnemySpell : MonoBehaviour
             ActionStateManager actions = player.GetComponent<ActionStateManager>();
             if (playerHealth != null && actions != null)
             {
+                //Ja spēlētājs bloķē uzbrukumum, tad neatņem dzīvības, bet ja nē tad atņem.
                 if (actions.currentState == actions.Guard)
                 {
                     Debug.Log("Spēlētājs nobloķēja metienu.");
@@ -46,6 +48,7 @@ public class EnemySpell : MonoBehaviour
             }
 
         }
+        //Iznīcina objektu, kad visas vajadzīgās darbības ir izdarītas.
         Destroy(gameObject);
     }
 }

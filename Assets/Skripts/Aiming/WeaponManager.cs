@@ -6,16 +6,16 @@ public class WeaponManager : MonoBehaviour
 {
 
     [Header("Šaušanas kontrole")]
-    [SerializeField] float fireSpeed;
-    float fireRateTime;
-    [SerializeField] bool semiAuto;
+    [SerializeField] float fireSpeed; // Ieroča šaušanas ātrums
+    float fireRateTime; // Laiks starp divām šāvieniem
+    [SerializeField] bool semiAuto; // Vai ierocis ir semiAuto režīmā
 
     [Header("Lode")]
-    [SerializeField] GameObject bullet;
-    [SerializeField] Transform barrelPos;
-    [SerializeField] float bulletVelocity;
-    [SerializeField] int bulletsPerFire;
-    public float damage = 20;
+    [SerializeField] GameObject bullet; //Lodes objekts
+    [SerializeField] Transform barrelPos; //No kurienes lode tiks izšauta
+    [SerializeField] float bulletVelocity; // Lodes ātrums
+    [SerializeField] int bulletsPerFire; // Cik lodes tiek izšautas šāvienā
+    public float damage = 20; // Cik daudz dzīvības atņems pretiniekam.
     CameraAim aim;
     [SerializeField] AudioClip gunShot;
     public AudioSource audioSource;
@@ -29,13 +29,14 @@ public class WeaponManager : MonoBehaviour
     float lightIntensity;
     [SerializeField] float lightReturnSpeed = 20;
 
-    public float enemyKickBackForce = 100;
+    public float enemyKickBackForce = 100; //Ar kādu stiprumu iešaus pretiniekam.
 
-    public Transform leftHandTarget, leftHandHint;
+    public Transform leftHandTarget, leftHandHint; //Kreisās rokas lokācija
     WeaponClassManager weaponClass;
     public GameTime gameTime;
     void Start()
     {
+        //Dabū vajadzīgos komponentus
         aim = GetComponentInParent<CameraAim>();
         actions = GetComponentInParent<ActionStateManager>();
         muzzleFlashParticals = GetComponentInChildren<ParticleSystem>();
@@ -61,7 +62,7 @@ public class WeaponManager : MonoBehaviour
          float soundVolume = PlayerPrefs.GetFloat("Sound");
          audioSource.volume = soundVolume;
     }
-
+    // Kad objekts tiek aktivizēts, iestata pašreizējo ieroci un munīciju
     private void OnEnable()
     {
         if (weaponClass == null)
@@ -76,11 +77,13 @@ public class WeaponManager : MonoBehaviour
 
     void Update()
     {
+        // Ja drīkst šaut, tad šauj
         if (ShouldFire()) Fire();
+        // Atgriež gaismas intensitāti uz sākotnējo vērtību
         muzzleLight.intensity = Mathf.Lerp(muzzleLight.intensity, 0, lightReturnSpeed * Time.deltaTime);
     }
 
-    //Funkcija, kas pārbauda vai šaut
+    //Funkcija, kas pārbauda vai tagad drīkst šauj un vai nav stāvoklī, kurā nevajadzētu tagad būt.
     bool ShouldFire() {
         fireRateTime += Time.deltaTime;
         if (fireRateTime < fireSpeed) return false;
@@ -96,7 +99,7 @@ public class WeaponManager : MonoBehaviour
         if (!semiAuto && Input.GetKey(KeyCode.Mouse0)) return true;
         return false;
     }
-    //Funkcija, kas šauj
+    //Funkcija, kas šauj ieroci
     void Fire() {
         fireRateTime = 0;
         barrelPos.LookAt(aim.aimPos);
@@ -116,7 +119,7 @@ public class WeaponManager : MonoBehaviour
             rb.AddForce(barrelPos.forward * bulletVelocity, ForceMode.Impulse);
         }
     }
-    //Spēlē efektu, ka šauj
+    //Spēlē efektu, ka šauj IEROCI
     void TriggerMuzzleFlash() {
         muzzleFlashParticals.Play();
         muzzleLight.intensity = lightIntensity;

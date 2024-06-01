@@ -4,9 +4,10 @@ using TMPro;
 
 public class ResolutionOption : MonoBehaviour
 {
-    public TMP_Dropdown resolutionDropdown; 
+    public TMP_Dropdown resolutionDropdown;
 
     private Resolution[] resolutions;
+    private int selectedResolutionIndex; // Saglabā atmiņā pēdējo izvēlēto rezolūciju indeksu
 
     void Start()
     {
@@ -17,33 +18,64 @@ public class ResolutionOption : MonoBehaviour
         resolutionDropdown.ClearOptions();
 
         List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
+        HashSet<string> uniqueResolutions = new HashSet<string>();
 
-        int currentResolutionIndex = 0;
         for (int i = 0; i < resolutions.Length; i++)
         {
-            string option = resolutions[i].width + " x " + resolutions[i].height;
-            TMP_Dropdown.OptionData optionData = new TMP_Dropdown.OptionData(option);
-            options.Add(optionData);
+            string resolutionKey = resolutions[i].width + " x " + resolutions[i].height;
 
-            // Pārbauda vai rezolūcija nav tāda pati kā ekrāna rezolūcija
-            if (resolutions[i].width == Screen.currentResolution.width &&
-                resolutions[i].height == Screen.currentResolution.height)
+            // Pārbauda, vai rezolūcija jau ir pievienota
+            if (!uniqueResolutions.Contains(resolutionKey))
             {
-                currentResolutionIndex = i;
+                uniqueResolutions.Add(resolutionKey);
+
+                // Pievieno rezolūciju dropdown opcijām
+                TMP_Dropdown.OptionData optionData = new TMP_Dropdown.OptionData(resolutionKey);
+                options.Add(optionData);
             }
         }
 
-        // Pievieno opcijas
+        // Pievieno opcijas dropdown
         resolutionDropdown.AddOptions(options);
 
-        // Iespējo rezolūciju
-        resolutionDropdown.value = currentResolutionIndex;
+        // Saglabā pēdējo izvēlēto rezolūciju
+        selectedResolutionIndex = PlayerPrefs.GetInt("SelectedResolutionIndex", 0);
+
+        // Uzstāda dropdown uz saglabāto rezolūciju
+        resolutionDropdown.value = selectedResolutionIndex;
         resolutionDropdown.RefreshShownValue();
+
+        // Sākotnēji uzstāda saglabāto rezolūciju
+        SetResolution(selectedResolutionIndex);
     }
 
     public void SetResolution(int resolutionIndex)
     {
-        Resolution resolution = resolutions[resolutionIndex];
-        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        if (resolutionIndex >= 0 && resolutionIndex < resolutionDropdown.options.Count)
+        {
+            string[] optionParts = resolutionDropdown.options[resolutionIndex].text.Split(' ');
+            int width = int.Parse(optionParts[0]);
+            int height = int.Parse(optionParts[2]);
+
+            // Atrod atbilstošo rezolūciju un uzstāda to
+            foreach (var resolution in resolutions)
+            {
+                if (resolution.width == width && resolution.height == height)
+                {
+                    Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreenMode);
+                    Debug.Log("Rezolūcija uzstādīta uz: " + resolution.width + " x " + resolution.height);
+
+                    // Saglabā jauno izvēlēto rezolūciju indeksu
+                    selectedResolutionIndex = resolutionIndex;
+                    PlayerPrefs.SetInt("SelectedResolutionIndex", selectedResolutionIndex);
+
+                    break;
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Nederīgs rezolūcijas indekss: " + resolutionIndex);
+        }
     }
 }

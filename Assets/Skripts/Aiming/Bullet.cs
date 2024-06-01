@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] float timeToDestroy;
+    [SerializeField] float timeToDestroy;//Laks līdz lode tiek iznīcināta.
     [HideInInspector] public WeaponManager weapon;
     [HideInInspector] public Vector3 dir;
 
@@ -13,6 +13,7 @@ public class Bullet : MonoBehaviour
         Destroy(this.gameObject, timeToDestroy);
     }
 
+    //Metode, kas notiek, kad lode saskaras ar pretinieku
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.GetComponentInParent<EnemyHealth>())
@@ -22,11 +23,12 @@ public class Bullet : MonoBehaviour
             
             GameObject head = enemyHealth.head;
 
-            // Pārbauda vai ir headshots
+            // Pārbauda vai ir trāpijis par galvu
             bool isHeadshot = IsHeadshot(collision.contacts[0].point, head);
 
+            //Atņem pretiniekam vajadzīgās dzīvības daudzumu.
             enemyHealth.TakeDamage(weapon.damage, isHeadshot);
-
+            //Ja pretinieka dzīvības ir nulle un pretinieks nav miris, tad aktivē ragdoll un pataisa pretinieku mirušu
             if (enemyHealth.health <= 0 && enemyHealth.isDead == false)
             {
                 Rigidbody rb = collision.gameObject.GetComponentInChildren<Rigidbody>();

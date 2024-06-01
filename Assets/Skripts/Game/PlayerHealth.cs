@@ -5,9 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour
 {
-    public int playerHealth = 200;
-    public int maxPlayerHealth = 200;
-    public bool isDead = false;
+    public int playerHealth = 200;//Spēlētāja tagadējošās dzīvības
+    public int maxPlayerHealth = 200; //Spēlētāja maksimālais iespējamais dzīvības vērtība
+    public bool isDead = false;//Vai spēlētājs ir miris
     public Image healthBar;
     public ActionStateManager actions;
     public GameTime time;
@@ -17,6 +17,7 @@ public class PlayerHealth : MonoBehaviour
     private AudioSource audioSource;
     private void Start()
     {
+        //Dabū vajadžīgos komponentus un vērtības
         time = FindObjectOfType<GameTime>();
         if (time == null)
         {
@@ -34,13 +35,13 @@ public class PlayerHealth : MonoBehaviour
     }
     void Update()
     {
-        if (!isDead && IsPlayerDead())
+        if (!isDead && IsPlayerDead()) //Ja spēlētājam vairs nav dzīvības, tad izpilda miršanas funkciju
         {
             Die();
         }
     }
 
-    // Pārbauda vai spēletājs ir nomiris
+    // Funkcija, kas pārbauda vai spēlētājs ir miris
      bool IsPlayerDead()
     {
         return playerHealth <= 0;
@@ -52,13 +53,13 @@ public class PlayerHealth : MonoBehaviour
         isDead = true;
         Debug.Log("Spēlētājs ir nomiris!");
         Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-        actions.SwitchState(actions.Death);
-        StartCoroutine(ShowDeadPanel(4f));
+        Cursor.visible = true; //Padara kursoru redzamu
+        actions.SwitchState(actions.Death); //Aiziet uz miršanas stāvokļa
+        StartCoroutine(ShowDeadPanel(4f));//Pēc 4 sekundēm parāda miršanas paneli
         OnPlayerDeath?.Invoke();
     }
 
-    // Ļauj lietotājam ņemt damage
+    // Atņem spēlētājam dzīvinas
     public void TakeDamage(int damage)
     {
         if (!isDead)
@@ -81,6 +82,7 @@ public class PlayerHealth : MonoBehaviour
             }
         }
     }
+    //Funkcija, kas pārvalda to, ka spēlētājs var dabūt dzīvības atpakaļ
     public void Heal(int healAmount)
     {
         if (!isDead)
@@ -95,6 +97,7 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    //Parāda miršanas paneli
     IEnumerator ShowDeadPanel(float delay)
     {
         yield return new WaitForSeconds(delay);

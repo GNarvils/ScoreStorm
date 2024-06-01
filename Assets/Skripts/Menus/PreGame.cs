@@ -16,14 +16,15 @@ public class PreGame : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     public Image levelImage2;
     public GameObject levelSelection;
 
-    private int selectedPlayer = 0; 
-    private int selectedLevel = 0;
+    private int selectedPlayer = 0;  //Izvēlētais spēlētājs
+    private int selectedLevel = 0; //Izvēlētais līmenis
 
     public AudioClip clickSound;
     public AudioClip hoverSound;
     private AudioSource audioSource; 
 
-    private float hoverScale = 1.1f;
+    private float hoverScale = 1.1f; //Pa cik bilde palielināsies
+    //Normālais bilžu lielums katrai bildei
     private Vector3 normalScale1; 
     private Vector3 normalScale2; 
     private Vector3 normalScale3;
@@ -37,6 +38,7 @@ public class PreGame : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
     void Start()
     {
+        //Dabū visus vajadzīgos komponentus un iestata visas vērtības, kas eksistē.
         playerSelection.SetActive(true);
         levelSelection.SetActive(false);
         normalScale1 = playerImage1.transform.localScale;
@@ -53,6 +55,7 @@ public class PreGame : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
         audioSource.volume = volume;
     }
 
+    //Kad peles kursos uziet virs bildes, tad parādās apakšā vajadzīgais teksts un bildi paliek mazliet lielāka
     public void OnPointerEnter(PointerEventData eventData)
     {
         PlayHoverSound();
@@ -73,6 +76,7 @@ public class PreGame : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
             levelImage2.transform.localScale = normalScale4 * hoverScale;
     }
 
+    //Kad peles kursors iziet no bildes izmērs aiziet uz noklusējuma
     public void OnPointerExit(PointerEventData eventData)
     {
         if (eventData.pointerEnter == playerImage1.gameObject)
@@ -85,7 +89,7 @@ public class PreGame : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
             levelImage2.transform.localScale = normalScale4;
         help.text = "";
     }
-
+    //Kad nospiež izdara atbilstošo funkciju
     public void OnPointerClick(PointerEventData eventData)
     {
         PlayClickSound(); 
@@ -100,18 +104,19 @@ public class PreGame : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
             SelectLevel2();
     }
 
-
+    //Spēle klikšķa skaņu
     private void PlayClickSound()
     {
         if (clickSound != null)
             audioSource.PlayOneShot(clickSound); 
     }
+    //Spēle kursora virs skaņu
     private void PlayHoverSound()
     {
         if (hoverSound != null)
             audioSource.PlayOneShot(hoverSound);
     }
-
+    //Ja ir izvēlēts spēlētājs viens saglabā vajadzīgās vērtības un parāda līmeņa izvēlni
     public void SelectPlayer1()
     {
         selectedPlayer = 1;
@@ -120,7 +125,7 @@ public class PreGame : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
         playerSelection.SetActive(false);
         levelSelection.SetActive(true);
     }
-
+    //Ja ir izvēlēts spēlētājs divi saglabā vajadzīgās vērtības un parāda līmeņa izvēlni
     public void SelectPlayer2()
     {
         selectedPlayer = 2;
@@ -129,7 +134,7 @@ public class PreGame : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
         playerSelection.SetActive(false);
         levelSelection.SetActive(true);
     }
-
+    //Ja ir izvēlēts līmenis viens saglabā vajadzīgās vērtības un pāriet uz spēles ainu
     public void SelectLevel1()
     {
         selectedLevel = 1;
@@ -139,6 +144,7 @@ public class PreGame : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
         levelSelection.SetActive(false);
         SceneManager.LoadScene("Game", LoadSceneMode.Single);
     }
+    //Ja ir izvēlēts līmenis divi saglabā vajadzīgās vērtības un pāriet uz spēles ainu
     public void SelectLevel2()
     {
         selectedLevel = 2;

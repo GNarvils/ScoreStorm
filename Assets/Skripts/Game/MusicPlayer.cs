@@ -13,6 +13,7 @@ public class MusicPlayer : MonoBehaviour
 
     void Start()
     {
+        //Dabū komponentus un vajadzīgās vērtības
         audioSource = GetComponent<AudioSource>();
         float savedVolume = PlayerPrefs.GetFloat("Music", 1f);
         audioSource.volume = savedVolume;
@@ -43,14 +44,15 @@ public class MusicPlayer : MonoBehaviour
     }
     void Update()
     {
+        //Ja spēlētājs ir miris aptura mūziku
         if (playerHealthScript != null && playerHealthScript.playerHealth <= 0)
             StopMusic();
-
+        //Ja laiks beidzās aptura mūziku vai spēle ir beigusies
         if (gameTimeScript != null && (gameTimeScript.gameIsOver || gameTimeScript.timeIsUp))
             StopMusic();
 
     }
-
+    //Spēlē spēlētāja 1 mūziku
     void PlayPlayer1Song()
     {
         if (audioSource.clip != player1Song)
@@ -59,7 +61,7 @@ public class MusicPlayer : MonoBehaviour
             audioSource.Play();
         }
     }
-
+    //Spēlē spēlētāja 2 mūziku
     void PlayPlayer2Song()
     {
         if (audioSource.clip != player2Song)
@@ -68,6 +70,7 @@ public class MusicPlayer : MonoBehaviour
             audioSource.Play();
         }
     }
+    //Apstādina mūziku
     void StopMusic()
     {
         audioSource.Stop();

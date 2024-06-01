@@ -10,37 +10,39 @@ public class EnemyAi : MonoBehaviour
 
     public NavMeshAgent agent;
 
-    public Transform player;
+    public Transform player; //Spēlētajs
 
     public LayerMask whatIsGround, whatIsPlayer;
 
     public Animator animator;
 
-    public int damageToPlayer;
+    public int damageToPlayer; // Cik daudz dzīvības atņems spēlētājam
 
-    private bool staggered = false;
+    private bool staggered = false; //Vai pretinieks ir apstādināts
 
-    public GameObject spell;
-    public bool hasSpells = true;
+    public GameObject spell; //Uguns bumba
+    public bool hasSpells = true; //Vai var mest uguns bumbas
 
+    //Kad pretinieks nav atradis spēlētāji viņš staigā uz riņķa notiektajā rādijusā
     public Vector3 walkPoint;
     bool walkPointSet;
     public float walkPointRange;
 
-    public float timeBetweenAttacks;
-    bool alreadyAttacked;
+    public float timeBetweenAttacks; // Laiks starp uzbrukumiem
+    bool alreadyAttacked; // Vai nav jau uzbrucis
 
-    public float sightRange, attackRange;
-    public bool playerInSightRange, playerInAttackRange;
+    public float sightRange, attackRange; // Attālums, kur pretinieks redz spēlētāju un attālums, kur pretinieks var uzbrukt.
+    public bool playerInSightRange, playerInAttackRange; //Vai spēlētāju redzu un vai var viņam uzbrukt
 
-    private bool spotSoundPlayed = false;
+    private bool spotSoundPlayed = false; //Vai spēlētāja redzēšanas skaņa bija spēlēta
 
-    public bool hasBeenHit = false;
+    public bool hasBeenHit = false; //Vai spēlētājs ir iešāvis pretiniekam
 
     public EnemySpawn enemySpawn;
 
     private void Awake()
     {
+        //Dabū spēlētāja objektu, kā arī parādīšanās komponentu
         int selectedPlayer = PlayerPrefs.GetInt("SelectedPlayer", 1);
         GameObject selectedPlayerObject = null;
 
@@ -65,10 +67,12 @@ public class EnemyAi : MonoBehaviour
 
     private void Update()
     {
+        //Ja pretinieks ir apstādināts izej ārā
         if (staggered)
             return;
 
         PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+        //Ja spēlētajs ir nomiris, tad beidz viņam sekot
         if (playerHealth != null && playerHealth.isDead)
         {
             Patroling();
@@ -77,6 +81,7 @@ public class EnemyAi : MonoBehaviour
             return;
         }
 
+        //Ja ir nošauti  75 pretinieki, tad viņi visu laiku sekos spēlētājam un viņu ātrums palielināsies uz gandrīz maksimālie iešanas ātrumu
         if (enemySpawn != null && enemySpawn.killedEnemy >= 75)
         {
             hasBeenHit = true;
@@ -88,13 +93,14 @@ public class EnemyAi : MonoBehaviour
         //Pārbauda redzi un uzbrukšanas attālumu
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
-
+        //Ja spēlētāju neredz un nav uzbrukšanas attāluma, tad staigā uz vietas
         if (!playerInSightRange && !playerInAttackRange || !playerInAttackRange && !hasBeenHit)
         {
             Patroling();
             animator.SetBool("Walk", true);
             animator.SetBool("Attack", false);
         }
+        //Ja spēlētāju redz, bet nevar uzbrukt sāc sekot
         if (playerInSightRange && !playerInAttackRange || !playerInAttackRange && hasBeenHit)
         {
             ChasePlayer();
@@ -105,14 +111,17 @@ public class EnemyAi : MonoBehaviour
                 EnemyHealth enemyHealth = GetComponent<EnemyHealth>();
                 if (enemyHealth != null)
                 {
+                    //Spēlē skaņu
                     enemyHealth.EnemySpottedSound();
                     spotSoundPlayed = true;
                 }
             }
 
         }
+        //Uzbrūc spēlētājam ja redz un ir tuvu
         if (playerInSightRange && playerInAttackRange || hasBeenHit && playerInAttackRange)
         {
+            //Ja var mest uguns bumbas, tad met, bet ja nē tad uzbrūc fiziski
             if (hasSpells)
             {
                 ProjectileAttackPlayer();
@@ -125,6 +134,7 @@ public class EnemyAi : MonoBehaviour
             animator.SetBool("Attack", true);
         }
     }
+    //Staigā uz vietas noteiktā rādiusā
     private void Patroling()
     {
         if (!walkPointSet) SearchWalkPoint();
@@ -134,7 +144,7 @@ public class EnemyAi : MonoBehaviour
 
         if (distanceToWalkPoint.magnitude < 1f) walkPointSet = false;
     }
-
+    //Meklē nākošo ceļu, kamēr iet uz vietas
     private void SearchWalkPoint()
     {
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
@@ -144,13 +154,13 @@ public class EnemyAi : MonoBehaviour
 
         if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround)) walkPointSet = true;
     }
-
+    //Seko spēlētājam
     private void ChasePlayer()
     {
         animator.SetBool("Reaction", false);
         agent.SetDestination(player.position);
     }
-
+    //Uzbrūc fiziski spēlētājam
     private void MeleeAttackPlayer()
     {
         agent.SetDestination(transform.position);
@@ -172,7 +182,7 @@ public class EnemyAi : MonoBehaviour
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
     }
-
+    //Parāda ugunsbumbu, pēc īsa laika
     private IEnumerator SpawnProjectileWithDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -185,7 +195,7 @@ public class EnemyAi : MonoBehaviour
         rb.AddForce(projectileDirection * forceMagnitude, ForceMode.Impulse);
 
     }
-
+    //Uzbrūc spēlētājam izmantojot ugunsbumbas
     private void ProjectileAttackPlayer()
     {
         agent.SetDestination(transform.position);
@@ -206,7 +216,7 @@ public class EnemyAi : MonoBehaviour
         }
     }
 
-
+    //Atņem dzīvības spēlētājam
     private void DamagePlayer()
     {
         if (playerInAttackRange)
@@ -220,12 +230,12 @@ public class EnemyAi : MonoBehaviour
             }
         }
     }
-
+    //Restartē uzbrukumu
     private void ResetAttack()
     {
         alreadyAttacked = false;
     }
-
+    //Apstādina pretinieku
     public void Stagger()
     {
         agent.isStopped = true;
@@ -237,7 +247,7 @@ public class EnemyAi : MonoBehaviour
 
         StartCoroutine(RecoverFromStagger());
     }
-
+    //Pēc apstādināšanas sāk atkal iet
     private IEnumerator RecoverFromStagger()
     {
         yield return new WaitForSeconds(1.2f);
@@ -249,6 +259,7 @@ public class EnemyAi : MonoBehaviour
             animator.SetBool("Reaction", false);
         }
     }
+    //Apstādina animācijas pretinieka
     public void StopAnimations()
     {
         animator.SetBool("Walk", false);

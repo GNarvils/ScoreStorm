@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,11 +15,12 @@ public class KeyBindsButton : MonoBehaviour
 
     void Start()
     {
+        //Atrod un dabū visas vērtības tekstā
         keybinds = transform.Find("KeyBinds");
         waitingKey = false;
         keyBindsManager = KeyBinds.manager;
-
-            for (int i = 0; i < 9; i++)
+        // Iterē caur katru ieslēgtās režīma pogu un iestata tekstu atbilstoši pašreizējām pogām
+        for (int i = 0; i < 9; i++)
             {
                 Transform child = keybinds.Find(keybinds.GetChild(i).name);
 
@@ -33,7 +34,7 @@ public class KeyBindsButton : MonoBehaviour
                 }
             }
     }
-
+    // Pārmaina teksta vērtības uz aktuālam pogām
     void SetKeyText(string actionName, TMP_Text textComponent)
     {
         switch (actionName)
@@ -78,24 +79,24 @@ public class KeyBindsButton : MonoBehaviour
             StartCoroutine(AssignKey());
         }
     }
-
+    //Sāk darbības pogas maiņu
     public void StartAssignment(string keyName)
     {
         if (!waitingKey)
             StartCoroutine(AssignKey());
     }
-
+    //Nosūta tekstu
     public void SendText(TMP_Text text)
     {
         buttonText = text;
     }
-
+    //Gaida pogas nospiešanu
     IEnumerator WaitForKey()
     {
         while (!keyEvent.isKey)
             yield return null;
     }
-
+    //Pārbauda vai var mainīt pogu
     IEnumerator AssignKey()
     {
         waitingKey = true;
@@ -110,7 +111,7 @@ public class KeyBindsButton : MonoBehaviour
             AssignKeyToAction(GetDefaultValue(buttonText.transform.parent.name));
         }
     }
-
+    //Pārbauda vai poga jau ir izmantota
     bool IsKeyAlreadyUsed(KeyCode key)
     {
         foreach (var property in typeof(KeyBinds).GetProperties())
@@ -125,7 +126,7 @@ public class KeyBindsButton : MonoBehaviour
         }
         return false;
     }
-
+    //Pataisa nospiesto pogu par darbības aktivizācijas pogu un saglabā
     void AssignKeyToAction(KeyCode key)
     {
         buttonText.text = key.ToString();
@@ -135,6 +136,7 @@ public class KeyBindsButton : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    //Uzliek darbības vērtības uz noklusējuma vērtību ja ir vajadzīga
     KeyCode GetDefaultValue(string actionName)
     {
         switch (actionName)

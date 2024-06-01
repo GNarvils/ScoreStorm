@@ -4,18 +4,19 @@ using TMPro;
 
 public class Score : MonoBehaviour
 {
-    public int totalScore = 0;
+    public int totalScore = 0; //Cik kopā punktu
     public TextMeshProUGUI scoreText;
     private Combo combo;
-    private float scoreMultiplier = 1f;
+    private float scoreMultiplier = 1f; //Punktu reizinātājs
     private Coroutine multiplierCoroutine;
 
     void Start()
     {
+        //Atrod komponentu un atjauno punktu tekstu
         combo = FindObjectOfType<Combo>();
         UpdateScoreText();
     }
-
+    //Metode, kas pieliek klāt punktus
     public void AddToScore(int value)
     {
         int addedScore = Mathf.RoundToInt(value * combo.GetScoreMultiplier() * scoreMultiplier);
@@ -24,7 +25,7 @@ public class Score : MonoBehaviour
 
         Debug.Log("Pielikts " + addedScore + " pie punktiem.");
     }
-
+    //Atjaunina punkta tekstu
     private void UpdateScoreText()
     {
         if (scoreText != null)
@@ -32,7 +33,7 @@ public class Score : MonoBehaviour
             scoreText.text = totalScore.ToString();
         }
     }
-
+    //Sāk punkta reizināšanu
     public void ActivateScoreMultiplier(float multiplier, float duration)
     {
         if (multiplierCoroutine != null)
@@ -41,7 +42,7 @@ public class Score : MonoBehaviour
         }
         multiplierCoroutine = StartCoroutine(ScoreMultiplierCoroutine(multiplier, duration));
     }
-
+    //Reizina punktus līdz norādītajam ilgumam
     private IEnumerator ScoreMultiplierCoroutine(float multiplier, float duration)
     {
         scoreMultiplier = multiplier;

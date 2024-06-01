@@ -10,6 +10,7 @@ public class MainMenuSongPlayer : MonoBehaviour
 
     private void Awake()
     {
+        //Pārbauda vai ir vērtības priekš peles ātruma, mūzikas un skaņas skaļuma, ja nē tad uzliek uz noklusējuma vērtību
 
         if (!PlayerPrefs.HasKey("Sensitivity"))
         {
@@ -35,11 +36,12 @@ public class MainMenuSongPlayer : MonoBehaviour
             Debug.LogError("AudioSource nav atrasts.");
             return;
         }
-
         audioSource.clip = mainMenuMusic;
         audioSource.loop = true;
+        //Dabū mūzikas skaļumu
         float soundVolume = PlayerPrefs.GetFloat("Music"); 
         audioSource.volume = soundVolume;
+        //Dabū mūZikas laiku, ja ir vajadzīgs un tad to iestata
         float savedTime = PlayerPrefs.GetFloat("MusicTime");
         audioSource.time = savedTime;
         
@@ -47,6 +49,7 @@ public class MainMenuSongPlayer : MonoBehaviour
 
     private void Update()
     {
+        //Ja atrodas iestatījumos mūzika dabū skaļumu visu laiku, lai varētu dzīrdēt izmaiņas, kad maina skaļumu
         if (SceneManager.GetActiveScene().name == "Settings")
         {
              float soundVolume = PlayerPrefs.GetFloat("Music");
@@ -57,13 +60,15 @@ public class MainMenuSongPlayer : MonoBehaviour
 
     private void Start()
     {
+        //Sāk mūzikas atskaņošanu
         audioSource.Play();
     }
+    //Kad izlēdz izdara metodi
     private void OnDisable()
     {
         SaveMusicTime();
     }
-
+    //Saglabā mūzikas laiku
     private void SaveMusicTime()
     {
         if (audioSource != null && audioSource.clip != null)

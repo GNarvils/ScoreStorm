@@ -1,7 +1,8 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Skripts, kas pārvalda saskarni
 interface IInteractable {
     public void Interact();
 }

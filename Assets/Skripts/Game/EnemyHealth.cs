@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    public float health;
+    public float health; //Dzīvības
     public RagDollManager ragdollManager;
-    [HideInInspector] public bool isDead;
-    public GameObject head;
+    [HideInInspector] public bool isDead; //Vai pretinieks ir miris
+    public GameObject head; //Galva
 
-    private float damageMultiplier = 1f;
+    private float damageMultiplier = 1f; //Dzīvības atņemšanas reizinātājs
     private Score playerScore;
     private Combo combo;
     private GameTime gameTime;
@@ -21,10 +21,11 @@ public class EnemyHealth : MonoBehaviour
     public AudioSource audioSource;
 
     public EnemySpawn spawn;
-    public int scoreValue = 100;
+    public int scoreValue = 100; //Punktu vērtību
 
     private void Start()
     {
+        //Dabū vajadzīgos komponentus un vērtības
         GameObject enemiesObject = GameObject.Find("Enemies");
         if (enemiesObject != null)
         {
@@ -49,7 +50,7 @@ public class EnemyHealth : MonoBehaviour
         float soundVolume = PlayerPrefs.GetFloat("Sound");
         audioSource.volume = soundVolume;
 
-        // Meklē head objektu 
+        // Meklē galvas objektu 
         if (head == null)
         {
             Transform headTransform = FindChildTransform(transform, "mixamorig:Head");
@@ -63,6 +64,7 @@ public class EnemyHealth : MonoBehaviour
             }
         }
     }
+    //Funkcija, kas meklē objektu bērnā
     private Transform FindChildTransform(Transform parent, string name)
     {
         foreach (Transform child in parent)
@@ -79,19 +81,19 @@ public class EnemyHealth : MonoBehaviour
         }
         return null;
     }
-
+    //Atņem dzīvības
     public void TakeDamage(float damage, bool isHeadshot = false)
     {
         if (health > 0)
         {
-            // Pārbauda vai ir head shots
+            // Pārbauda vai ir trāpīts par galvu
             if (isHeadshot && Random.value >= 0.5f) // 50% iespēja ka ir stagger
             {
 
                 enemyAi.Stagger();
             }
 
-            // Pieliek vai reseto damage multiplier ja ir headshot
+            // Pieliek vai atstā bojājuma reizinātāju, ja ir bijis trāpiens par galvu
             if (!isHeadshot)
             {
                 damageMultiplier = 1f;
@@ -119,10 +121,10 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    // Funkcija, kas notiek, kad nošauj enemy
+    // Funkcija, kas notiek, kad nošauj pretinieku
     void EnemyDeath()
     {
-        // Trigger ragdoll
+        // Izspilda ragdoll
         ragdollManager.TriggerRagdoll();
         isDead = true;
         Debug.Log("Nošauts pretinieks");
@@ -154,7 +156,7 @@ public class EnemyHealth : MonoBehaviour
             enemyAi.enabled = false;
         }
 
-        // Disable the animator
+        // Apstādina animācijas
         if (animator != null)
         {
             animator.enabled = false;
@@ -172,7 +174,6 @@ public class EnemyHealth : MonoBehaviour
             enemyAi.agent.enabled = false;
         }
 
-        // Disable the Rigidbody to stop physics simulation (if it exists)
         if (rb != null)
         {
             rb.velocity = Vector3.zero;
@@ -181,7 +182,7 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    // Paslēpj enemy 5 sekundes pēc nomiršanas
+    // Paslēpj pretinieku 5 sekundes pēc nomiršanas
     IEnumerator DestroyAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -189,13 +190,13 @@ public class EnemyHealth : MonoBehaviour
         Debug.Log("Pretinieks iznīcināts");
         spawn.currentEnemyCount = spawn.currentEnemyCount - 1;
     }
-
+    //Spēlē spēlētāja ieraudzīšanas skaņu
     public void EnemySpottedSound()
     {
         int rand = Random.Range(2, 4);
         audioSource.PlayOneShot(enemySounds[rand]);
     }
-
+    //Spēlē uzbrukšanas skaņu
     public void EnemyAttackSound()
     {
         int rand = Random.Range(4, 6);

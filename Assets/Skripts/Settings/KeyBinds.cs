@@ -1,11 +1,12 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Build.Content;
 using UnityEngine;
 
 public class KeyBinds : MonoBehaviour
 {
     public static KeyBinds manager;
+
+    //Darbības pogas mainīgie.
     public KeyCode forward {get; set;}
     public KeyCode backward { get; set; }
     public KeyCode left { get; set; }
@@ -19,6 +20,7 @@ public class KeyBinds : MonoBehaviour
 
     void Awake()
     {
+        //Dabū kontroles vadītāja skriptu
         if (manager == null) { 
             manager = this;
         } 
@@ -26,6 +28,7 @@ public class KeyBinds : MonoBehaviour
             Destroy(gameObject);
         }
 
+        //Dabū katras darbības pogu, kura ja nav tad tiek iestatīta noklusējuma vērtība.
         forward = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("forwardKey", "W"));
         backward = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("backwardKey", "S"));
         left = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("leftKey", "A"));

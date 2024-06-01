@@ -7,38 +7,40 @@ using UnityEngine.SceneManagement;
 
 public class GameTime : MonoBehaviour
 {
-    public TMP_Text timeText;
-    public float timer = 120f;
+    public TMP_Text timeText; 
+    public float timer = 120f; // Sākotnējais taimeris vērtība
     public PlayerHealth playerHealth;
-    public GameObject level1;
+    public GameObject level1; 
     public GameObject level2;
-    public GameObject player1;
+    public GameObject player1; 
     public GameObject player2;
     public GameObject deadPanel;
-    public GameObject victoryPanel;
-    public GameObject deathT;
-    public GameObject timeT;
-    public bool gameIsOver = false;
-    public GameObject player1Image;
+    public GameObject victoryPanel; 
+    public GameObject deathT; 
+    public GameObject timeT; 
+    public bool gameIsOver = false; // Vai spēle ir beigusies
+    public GameObject player1Image; 
     public GameObject player2Image;
-    private bool victoryPanelShown = false;
-    public TMP_Text punkti;
-    public TMP_Text laiks;
+    private bool victoryPanelShown = false; // Vai uzvaras panelis jau ir parādīts
+    public TMP_Text punkti; 
+    public TMP_Text laiks; 
     public TMP_Text kopa;
-    public TMP_Text ranks;
-    public Score score;
-    public int total = 0;
-    public AudioClip victorySound; 
-    public AudioClip lossSound;   
-    public AudioSource audioSource;
-    public bool timeIsUp = false;
+    public TMP_Text ranks; 
+    public Score score; 
+    public int total = 0; // Kopējais punktu skaits
+    public AudioClip victorySound;
+    public AudioClip lossSound; 
+    public AudioSource audioSource; 
+    public bool timeIsUp = false; 
     public GameObject rekords;
+
     void Start()
     {
         timeIsUp = false;
         gameIsOver = false;
         int selectedPlayer = PlayerPrefs.GetInt("SelectedPlayer", 1);
 
+        // Iestata spēlētāju un punktu sistēmu, atkarībā no izvēlētā spēlētāja
         if (selectedPlayer == 1)
         {
             player1.SetActive(true);
@@ -56,6 +58,7 @@ public class GameTime : MonoBehaviour
 
         int selectedLevel = PlayerPrefs.GetInt("SelectedLevel", 1);
 
+        // Iestata līmeni, atkarībā no izvēlētā līmeņa
         if (selectedLevel == 1)
         {
             level1.SetActive(true);
@@ -81,6 +84,7 @@ public class GameTime : MonoBehaviour
         victoryPanel = GameObject.Find("VictoryPanel");
         TMP_Text[] texts = victoryPanel.GetComponentsInChildren<TMP_Text>();
 
+        // Atrod uzvaras paneļa tekstus
         foreach (TMP_Text text in texts)
         {
             if (text.name == "Punkti")
@@ -110,23 +114,28 @@ public class GameTime : MonoBehaviour
         }
 
         rekords.SetActive(false);
-        audioSource = gameObject.GetComponent<AudioSource>(); 
+        audioSource = gameObject.GetComponent<AudioSource>();
         float volume = PlayerPrefs.GetFloat("Sound", 1.0f);
         audioSource.volume = volume;
     }
 
     void Update()
     {
-        if (!playerHealth.isDead && !gameIsOver) { 
+        // Atjauno taimeri tikai, ja spēlētājs nav miris un spēle nav beigusies
+        if (!playerHealth.isDead && !gameIsOver)
+        {
             timer -= Time.deltaTime;
-    }
+        }
 
+        // Ja spēle ir beigusies un uzvaras panelis vēl nav rādīts, rādīt uzvaras paneli
         if (gameIsOver && !victoryPanelShown)
-            {
+        {
             victoryPanelShown = true;
             ShowVictoryPanel();
             return;
         }
+
+        // Nodrošina, ka taimeris nekad nav mazāks par 0
         if (timer < 0f)
         {
             timer = 0f;
@@ -137,6 +146,7 @@ public class GameTime : MonoBehaviour
 
         timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
 
+        // Ja laiks ir beidzies un spēlētājs nav miris, spēlētājs nomirst
         if (timer <= 0f && !playerHealth.isDead)
         {
             timeIsUp = true;
@@ -147,17 +157,23 @@ public class GameTime : MonoBehaviour
                 StartCoroutine(ShowDeadPanel(4f));
             }
         }
+
+        // Izeja no spēles uz mājas ekrānu ar Esc taustiņu
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
             SceneManager.LoadScene("HomeScreen", LoadSceneMode.Single);
         }
     }
 
+    // Metode, lai pievienotu laiku taimerim
     public void AddTime(float timeToAdd)
     {
         timer += timeToAdd;
     }
 
+    // Korutīna, kas parāda nāves paneli pēc aizkaves
     IEnumerator ShowDeadPanel(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -166,6 +182,8 @@ public class GameTime : MonoBehaviour
         deathT.SetActive(false);
         timeT.SetActive(true);
     }
+
+    // Metode, kas parāda uzvaras paneli
     void ShowVictoryPanel()
     {
         victoryPanel.SetActive(true);
@@ -185,6 +203,8 @@ public class GameTime : MonoBehaviour
         laiks.text += " " + string.Format("{0:00}:{1:00}", Mathf.FloorToInt(timer / 60f), Mathf.FloorToInt(timer % 60f));
         total = (int)(timer + score.totalScore);
         kopa.text += " " + total;
+
+        // Noteikta ranga piešķiršana, balstoties uz kopējo punktu skaitu
         string rank;
         if (total < 2000)
         {
@@ -206,28 +226,30 @@ public class GameTime : MonoBehaviour
         {
             rank = "A";
         }
-        else 
+        else
         {
             rank = "S";
         }
         ranks.text += " " + rank;
 
+        // Pārbauda un saglabā jauno rekordu, ja tas ir lielāks par iepriekšējo
         int previousScore = PlayerPrefs.GetInt("Score_Player_" + selectedPlayer + "_Level_" + selectedLevel, 0);
-
-
         if (total > previousScore)
         {
             rekords.SetActive(true);
             PlayerPrefs.SetInt("Score_Player_" + selectedPlayer + "_Level_" + selectedLevel, total);
             PlayerPrefs.Save();
         }
+
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         Debug.Log("Uzvara");
         PlaySoundEffect(victorySound);
     }
-   public void PlaySoundEffect(AudioClip clip)
+
+    // Metode, lai atskaņotu skaņas efektu
+    public void PlaySoundEffect(AudioClip clip)
     {
-            audioSource.PlayOneShot(clip);    
+        audioSource.PlayOneShot(clip);
     }
 }

@@ -1,13 +1,13 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
 public class WPAmmo : MonoBehaviour
 {
-    public int clipSize;
-    public int extraAmmo;
-    public int currentAmmo;
+    public int clipSize; // Magazīnas lielums
+    public int extraAmmo; // Pārlikušās lodes
+    public int currentAmmo; // Tagadējošas lodes daudzums magazīna.
 
     public AudioClip magInSound;
     public AudioClip magOutSound;
@@ -16,13 +16,17 @@ public class WPAmmo : MonoBehaviour
 
     void Start()
     {
+        //Tagadējošas lodes ir tikpat daudz, kā citi magazīnā.
         currentAmmo = clipSize;
     }
 
     private void Update()
     {
+        //Parāda lodes aktuālās
         ammoText.text = currentAmmo.ToString() + " / " + extraAmmo.ToString();
     }
+
+    //Pārlādēšanas funkcija
     public void Reload()
     {
         if (extraAmmo >= clipSize)
