@@ -1518,7 +1518,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Sav\u0101cot dod sp\u0113l\u0113t\u0101jam 5 liel veida lodes."
+  m_text: "Sav\u0101cot dod sp\u0113l\u0113t\u0101jam 7 liel veida lodes."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e2ca46659542ea543a6ec0cab85dd68e, type: 2}
   m_sharedMaterial: {fileID: 5767133481297297283, guid: e2ca46659542ea543a6ec0cab85dd68e, type: 2}
@@ -5425,7 +5425,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Sav\u0101cot dod sp\u0113l\u0113t\u0101jam 45 maz veida lodes."
+  m_text: "Sav\u0101cot dod sp\u0113l\u0113t\u0101jam 60 maz veida lodes."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e2ca46659542ea543a6ec0cab85dd68e, type: 2}
   m_sharedMaterial: {fileID: 5767133481297297283, guid: e2ca46659542ea543a6ec0cab85dd68e, type: 2}
