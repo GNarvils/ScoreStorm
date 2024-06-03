@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 
 using UnityEngine.UI;
+using System.Globalization;
 
 public class Combo : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class Combo : MonoBehaviour
     public int comboMultiplier;
     public Image comboMeter;
     public float maxComboTime = 10f; //Cik ilgi combo var eksistēt
+    public TextMeshProUGUI comboMultiText;
 
     void Start()
     {
@@ -43,7 +45,7 @@ public class Combo : MonoBehaviour
         enemiesKilledInCombo++;
         comboTimer = 10f;
 
-        if (enemiesKilledInCombo >= 2)
+        if (enemiesKilledInCombo >= 1)
         {
             StartCombo();
         }
@@ -58,6 +60,7 @@ public class Combo : MonoBehaviour
         isComboActive = true;
         comboMultiplier = (int)GetScoreMultiplier();
         comboTextObject.SetActive(true);
+        UpdateComboMultiplierText();
     }
 
     // Restartē combo
@@ -67,6 +70,7 @@ public class Combo : MonoBehaviour
         enemiesKilledInCombo = 0;
         comboTextObject.SetActive(false);
         comboMeter.fillAmount = 0;
+        UpdateComboMultiplierText();
     }
 
     // Dabū multiplier no cik enemy ir killed
@@ -83,9 +87,26 @@ public class Combo : MonoBehaviour
     private void UpdateComboUI()
     {
         comboCountText.text = enemiesKilledInCombo.ToString();
+        UpdateComboMultiplierText();
     }
     private void UpdateComboMeter()
     {
         comboMeter.fillAmount = comboTimer / maxComboTime;
     }
+
+    private void UpdateComboMultiplierText()
+    {
+        float multiplier = GetScoreMultiplier();
+        if (multiplier > 1f)
+        {
+            comboMultiText.text = multiplier.ToString("F1", CultureInfo.InvariantCulture) + "x";
+            comboMultiText.gameObject.SetActive(true);
+        }
+        else
+        {
+            comboMultiText.gameObject.SetActive(false);
+        }
+    }
+
 }
+

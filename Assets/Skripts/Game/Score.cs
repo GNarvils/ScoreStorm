@@ -9,12 +9,28 @@ public class Score : MonoBehaviour
     private Combo combo;
     private float scoreMultiplier = 1f; //Punktu reizinātājs
     private Coroutine multiplierCoroutine;
+    private GameTime gameTime;
 
     void Start()
     {
         //Atrod komponentu un atjauno punktu tekstu
         combo = FindObjectOfType<Combo>();
         UpdateScoreText();
+
+        // Meklē UI objektu un iegūst spēles laika komponenti no tā
+        GameObject uiGameObject = GameObject.Find("UI");
+        if (uiGameObject != null)
+        {
+            gameTime = uiGameObject.GetComponent<GameTime>();
+            if (gameTime == null)
+            {
+                Debug.LogError("GameTime skripts nav atrasts");
+            }
+        }
+        else
+        {
+            Debug.LogError("UI GameObject nav atrasts.");
+        }
     }
     //Metode, kas pieliek klāt punktus
     public void AddToScore(int value)
@@ -46,7 +62,9 @@ public class Score : MonoBehaviour
     private IEnumerator ScoreMultiplierCoroutine(float multiplier, float duration)
     {
         scoreMultiplier = multiplier;
+        gameTime.multiplierT.SetActive(true);
         yield return new WaitForSeconds(duration);
         scoreMultiplier = 1f;
+        gameTime.multiplierT.SetActive(false);
     }
 }

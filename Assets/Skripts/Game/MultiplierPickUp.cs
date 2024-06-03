@@ -33,6 +33,7 @@ public class MultiplierPickUp : MonoBehaviour, IInteractable
         objectColliders = GetComponentsInChildren<Collider>();
         float soundVolume = PlayerPrefs.GetFloat("Sound");
         audioSource.volume = soundVolume;
+
     }
     //Saskarnes funkcija
     public void Interact()

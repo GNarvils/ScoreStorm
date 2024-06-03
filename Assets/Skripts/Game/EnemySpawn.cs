@@ -96,7 +96,7 @@ public class EnemySpawn : MonoBehaviour
 
         GameObject enemyToSpawn;
         //Stiprais pretinieks pārādas tikai, kā 25, 50, 75, 99 un 100 pretinieks
-        if (totalEnemyCount == 25 || totalEnemyCount == 50 || totalEnemyCount == 75 || totalEnemyCount == 99 || totalEnemyCount == 100)
+        if (totalEnemyCount == 25 || totalEnemyCount == 50 || totalEnemyCount == 75 || totalEnemyCount == 98 || totalEnemyCount == 99)
         {
             enemyToSpawn = enemyHeavy;
         }

@@ -33,11 +33,13 @@ public class GameTime : MonoBehaviour
     public AudioSource audioSource; 
     public bool timeIsUp = false; 
     public GameObject rekords;
+    public GameObject multiplierT;
 
     void Start()
     {
         timeIsUp = false;
         gameIsOver = false;
+        multiplierT.SetActive(false);
         int selectedPlayer = PlayerPrefs.GetInt("SelectedPlayer", 1);
 
         // Iestata spēlētāju un punktu sistēmu, atkarībā no izvēlētā spēlētāja

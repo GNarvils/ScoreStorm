@@ -81,14 +81,19 @@ public class EnemyAi : MonoBehaviour
             return;
         }
 
-        //Ja ir nošauti  25 pretinieki, tad viņi visu laiku sekos spēlētājam 
-        if (enemySpawn != null && enemySpawn.killedEnemy >= 25)
+        //Ja ir nošauti  10 pretinieki, tad viņi visu laiku sekos spēlētājam 
+        if (enemySpawn != null && enemySpawn.killedEnemy >= 10)
         {
             hasBeenHit = true;
         }
-        //Ja ir nošauti 50 pretinieki, viņu ātrums palielināsies uz gandrīz maksimālie iešanas ātrumu
+        //Ja ir nošauti 50 pretinieki, viņu ātrums palielināsies uz gandrīz maksimālo iešanas ātrumu
         else if (enemySpawn != null && enemySpawn.killedEnemy >= 50) {
             agent.speed = 6.5f;
+        }
+        //Ja ir nošauti 75 pretinieki, viņu ātrums palielināsies uz maksimālo iešanas ātrumu
+        else if (enemySpawn != null && enemySpawn.killedEnemy >= 75)
+        {
+            agent.speed = 7.5f;
         }
 
 
